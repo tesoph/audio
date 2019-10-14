@@ -191,7 +191,7 @@ function setup() {
     button2.mousePressed(togglePlaying);
 
    // textFont(inconsolata);
-    textSize(width / 3);
+    textSize(width/10);
     textAlign(CENTER, CENTER);
     //var myDiv = createDiv('click to start audio');
     //myDiv.position(0, 0);
@@ -331,7 +331,7 @@ function draw() {
     }
     else{
         background(150);
-        text("paused", 0, 0);
+        text("paused", width/2, height/2);
     }
 }
 
