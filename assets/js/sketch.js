@@ -1,12 +1,12 @@
 //Code for attraction and repulsion forces adapted from Nature of Code chapters 1-3
 
-let w = 1000;
-let h = 700;
+let w;
+let h;
 
 class Attractor {
     //Our Attractor is a simple object that doesn’t move. We just need a mass and a location.
     constructor() {
-        this.location = createVector(w / 2, h / 2);
+        this.location = createVector(width / 2, height / 2);
         this.mass = 60;
         this.velocity = createVector(1, 2);
         this.g = 1;
@@ -161,7 +161,9 @@ var start;
 var button;
 //let inconsolata;
 function preload() {
-  //inconsolata = loadFont('assets/inconsolata.otf');
+    let w = displayWidth/2;
+    let h = displayHeight/2;
+    //inconsolata = loadFont('assets/inconsolata.otf');
 }
 //button=createButton("go");
 
@@ -178,20 +180,24 @@ document.querySelector('button').addEventListener('click', function() {
   });
 */
 function setup() {
+     w = displayWidth/1.5;
+ h = displayHeight/1.5;
     start = false;
     var mic;
-    createCanvas(w, h);
-    background(250);
+   let cnv = createCanvas(w,h);
+   cnv.parent("container");
+    background(0);
     mic = new p5.AudioIn()
     mic.start();
     fft = new p5.FFT();
     fft.setInput(mic);
     peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
-    button2 = createButton("play");
-    button2.mousePressed(togglePlaying);
+    button = select("#play");
 
-   // textFont(inconsolata);
-    textSize(width/10);
+    button.mousePressed(togglePlaying);
+
+    // textFont(inconsolata);
+    textSize(width / 10);
     textAlign(CENTER, CENTER);
     //var myDiv = createDiv('click to start audio');
     //myDiv.position(0, 0);
@@ -230,28 +236,6 @@ function setup() {
        }*/
 
 }
-
-function jumpSong() {
-    var len = song.duration();
-    song.jump(len / 2);
-}
-
-function loaded() {
-    //
-}
-
-function togglePlaying() {
-    if (getAudioContext().state !== 'running') {
-        userStartAudio();
-    }
-    if (start == true) {
-        start = false;
-    } else if (start == false) {
-        start = true;
-    }
-}
-
-
 
 function draw() {
     if (start === true) {
@@ -309,29 +293,37 @@ function draw() {
             f.normalize();
             f.mult(1);
             movers[i].applyForce(f);
-
-
-
             if (lowMid > 80) {
                 var t = a.repel(movers[i]);
                 t.normalize();
                 t.mult(1);
                 movers[i].applyForce(t);
-
-
             }
             movers[i].checkEdges();
             movers[i].update();
             movers[i].display();
-
-
-
         }
-
+    }
+    else if (start ==false && getAudioContext().state =="running") {
+        background(150);
+        text("paused", width / 2, height / 2);
     }
     else{
-        background(150);
-        text("paused", width/2, height/2);
+        background(0);
+    }
+}
+
+function togglePlaying() {
+    if (getAudioContext().state !== 'running') {
+        userStartAudio();
+    }
+    if (start == true) {
+        start = false;
+        button.html("play");
+    } else if (start == false) {
+        background(0);
+        start = true;
+        button.html("pause");
     }
 }
 
