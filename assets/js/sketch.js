@@ -159,9 +159,9 @@ var button2;
 var jumpButton;
 var start;
 var button;
-let inconsolata;
+//let inconsolata;
 function preload() {
-  inconsolata = loadFont('assets/inconsolata.otf');
+  //inconsolata = loadFont('assets/inconsolata.otf');
 }
 //button=createButton("go");
 
@@ -190,7 +190,7 @@ function setup() {
     button2 = createButton("play");
     button2.mousePressed(togglePlaying);
 
-    textFont(inconsolata);
+   // textFont(inconsolata);
     textSize(width / 3);
     textAlign(CENTER, CENTER);
     //var myDiv = createDiv('click to start audio');
