@@ -10,10 +10,7 @@ margin-top:50px;
 }
 
 #play{
-    background-color: grey;
-    border:2px black solid;
     padding:20px;
     text-align:center;
     margin: 10px;
-    border-radius:50%;
 }

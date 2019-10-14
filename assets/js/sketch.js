@@ -319,11 +319,11 @@ function togglePlaying() {
     }
     if (start == true) {
         start = false;
-        button.html("play");
+       // button.html("play");
     } else if (start == false) {
         background(0);
         start = true;
-        button.html("pause");
+      //  button.html("pause");
     }
 }
 
