@@ -155,9 +155,12 @@ class Mover {
 let movers = [];
 var song;
 var slider;
-var button;
+var button2;
 var jumpButton;
 var start;
+var button;
+//button=createButton("go");
+
 /*
 window.onload = function() {
     var context = new AudioContext();
@@ -173,8 +176,9 @@ document.querySelector('button').addEventListener('click', function() {
 function setup() {
     start=false;
   var mic;
-  button=createButton("play");
-  button.mousePressed(togglePlaying);
+
+  button2=createButton("play");
+  button2.mousePressed(togglePlaying);
   var myDiv = createDiv('click to start audio');
   myDiv.position(0, 0);
 
@@ -205,7 +209,7 @@ mover = new Mover(1,10,50);
     //fft = new p5.FFT();
     //fft.setInput(mic);
    // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
         movers[i] = new Mover(2, w/ 2 + random(-10, 10), h / 2);
     }
  /* for (let i = 0; i < 50; i++) {
@@ -268,7 +272,7 @@ function togglePlaying(){
                     ellipse(w/2,h/2,treble, treble);
       }
           fill("white");
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 10; i++) {
           /*
         if ( peakDetect.isDetected ) {
             console.log("detected");
@@ -313,3 +317,5 @@ function togglePlaying(){
      
 }
     }
+
+   
