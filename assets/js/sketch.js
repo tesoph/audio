@@ -157,7 +157,10 @@ var song;
 var slider;
 var button;
 var jumpButton;
+var start;
+
 function setup() {
+    start=false;
   var mic;
   button=createButton("play");
   button.mousePressed(togglePlaying);
@@ -178,7 +181,7 @@ mover = new Mover(1,10,50);
     background(0);
     //fft = new p5.FFT();
     //fft.setInput(mic);
-  //  peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
+    peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
   for (let i = 0; i < 50; i++) {
         movers[i] = new Mover(2, w/ 2 + random(-10, 10), h / 2);
     }
@@ -202,12 +205,15 @@ function togglePlaying(){
     mic.start();
     fft = new p5.FFT();
     fft.setInput(mic);
+    start=true;
+
   
 }
 
 
 
     function draw() {
+        if(start===true){
         //fft.analyze();
         var spectrum = fft.analyze();
         var highMid =fft.getEnergy("highMid");
@@ -281,5 +287,5 @@ function togglePlaying(){
 
     }
      
-    
+}
     }
