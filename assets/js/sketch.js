@@ -159,8 +159,8 @@ var button;
 var jumpButton;
 function setup() {
   var mic;
- // button=createButton("play");
- // button.mousePressed(togglePlaying);
+  button=createButton("play");
+  button.mousePressed(togglePlaying);
  // slider = createSlider(0,1,0,0.1);
   //song = loadSound("broke.mp3", loaded);
  // jumpButton = createButton("jump");
@@ -172,13 +172,13 @@ mover = new Mover(1,10,50);
  a =new Attractor();
 
     var gravity = createVector(0, 0.1);
-    mic = new p5.AudioIn()
-    mic.start();
+  //  mic = new p5.AudioIn()
+  //  mic.start();
     createCanvas(w, h);
     background(0);
-    fft = new p5.FFT();
-    fft.setInput(mic);
-    peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
+    //fft = new p5.FFT();
+    //fft.setInput(mic);
+  //  peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
   for (let i = 0; i < 50; i++) {
         movers[i] = new Mover(2, w/ 2 + random(-10, 10), h / 2);
     }
@@ -198,13 +198,11 @@ function loaded(){
 }
 
 function togglePlaying(){
-    if(!song.isPlaying()){
-        song.play();
-        button.html("pause");
-    }else{
-        song.pause();
-        button.html("play");
-    }
+    mic = new p5.AudioIn()
+    mic.start();
+    fft = new p5.FFT();
+    fft.setInput(mic);
+  
 }
 
 
