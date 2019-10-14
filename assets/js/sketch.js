@@ -158,7 +158,7 @@ var slider;
 var button;
 var jumpButton;
 var start;
-
+/*
 window.onload = function() {
     var context = new AudioContext();
     // Setup all nodes
@@ -169,7 +169,7 @@ document.querySelector('button').addEventListener('click', function() {
       console.log('Playback resumed successfully');
     });
   });
-
+*/
 function setup() {
     start=false;
   var mic;
@@ -201,7 +201,7 @@ mover = new Mover(1,10,50);
   //  mic = new p5.AudioIn()
   //  mic.start();
     createCanvas(w, h);
-    background(0);
+    background(250);
     //fft = new p5.FFT();
     //fft.setInput(mic);
    // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
