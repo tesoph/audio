@@ -159,11 +159,34 @@ var button;
 var jumpButton;
 var start;
 
+window.onload = function() {
+    var context = new AudioContext();
+    // Setup all nodes
+  }
+
+document.querySelector('button').addEventListener('click', function() {
+    context.resume().then(() => {
+      console.log('Playback resumed successfully');
+    });
+  });
+
 function setup() {
     start=false;
   var mic;
   button=createButton("play");
   button.mousePressed(togglePlaying);
+  var myDiv = createDiv('click to start audio');
+  myDiv.position(0, 0);
+
+  //var mySynth = new p5.MonoSynth();
+
+  // This won't play until the context has started
+  //mySynth.play('A6');
+
+  // Start the audio context on a click/touch event
+  userStartAudio().then(function() {
+     myDiv.remove();
+   });
  // slider = createSlider(0,1,0,0.1);
   //song = loadSound("broke.mp3", loaded);
  // jumpButton = createButton("jump");
@@ -181,7 +204,7 @@ mover = new Mover(1,10,50);
     background(0);
     //fft = new p5.FFT();
     //fft.setInput(mic);
-    peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
+   // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
   for (let i = 0; i < 50; i++) {
         movers[i] = new Mover(2, w/ 2 + random(-10, 10), h / 2);
     }
@@ -205,6 +228,7 @@ function togglePlaying(){
     mic.start();
     fft = new p5.FFT();
     fft.setInput(mic);
+    peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
     start=true;
 
   
