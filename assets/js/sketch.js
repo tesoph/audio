@@ -134,7 +134,8 @@ function preload() {
 function setup() {
     slider = createSlider(0, 255, 80, 1);
     slider.position(10, 10);
-    slider.style('width', '80px');
+    slider.style("display:block; position:static;");
+    slider.parent("threshold");
     // sliderRange(0, 1000, 10);
 
     //Canvas width and height are related to the width and height of the display
