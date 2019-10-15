@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+  
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.dom.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    <script src="libraries/dat.gui.js"></script>
+    <script src="libraries/p5.gui.js"></script>
+    <script src="libraries/quicksettings.js"></script>
+    <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
 
     <script src="assets/js/sketch.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
 </head>
 
@@ -25,12 +29,14 @@
         <div id="container"></div>
         <button id="play"><i class="far fa-play-circle fa-10x"></i></button>
     </main>
+
+
     <script>
-    $('#play').click(function() {
-       
-    $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
-});
-</script>
+        $('#play').click(function () {
+            // Is there a way to load the images before they are needed?
+            $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
+        });
+    </script>
 </body>
 
 </html>

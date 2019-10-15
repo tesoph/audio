@@ -24,23 +24,15 @@ class Attractor {
 
     checkEdges() {
         if (this.location.x > w) {
-            // location.x = 0;
             this.velocity.x *= -1;
-            // velocity.y *=-1;
         } else if (this.location.x < 0) {
-            //  location.x = width;
             this.velocity.x *= -1;
-            //  velocity.y *=-1;
         }
 
         if (this.location.y > h) {
-            //  location.y = 0;
             this.velocity.y *= -1;
-            //  velocity.x*=-1;
         } else if (this.location.y < 0) {
-            // location.y = h;
             this.velocity.y *= -1;
-            // velocity.x*=-1;
         }
 
     }
@@ -82,21 +74,8 @@ class Mover {
         this.topspeed = 5;
         this.mass = m_;
     }
-    //Our object has two PVectors: location and velocity.
-    //float rad = radians(frameCount);
-    //float angleCount = 7;    //// 1 - ...
-    //float angle = getRandomAngle(direction);
-    //boolean reachedBorder = false;
-    // PVector wind=new PVector(0.01,0);
-
-
 
     update() {
-        // println(rad);
-        //Motion 101: Location changes by velocity.
-        // acceleration = PVector.random2D();
-        // acceleration.normalize();
-        //acceleration.mult(0.2);
         this.velocity.add(this.acceleration);
         this.velocity.limit(this.topspeed);
         this.location.add(this.velocity);
@@ -105,44 +84,31 @@ class Mover {
 
     display() {
         stroke(0);
-        fill(175);
+        fill(255,0,0);
         ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
-        // ellipse(location.x, location.y, mass*10, mass*10);
         line(width / 2, height / 2, this.location.x, this.location.y);
+        fill(255);
     }
     applyForce(force) {
-        //Making a copy of the PVector before using it!
-        //PVector f =force.get();
-        //f.div(mass);
         var f = p5.Vector.div(force, this.mass);
         this.acceleration.add(f);
     }
 
     checkEdges() {
         if (this.location.x > w) {
-
-            // location.x = 0;
             this.velocity.x *= -1;
-            this.acceleration.x *= -1;
-            // velocity.y *=-1;
+            //     this.acceleration.x *= -1;
         } else if (this.location.x < 0) {
-            //  location.x = width;
             this.velocity.x *= -1;
-            this.acceleration.x *= -1;
-            //  velocity.y *=-1;
+            //     this.acceleration.x *= -1;
         }
 
         if (this.location.y > h) {
-
-            //  location.y = 0;
             this.velocity.y *= -1;
-            this.acceleration.y *= -1;
-            //  velocity.x*=-1;
+            // this.acceleration.y *= -1;
         } else if (this.location.y < 0) {
-            // location.y = height;
             this.velocity.y *= -1;
-            this.acceleration.y *= -1;
-            // velocity.x*=-1;
+            //   this.acceleration.y *= -1;
         }
 
     }
@@ -157,173 +123,140 @@ var song;
 var slider;
 var button2;
 var jumpButton;
-var start;
+var playing;
 var button;
-//let inconsolata;
+let mySensitivity = 80;
+//let sensitivityMin = 0 ;
+//let sensitivityMax = 255;
+//let sensitivityStep = 10;
+
+
+var slider;
+
 function preload() {
-    let w = displayWidth/2;
-    let h = displayHeight/2;
-    //inconsolata = loadFont('assets/inconsolata.otf');
+    //
 }
-//button=createButton("go");
 
-/*
-window.onload = function() {
-    var context = new AudioContext();
-    // Setup all nodes
-  }
-
-document.querySelector('button').addEventListener('click', function() {
-    context.resume().then(() => {
-      console.log('Playback resumed successfully');
-    });
-  });
-*/
 function setup() {
-     w = displayWidth/1.5;
- h = displayHeight/1.5;
-    start = false;
-    var mic;
-   let cnv = createCanvas(w,h);
-   cnv.parent("container");
+    slider = createSlider(0, 255, 80, 1);
+    slider.position(10, 10);
+    slider.style('width', '80px');
+   // sliderRange(0, 1000, 10);
+
+    //Canvas width and height are related to the width and height of the display
+    w = displayWidth / 1.1;
+    h = displayHeight / 1.5;
+
+    //Boolean variable if true runs the code inside draw
+    playing = false;
+
+    //creating a canvas and attaching it to the #container div in index.html
+    let cnv = createCanvas(w, h);
+    cnv.parent("container");
     background(0);
+
+    //Audio input comes from the microphone
+    var mic;
     mic = new p5.AudioIn()
     mic.start();
+
+    //FFT object analyzes the audio input
     fft = new p5.FFT();
     fft.setInput(mic);
     peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
-    button = select("#play");
 
+    //Play/pause button when pressed calls function togglePlaying
+    button = select("#play");
     button.mousePressed(togglePlaying);
 
-    // textFont(inconsolata);
+    //paused-text settings
     textSize(width / 10);
     textAlign(CENTER, CENTER);
-    //var myDiv = createDiv('click to start audio');
-    //myDiv.position(0, 0);
 
-    //var mySynth = new p5.MonoSynth();
-
-    // This won't play until the context has started
-    //mySynth.play('A6');
-
-    // Start the audio context on a click/touch event
-    // userStartAudio().then(function() {
-    //  myDiv.remove();
-    // });
-    // slider = createSlider(0,1,0,0.1);
-    //song = loadSound("broke.mp3", loaded);
-    // jumpButton = createButton("jump");
-    // jumpButton.mousePressed(jumpSong);
-
-
-    //Declare Mover object.
-    mover = new Mover(1, 10, 50);
+    //Declare attractor object.
     a = new Attractor();
 
-    var gravity = createVector(0, 0.1);
-    //  mic = new p5.AudioIn()
-    //  mic.start();
+    // var gravity = createVector(0, 0.1);
 
-    //fft = new p5.FFT();
-    //fft.setInput(mic);
     // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
+
+    //Create an array of mover objects
     for (let i = 0; i < 10; i++) {
         movers[i] = new Mover(2, w / 2 + random(-10, 10), h / 2);
     }
-    /* for (let i = 0; i < 50; i++) {
-           moversb[i] = new Mover(2, w/ 2 + random(-10, 10), h / 2);
-       }*/
-
 }
 
 function draw() {
-    if (start === true) {
-        //fft.analyze();
+    sensitivity =slider.value();
+    if (playing === true) {
         var spectrum = fft.analyze();
-        var highMid = fft.getEnergy("highMid");
+        // var highMid = fft.getEnergy("highMid");
         var lowMid = fft.getEnergy("lowMid");
-        var treble = fft.getEnergy("treble");
+        // var treble = fft.getEnergy("treble");
         var bass = fft.getEnergy("bass");
-        var mid = fft.getEnergy("mid");
+        // var mid = fft.getEnergy("mid");
 
-        var bassMap = map(bass, 0, 255, 50, 500);
-        if (bass > 50) {
-            //  ellipse(20,20,bass,bass); 
-        }
-        peakDetect.update(fft);
+        //radius of center ellipse is mapped to the amplitude of the bass tone
+        var bassMap = map(bass, 0, 255, 50, 300);
+        ellipse(w / 2, h / 2, bassMap, bassMap);
+
+        //   peakDetect.update(fft);
+
+        //Creating a gradual fade effect on the background 
         noStroke();
         fill(0, 0, 0, 5);
         rect(0, 0, width, height);
         stroke(0);
-        a.display();
-        //  a.update();
-        a.checkEdges();
 
-        ellipse(w / 2, h / 2, bassMap, bassMap);
-
-        //hats
-        if (treble > 30) {
-            let c = color("red");
-            fill(c);
-            ellipse(w / 2, h / 2, treble, treble);
-        }
         fill("white");
-        for (let i = 0; i < 10; i++) {
-            /*
-          if ( peakDetect.isDetected ) {
-              console.log("detected");
-              var t = a.repel(movers[i]);
-              t.normalize();
-              t.mult(100);
-              movers[i].applyForce(t);
-            } else {
-              console.log("not detected");
-              var f = a.attract(movers[i]);
-              f.normalize();
-              f.mult(1);
-              movers[i].applyForce(f);
-             
-            }
-            movers[i].checkEdges();
-            movers[i].update();
-           movers[i].display();*/
 
+        //Loop through the array of movers
+        for (let i = 0; i < 10; i++) {
+            //Movers are attracted to the Attractor object in center of canvas
             var f = a.attract(movers[i]);
             f.normalize();
             f.mult(1);
             movers[i].applyForce(f);
-            if (lowMid > 80) {
+
+            //If a certain frequency is above a certain amplitude the movers are repelled by the attractor object
+            if (lowMid > mySensitivity) {
                 var t = a.repel(movers[i]);
                 t.normalize();
                 t.mult(1);
                 movers[i].applyForce(t);
             }
+            //Movers reverse direction when they meet the edge of the canvas
             movers[i].checkEdges();
             movers[i].update();
             movers[i].display();
         }
     }
-    else if (start ==false && getAudioContext().state =="running") {
+    //Paused canvas
+    else if (playing == false && getAudioContext().state == "running") {
         background(150);
         text("paused", width / 2, height / 2);
     }
-    else{
+    //Pre-start canvas
+    else {
         background(0);
     }
 }
 
 function togglePlaying() {
+
+    //Start Audio context on user gesture
     if (getAudioContext().state !== 'running') {
         userStartAudio();
     }
-    if (start == true) {
-        start = false;
-       // button.html("play");
-    } else if (start == false) {
+    if (playing == true) {
+        playing = false;
+    } else if (playing == false) {
+        //clear the background (to remove "paused" text)
         background(0);
-        start = true;
-      //  button.html("pause");
+        playing = true;
     }
 }
 
+function analyze() {
+
+}
