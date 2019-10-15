@@ -1,16 +1,30 @@
 main{
-    display: flex;
-    align-items:center;
-    justify-content:center;
+    
+   display: flex;
+   align-items:center;
+   justify-content:center;
     flex-direction: column;
+    
 }
 
 #container{
-margin-top:50px;
+margin-top:0px;
 }
 
 #play{
     padding:20px;
     text-align:center;
     margin: 10px;
+}
+
+#gui{
+    display: flex;
+    align-items:center;
+    text-align: center;
+    justify-content:center;
+    flex-direction: column;
+}
+
+p{
+    text-align:center;
 }
