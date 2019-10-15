@@ -67,7 +67,8 @@ class Attractor {
 
 
 class Mover {
-    constructor(m_, x_, y_) {
+    constructor(m_, x_, y_, r_, g_, b_) {
+        this.color = color(r_, g_, b_);
         this.location = createVector(x_, y_);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(-0.001, 0.01);
@@ -84,7 +85,7 @@ class Mover {
 
     display() {
         stroke(0);
-        fill(255,0,0);
+        fill(this.color);
         ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
         line(width / 2, height / 2, this.location.x, this.location.y);
         fill(255);
@@ -114,24 +115,17 @@ class Mover {
     }
 }
 
-//Mover[] movers = new Mover[250];
-//var a = new Attractor();
-// PVector wind=new PVector(900,0);PVector gravity = new PVector(0,0.1);
-//var gravity = createVector(0,0.1);
-let movers = [];
-var song;
+//Arrays of movers
+let moversLowMid = [];
+let moversHighMid = [];
+//Controls the threshold variable
 var slider;
-var button2;
-var jumpButton;
-var playing;
+//Play/pause button
 var button;
-let mySensitivity = 80;
-//let sensitivityMin = 0 ;
-//let sensitivityMax = 255;
-//let sensitivityStep = 10;
+//Boolean variable if true runs the code inside draw
+var playing;
+let threshold = 80;
 
-
-var slider;
 
 function preload() {
     //
@@ -141,13 +135,13 @@ function setup() {
     slider = createSlider(0, 255, 80, 1);
     slider.position(10, 10);
     slider.style('width', '80px');
-   // sliderRange(0, 1000, 10);
+    // sliderRange(0, 1000, 10);
 
     //Canvas width and height are related to the width and height of the display
     w = displayWidth / 1.1;
     h = displayHeight / 1.5;
 
-    //Boolean variable if true runs the code inside draw
+    //initial value is false
     playing = false;
 
     //creating a canvas and attaching it to the #container div in index.html
@@ -181,16 +175,17 @@ function setup() {
     // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
 
     //Create an array of mover objects
-    for (let i = 0; i < 10; i++) {
-        movers[i] = new Mover(2, w / 2 + random(-10, 10), h / 2);
+    for (let i = 0; i < 5; i++) {
+        moversLowMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, 255, 0, 0);
+        moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, 0, 255, 0);
     }
 }
 
 function draw() {
-    sensitivity =slider.value();
+    threshold = slider.value();
     if (playing === true) {
         var spectrum = fft.analyze();
-        // var highMid = fft.getEnergy("highMid");
+        var highMid = fft.getEnergy("highMid");
         var lowMid = fft.getEnergy("lowMid");
         // var treble = fft.getEnergy("treble");
         var bass = fft.getEnergy("bass");
@@ -211,24 +206,41 @@ function draw() {
         fill("white");
 
         //Loop through the array of movers
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             //Movers are attracted to the Attractor object in center of canvas
-            var f = a.attract(movers[i]);
+            var f = a.attract(moversLowMid[i]);
+            var x = a.attract(moversHighMid[i]);
             f.normalize();
             f.mult(1);
-            movers[i].applyForce(f);
+            x.normalize();
+            x.mult(1);
+            moversLowMid[i].applyForce(f);
+            moversHighMid[i].applyForce(x);
 
-            //If a certain frequency is above a certain amplitude the movers are repelled by the attractor object
-            if (lowMid > mySensitivity) {
-                var t = a.repel(movers[i]);
+            //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
+            if (lowMid > threshold) {
+                var t = a.repel(moversLowMid[i]);
                 t.normalize();
                 t.mult(1);
-                movers[i].applyForce(t);
+                moversLowMid[i].applyForce(t);
             }
+            if (highMid > threshold) {
+                //below commented out code has interesting effect
+                // var t = a.repel(moversLowMid[i]);
+                var t = a.repel(moversHighMid[i]);
+                t.normalize();
+                t.mult(1);
+                moversHighMid[i].applyForce(t);
+            }
+
             //Movers reverse direction when they meet the edge of the canvas
-            movers[i].checkEdges();
-            movers[i].update();
-            movers[i].display();
+            moversLowMid[i].checkEdges();
+            moversLowMid[i].update();
+            moversLowMid[i].display();
+
+            moversHighMid[i].checkEdges();
+            moversHighMid[i].update();
+            moversHighMid[i].display();
         }
     }
     //Paused canvas
