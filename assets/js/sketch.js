@@ -254,11 +254,11 @@ function draw() {
            // moversHighMid[i].display();
         }
 
-        beginShape();
-        for (let i = 0; i < 5; i++) {
-            vertex( moversLowMid[i].location.x,moversLowMid[i].location.y);
-        }
-        endShape();
+       // beginShape();
+       // for (let i = 0; i < 5; i++) {
+        //    vertex( moversLowMid[i].location.x,moversLowMid[i].location.y);
+      //  }
+       // endShape();
     }
     //Paused canvas
     else if (playing == false && getAudioContext().state == "running") {
