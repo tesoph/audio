@@ -87,7 +87,9 @@ class Mover {
         stroke(0);
         fill(this.color);
         ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
+        if(lines){
         line(width / 2, height / 2, this.location.x, this.location.y);
+        }
         fill(255);
     }
     applyForce(force) {
@@ -125,8 +127,9 @@ var button;
 //Boolean variable if true runs the code inside draw
 var playing;
 let threshold = 80;
-
-
+//Checkbox to display lines or not
+let checkbox;
+var lines;
 function preload() {
     //
 }
@@ -138,6 +141,10 @@ function setup() {
     slider.parent("threshold");
     // sliderRange(0, 1000, 10);
 
+    checkbox = createCheckbox('Display lines', false);
+    checkbox.parent("lines");
+    checkbox.changed(myCheckedEvent);
+    lines=false;
     //Canvas width and height are related to the width and height of the display
     w = displayWidth / 1.1;
     h = displayHeight / 1.5;
@@ -192,7 +199,7 @@ function draw() {
         var bass = fft.getEnergy("bass");
         // var mid = fft.getEnergy("mid");
 
-        //radius of center ellipse is mapped to the amplitude of the bass tone
+        //radius of center ellipse is mapped to the amplitude of the bass frequency
         var bassMap = map(bass, 0, 255, 50, 300);
         ellipse(w / 2, h / 2, bassMap, bassMap);
 
@@ -269,6 +276,16 @@ function togglePlaying() {
         playing = true;
     }
 }
+
+function myCheckedEvent() {
+    if (this.checked()) {
+      console.log('Checking!');
+      lines=true;
+    } else {
+        lines=false;
+      console.log('Unchecking!');
+    }
+  }
 
 function analyze() {
 

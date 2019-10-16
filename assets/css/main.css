@@ -18,11 +18,20 @@ margin-top:0px;
 }
 
 #gui{
+    width:75%;
     display: flex;
     align-items:center;
-    text-align: center;
     justify-content:center;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+
+#threshold{
+  padding:10px 20px 10px;  
+}
+
+#lines{
+    padding:10px 20px 10px;  
 }
 
 p{
