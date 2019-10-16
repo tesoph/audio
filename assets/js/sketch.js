@@ -84,12 +84,13 @@ class Mover {
     }
 
     display() {
-        stroke(0);
-        fill(this.color);
-        ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
-        if(lines){
-        line(width / 2, height / 2, this.location.x, this.location.y);
-        }
+        stroke(255);
+
+      //  fill(this.color);
+      //  ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
+      //  if(lines){
+      //  line(width / 2, height / 2, this.location.x, this.location.y);
+       // }
         fill(255);
     }
     applyForce(force) {
@@ -130,11 +131,13 @@ let threshold = 80;
 //Checkbox to display lines or not
 let checkbox;
 var lines;
+let cnv
 function preload() {
     //
 }
 
 function setup() {
+ 
     slider = createSlider(0, 255, 80, 1);
     slider.position(10, 10);
     slider.style("display:block; position:static;");
@@ -153,7 +156,7 @@ function setup() {
     playing = false;
 
     //creating a canvas and attaching it to the #container div in index.html
-    let cnv = createCanvas(w, h);
+     cnv = createCanvas(w, h);
     cnv.parent("container");
     background(0);
 
@@ -244,12 +247,18 @@ function draw() {
             //Movers reverse direction when they meet the edge of the canvas
             moversLowMid[i].checkEdges();
             moversLowMid[i].update();
-            moversLowMid[i].display();
+          //  moversLowMid[i].display();
 
             moversHighMid[i].checkEdges();
             moversHighMid[i].update();
-            moversHighMid[i].display();
+           // moversHighMid[i].display();
         }
+
+        beginShape();
+        for (let i = 0; i < 5; i++) {
+            vertex( moversLowMid[i].location.x,moversLowMid[i].location.y);
+        }
+        endShape();
     }
     //Paused canvas
     else if (playing == false && getAudioContext().state == "running") {
@@ -284,6 +293,14 @@ function myCheckedEvent() {
     } else {
         lines=false;
       console.log('Unchecking!');
+    }
+  }
+
+  function keyPressed() {
+    if (keyCode === 32) {
+        saveCanvas(cnv, 'myCanvas.jpg');
+    } else if (keyCode === RIGHT_ARROW) {
+      print("hello");
     }
   }
 
