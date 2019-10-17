@@ -86,11 +86,11 @@ class Mover {
     display() {
         stroke(255);
 
-      //  fill(this.color);
-      //  ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
-      //  if(lines){
-      //  line(width / 2, height / 2, this.location.x, this.location.y);
-       // }
+        fill(this.color);
+       ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
+       if(lines){
+        line(width / 2, height / 2, this.location.x, this.location.y);
+       }
         fill(255);
     }
     applyForce(force) {
