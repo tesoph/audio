@@ -247,11 +247,11 @@ function draw() {
             //Movers reverse direction when they meet the edge of the canvas
             moversLowMid[i].checkEdges();
             moversLowMid[i].update();
-          //  moversLowMid[i].display();
+            moversLowMid[i].display();
 
             moversHighMid[i].checkEdges();
             moversHighMid[i].update();
-           // moversHighMid[i].display();
+            moversHighMid[i].display();
         }
 
        // beginShape();
