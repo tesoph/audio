@@ -87,10 +87,14 @@ class Mover {
         stroke(255);
 
         fill(this.color);
+        if(shapeMode==false){
        ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
+        }
        if(lines){
         line(width / 2, height / 2, this.location.x, this.location.y);
        }
+     
+       
         fill(255);
     }
     applyForce(force) {
@@ -129,25 +133,38 @@ var button;
 var playing;
 let threshold = 80;
 //Checkbox to display lines or not
-let checkbox;
+let checkboxLines;
 var lines;
 let cnv
+
+let captureButton;
+
+let shapeMode=false;
+let shapeCheckbox;
 function preload() {
     //
 }
 
 function setup() {
- 
+  captureButton = createButton(" ");
+  captureButton.mousePressed(capture);
+  captureButton.parent("capture");
+  captureButton.style("background:red;color:black;border-radius:50%;width:50px;height:50px;")
+
     slider = createSlider(0, 255, 80, 1);
-    slider.position(10, 10);
+ 
     slider.style("display:block; position:static;");
     slider.parent("threshold");
     // sliderRange(0, 1000, 10);
 
-    checkbox = createCheckbox('Display lines', false);
-    checkbox.parent("lines");
-    checkbox.changed(myCheckedEvent);
+    checkboxLines = createCheckbox('Display lines', false);
+    checkboxLines.parent("lines");
+    checkboxLines.changed(lines);
     lines=false;
+    shapeCheckbox = createCheckbox('Shape mode', false);
+    shapeCheckbox.parent("shape");
+    shapeCheckbox.changed(shape);
+    shapeMode=false;
     //Canvas width and height are related to the width and height of the display
     w = displayWidth / 1.1;
     h = displayHeight / 1.5;
@@ -253,12 +270,14 @@ function draw() {
             moversHighMid[i].update();
             moversHighMid[i].display();
         }
-
-       // beginShape();
-       // for (let i = 0; i < 5; i++) {
-        //    vertex( moversLowMid[i].location.x,moversLowMid[i].location.y);
-      //  }
-       // endShape();
+if(shapeMode){
+    noFill();
+       beginShape();
+     for (let i = 0; i < 5; i++) {
+          vertex( moversLowMid[i].location.x,moversLowMid[i].location.y);
+       }
+       endShape();
+}
     }
     //Paused canvas
     else if (playing == false && getAudioContext().state == "running") {
@@ -286,7 +305,7 @@ function togglePlaying() {
     }
 }
 
-function myCheckedEvent() {
+function lines() {
     if (this.checked()) {
       console.log('Checking!');
       lines=true;
@@ -296,6 +315,18 @@ function myCheckedEvent() {
     }
   }
 
+function shape() {
+    if (this.checked()) {
+      console.log('Checking!');
+      shapeMode=true;
+    } else {
+        shapeMode=false;
+      console.log('Unchecking!');
+    }
+  }
+function capture(){
+    saveCanvas(cnv, 'myCanvas.jpg');
+}
   function keyPressed() {
     if (keyCode === 32) {
         saveCanvas(cnv, 'myCanvas.jpg');
