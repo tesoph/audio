@@ -67,8 +67,8 @@ class Attractor {
 
 
 class Mover {
-    constructor(m_, x_, y_, r_, g_, b_) {
-        this.color = color(r_, g_, b_);
+    constructor(m_, x_, y_, c_) {
+        this.color = c_;
         this.location = createVector(x_, y_);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(-0.001, 0.01);
@@ -86,7 +86,7 @@ class Mover {
     display() {
         stroke(255);
 strokeWeight(strokeWidth);
-        fill(this.color);
+       // fill(this.color);
         if(shapeMode==false){
        ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
         }
@@ -144,12 +144,15 @@ let shapeCheckbox;
 
 
 var strokeWidth;
+
+let red;
+let c;
 function preload() {
     //
 }
 
 function setup() {
-
+    red = color(255,0,0);
     strokeWidth=2;
 
   captureButton = createButton(" ");
@@ -207,16 +210,18 @@ function setup() {
     // var gravity = createVector(0, 0.1);
 
     // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
-
+ c=color(0,255,0);
     //Create an array of mover objects
     for (let i = 0; i < 5; i++) {
-        moversLowMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, 255, 0, 0);
-        moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, 0, 255, 0);
+        moversLowMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, c);
+        moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, red);
     }
 }
 
 function draw() {
-    threshold = slider.value();
+    let zzz = slider.value();
+    //backwards so the slider makes sense
+    threshold = map(zzz,0,255,230,0);
     if (playing === true) {
         var spectrum = fft.analyze();
         var highMid = fft.getEnergy("highMid");
@@ -226,9 +231,12 @@ function draw() {
         // var mid = fft.getEnergy("mid");
 
         //radius of center ellipse is mapped to the amplitude of the bass frequency
-        var bassMap = map(bass, 0, 255, 50, 300);
+        var bassMap = map(bass, 0, 255, 20, 500);
+        var bassMap2 = map(bass, 0, 255, 5, 100);
+        noFill();
         ellipse(w / 2, h / 2, bassMap, bassMap);
-
+        fill(255);
+        ellipse(w / 2, h / 2, bassMap2, bassMap2);
         //   peakDetect.update(fft);
 
         //Creating a gradual fade effect on the background 
@@ -266,15 +274,19 @@ function draw() {
                 t.mult(1);
                 moversHighMid[i].applyForce(t);
             }
-
+            fill(c);
+            print(c);
             //Movers reverse direction when they meet the edge of the canvas
             moversLowMid[i].checkEdges();
             moversLowMid[i].update();
+      
             moversLowMid[i].display();
 
             moversHighMid[i].checkEdges();
             moversHighMid[i].update();
+            fill(red);
             moversHighMid[i].display();
+            fill(255);
         }
 if(shapeMode){
     noFill();

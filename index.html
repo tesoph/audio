@@ -39,14 +39,19 @@
             </div>
 
             <div id="threshold">
-                <p>Sensitivity Threshold</p>
+                <p>Sensitivity to noise</p>
             </div>
 
             <div id="lines"></div>
             <div id="shape"></div>
-            <div id="stroke-width"><input type="range" name="stroke_weight" id="stroke-weight-picker" min="0.2" max="10"
+            <div id="stroke-width"><input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10"
                     value="2" />
                 <label for="stroke-weight-picker">Stroke weight</label></div>
+<div>
+                <input type="color" id="lowMidColor" name="lowMidColor"
+           value="#e66465">
+    <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
+</div>
         </div>
 
         <div id="container"></div>
@@ -81,6 +86,32 @@ var sketch = function(p){
             slider.oninput = function () {
                 strokeWidth = this.value;
             }
+            var lowMidColor =document.getElementById("lowMidColor");
+            lowMidColor.oninput = function (){
+               // var colorx =hexToRGB(this.value);
+               // c = colorx;
+               // console.log(colorx);
+              c=this.value;
+            }
+            //https://css-tricks.com/converting-color-spaces-in-javascript/
+            function hexToRGB(h) {
+  let r = 0, g = 0, b = 0;
+
+  // 3 digits
+  if (h.length == 4) {
+    r = "0x" + h[1] + h[1];
+    g = "0x" + h[2] + h[2];
+    b = "0x" + h[3] + h[3];
+
+  // 6 digits
+  } else if (h.length == 7) {
+    r = "0x" + h[1] + h[2];
+    g = "0x" + h[3] + h[4];
+    b = "0x" + h[5] + h[6];
+  }
+  
+  return "color("+ +r + "," + +g + "," + +b + ")";
+}
         }
     </script>
 </body>
