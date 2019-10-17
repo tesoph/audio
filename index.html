@@ -19,7 +19,7 @@
     <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/p5.createloop@0.1.3/dist/p5.createloop.js"></script>
 
-   
+
     <script src="assets/js/sketch.js"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
@@ -29,19 +29,24 @@
 <body>
     <main>
         <div id="gui">
-            <div id="shortcuts"><p>keyboard shortcuts: <br>
-                Press spacebar to capture an image</p></div>
+            <div id="shortcuts">
+                <p>keyboard shortcuts: <br>
+                    Press spacebar to capture an image</p>
+            </div>
             <div id="capture">
-                    <p>Press to save an image</p>
+                <p>Press to save an image</p>
 
             </div>
-            
+
             <div id="threshold">
                 <p>Sensitivity Threshold</p>
             </div>
 
             <div id="lines"></div>
             <div id="shape"></div>
+            <div id="stroke-width"><input type="range" name="stroke_weight" id="stroke-weight-picker" min="0.2" max="10"
+                    value="2" />
+                <label for="stroke-weight-picker">Stroke weight</label></div>
         </div>
 
         <div id="container"></div>
@@ -50,10 +55,33 @@
 
 
     <script>
-        $('#play').click(function () {
-            // Is there a way to load the images before they are needed?
-            $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
-        });
+
+        /*
+     
+        //sketch template
+        //p is arbitrary
+var sketch = function(p){
+    p.variable;
+
+    p.setup = function(){
+
+    }
+}
+     //Making the p5 object
+  var myp5 = new p5(sketch);
+        */
+        
+                $('#play').click(function () {
+                    // Is there a way to load the images before they are needed?
+                    $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
+                });
+
+        window.onload = function () {
+            var slider = document.getElementById("stroke-weight-picker");
+            slider.oninput = function () {
+                strokeWidth = this.value;
+            }
+        }
     </script>
 </body>
 

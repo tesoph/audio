@@ -85,7 +85,7 @@ class Mover {
 
     display() {
         stroke(255);
-
+strokeWeight(strokeWidth);
         fill(this.color);
         if(shapeMode==false){
        ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
@@ -141,11 +141,17 @@ let captureButton;
 
 let shapeMode=false;
 let shapeCheckbox;
+
+
+var strokeWidth;
 function preload() {
     //
 }
 
 function setup() {
+
+    strokeWidth=2;
+
   captureButton = createButton(" ");
   captureButton.mousePressed(capture);
   captureButton.parent("capture");
