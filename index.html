@@ -18,7 +18,10 @@
     <script src="libraries/quicksettings.js"></script>
     <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/p5.createloop@0.1.3/dist/p5.createloop.js"></script>
-
+    <script
+    src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+    integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+    crossorigin="anonymous"></script>
 
     <script src="assets/js/sketch.js"></script>
 
@@ -28,11 +31,14 @@
 
 <body>
     <main>
-        <div id="gui">
-            <div id="shortcuts">
+            <button id="buttonX" class="ui-state-default ui-corner-all">Click to hide/display settings menu </button>
+        <div id="toggler">
+               <div id="gui">
+                 
+           <!-- <div id="shortcuts">
                 <p>keyboard shortcuts: <br>
                     Press spacebar to capture an image</p>
-            </div>
+            </div>-->
             <div id="capture">
                 <p>Press to save an image</p>
 
@@ -44,14 +50,20 @@
 
             <div id="lines"></div>
             <div id="shape"></div>
-            <div id="stroke-width"><input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10"
-                    value="2" />
-                <label for="stroke-weight-picker">Stroke weight</label></div>
-<div>
-                <input type="color" id="lowMidColor" name="lowMidColor"
-           value="#e66465">
-    <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
-</div>
+            <div id="stroke-width">
+                <label for="stroke-weight-picker">Stroke weight</label>
+                <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10" value="2" />
+            </div>
+
+            <div id="colors">
+                <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
+                <input type="color" id="lowMidColor" name="lowMidColor" value="#e66465">
+
+                <label for="highMidColorPicker">High mid tones [frequency range: 2600-5200Hz]</label>
+                <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#3380FF">
+            </div>
+        </div>
+    
         </div>
 
         <div id="container"></div>
@@ -75,43 +87,76 @@ var sketch = function(p){
      //Making the p5 object
   var myp5 = new p5(sketch);
         */
-        
-                $('#play').click(function () {
-                    // Is there a way to load the images before they are needed?
-                    $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
-                });
+   //     $( function() {
+  //  $( "#accordion" ).accordion({
+ //     collapsible: true
+  //  });
+ // } );
+ 
+ 
+    // Set effect from select menu value
+    $( "#buttonX" ).on( "click", function() {
+        $("#toggler").toggle("slide",{},100);
+    });
+    $( function() {
+    $( "#gui" ).draggable();
+  } );
+
+ //$("#buttonX").on( "click", function() {
+   // $("#toggler").toggle(slow,swing);
+   // });
+  
+      //  $("#gui").toggle();
+        $('#play').click(function () {
+            // Is there a way to load the images before they are needed?
+            $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
+        });
 
         window.onload = function () {
+
             var slider = document.getElementById("stroke-weight-picker");
             slider.oninput = function () {
                 strokeWidth = this.value;
             }
-            var lowMidColor =document.getElementById("lowMidColor");
-            lowMidColor.oninput = function (){
-               // var colorx =hexToRGB(this.value);
-               // c = colorx;
-               // console.log(colorx);
-              c=this.value;
+
+            var lowMidColor = document.getElementById("lowMidColor");
+            lowMidColor.oninput = function () {
+                // var colorx =hexToRGB(this.value);
+                // c = colorx;
+
+                // console.log(colorx);
+                c = this.value;
+                console.log("LOW MID:" + c);
             }
+
+            var highMidColorPicker = document.getElementById("highMidColorPicker");
+            highMidColorPicker.oninput = function () {
+                // var colorx =hexToRGB(this.value);
+                // c = colorx;
+                // console.log(colorx);
+                highMidColor = this.value;
+                console.log("HIGH MID:" + highMidColor);
+            }
+
             //https://css-tricks.com/converting-color-spaces-in-javascript/
             function hexToRGB(h) {
-  let r = 0, g = 0, b = 0;
+                let r = 0, g = 0, b = 0;
 
-  // 3 digits
-  if (h.length == 4) {
-    r = "0x" + h[1] + h[1];
-    g = "0x" + h[2] + h[2];
-    b = "0x" + h[3] + h[3];
+                // 3 digits
+                if (h.length == 4) {
+                    r = "0x" + h[1] + h[1];
+                    g = "0x" + h[2] + h[2];
+                    b = "0x" + h[3] + h[3];
 
-  // 6 digits
-  } else if (h.length == 7) {
-    r = "0x" + h[1] + h[2];
-    g = "0x" + h[3] + h[4];
-    b = "0x" + h[5] + h[6];
-  }
-  
-  return "color("+ +r + "," + +g + "," + +b + ")";
-}
+                    // 6 digits
+                } else if (h.length == 7) {
+                    r = "0x" + h[1] + h[2];
+                    g = "0x" + h[3] + h[4];
+                    b = "0x" + h[5] + h[6];
+                }
+
+                return "color(" + +r + "," + +g + "," + +b + ")";
+            }
         }
     </script>
 </body>

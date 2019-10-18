@@ -18,6 +18,16 @@ margin-top:0px;
 }
 
 #gui{
+    position: absolute;
+    color:white;
+    background-color:grey;
+    margin: 10px auto;
+    padding: 5px;
+    border: 5px solid red;
+   
+    text-align: center;
+}
+#gui2{
     width:75%;
     display: flex;
     align-items:center;
@@ -26,6 +36,11 @@ margin-top:0px;
     flex-wrap:wrap;
     margin-bottom:25px;
 }
+
+#gui3{
+   
+}
+
 
 #threshold{
   padding:10px 20px 10px;  
