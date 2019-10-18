@@ -55,12 +55,15 @@
                 <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10" value="2" />
             </div>
 
-            <div id="colors">
+            <div id="colors" class = "row">
+                <div class="col">
                 <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
                 <input type="color" id="lowMidColor" name="lowMidColor" value="#e66465">
-
+            </div>
+            <div class="col">
                 <label for="highMidColorPicker">High mid tones [frequency range: 2600-5200Hz]</label>
                 <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#3380FF">
+            </div>
             </div>
         </div>
     
@@ -93,7 +96,7 @@ var sketch = function(p){
   //  });
  // } );
  
- 
+ $( "#gui" ).draggable();
     // Set effect from select menu value
     $( "#buttonX" ).on( "click", function() {
         $("#toggler").toggle("slide",{},100);

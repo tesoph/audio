@@ -154,6 +154,7 @@ function preload() {
 }
 
 function setup() {
+  //  frameRate( 30 );
     highMidColor=color(255,0,0);
     red = color(255,0,0);
     c=color(0,255,0);
@@ -179,14 +180,16 @@ function setup() {
     shapeCheckbox.changed(shape);
     shapeMode=false;
     //Canvas width and height are related to the width and height of the display
-    w = displayWidth / 1.1;
-    h = displayHeight / 1.5;
-
+   // w = displayWidth / 1.1;
+   // h = displayHeight / 1.5;
+w= windowWidth;
+h=windowHeight;
     //initial value is false
     playing = false;
 
     //creating a canvas and attaching it to the #container div in index.html
-     cnv = createCanvas(w, h);
+  //   cnv = createCanvas(w, h);
+   cnv = createCanvas(w, h);
     cnv.parent("container");
     background(0);
 
