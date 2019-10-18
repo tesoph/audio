@@ -147,12 +147,17 @@ var strokeWidth;
 
 let red;
 let c;
+let highMidColor;
+
 function preload() {
     //
 }
 
 function setup() {
+    highMidColor=color(255,0,0);
     red = color(255,0,0);
+    c=color(0,255,0);
+    
     strokeWidth=2;
 
   captureButton = createButton(" ");
@@ -161,8 +166,7 @@ function setup() {
   captureButton.style("background:red;color:black;border-radius:50%;width:50px;height:50px;")
 
     slider = createSlider(0, 255, 80, 1);
- 
-    slider.style("display:block; position:static;");
+
     slider.parent("threshold");
     // sliderRange(0, 1000, 10);
 
@@ -210,11 +214,11 @@ function setup() {
     // var gravity = createVector(0, 0.1);
 
     // peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
- c=color(0,255,0);
+ 
     //Create an array of mover objects
     for (let i = 0; i < 5; i++) {
         moversLowMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, c);
-        moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, red);
+        moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
     }
 }
 
@@ -275,16 +279,17 @@ function draw() {
                 moversHighMid[i].applyForce(t);
             }
             fill(c);
-            print(c);
+           // print(c);
             //Movers reverse direction when they meet the edge of the canvas
             moversLowMid[i].checkEdges();
             moversLowMid[i].update();
-      
             moversLowMid[i].display();
 
+            fill(highMidColor);
             moversHighMid[i].checkEdges();
             moversHighMid[i].update();
-            fill(red);
+           
+         //   print(highMidColor);
             moversHighMid[i].display();
             fill(255);
         }
@@ -346,8 +351,10 @@ function capture(){
     saveCanvas(cnv, 'myCanvas.jpg');
 }
   function keyPressed() {
+      
     if (keyCode === 32) {
-        saveCanvas(cnv, 'myCanvas.jpg');
+        //saveCanvas(cnv, 'myCanvas.jpg');
+        print("HIGH:" + highMidColor + " LOW:" + c)
     } else if (keyCode === RIGHT_ARROW) {
       print("hello");
     }
