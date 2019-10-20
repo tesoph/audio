@@ -1,4 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #fff;
+    height: 10px;
+    width: 15px;
+    margin-top: -3px;
+    border-radius: 99px;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 3px;
+    background: #ddd;
+  }
 body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
@@ -12,29 +36,45 @@ main {
 }
 
 #container {
+    /*w and h fixed ipad bug*/
+    width: 100%;
+    height: 100%;
     margin-top: 0px;
 }
 
 #play {
-   /* padding: 20px;
+    /* padding: 20px;
     text-align: center;
     margin: 10px;*/
+}
+
+.ui-container {
+    height: 15vh;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 #gui {
     position: absolute;
     color: white;
-    background-color: rgba(0,0,0, 0.5);
-   /* background-color: rgba(40,40,40, 0.5);*/
-    margin-top:20x;
-    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(40,40,40, 0.5);*/
     top: 0;
-right:0;
-border: 1px solid white;
-   /* border: 0.5px solid grey;*/
+   left: 0;
+right: 0;
+    margin-left:auto;
+    margin-right:auto;
+    max-height: 85vh;
+    border: 1px solid white;
+    /* border: 0.5px solid grey;*/
     text-align: center;
+    width:95%;
 }
 
+input {
+    min-height:25px;
+}
 #gui2 {
     width: 75%;
     display: flex;
@@ -57,22 +97,87 @@ border: 1px solid white;
 
 p {
     text-align: center;
+    margin:0;
 }
 
-#toggler{
-    position:absolute;
-    right:0;
-  width:90%;
-  margin-top:10px;
-  margin-right:10px;
-
+#toggler {
+    position: absolute;
+    /* right: 0;*/
+    width: 100%;
+    max-height:85vh;
 }
 
-#buttonX{
-    position:absolute;
-    width:80px;
-    height:80px;
-    background-color:red;
-    color:black;
-    margin:20px;
+#buttonX {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: black;
+    margin: 10px;
+    bottom: 0;
+    background-image: url("../img/controls.png");
+    background-size: 50px 50px;
+}
+
+.controlsImg {
+    height: 50px;
+    width: 50px;
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {
+    #gui {
+        position: absolute;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* background-color: rgba(40,40,40, 0.5);*/
+        margin: 2.5% 2.5% 0 2.5%;
+        padding: 2.5%;
+        width: 90%;
+        border: 1px solid white;
+        /* border: 0.5px solid grey;*/
+        text-align: center;
+        height: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .ui-container {
+        height: 15vh;
+        top: 0;
+        width: 100%;
+    }
+    #buttonX {
+        position: absolute;
+        width: 75px;
+        height: 75px;
+        top: 0;
+        left: 0;
+        background-size: 75px 75px;
+        /*  background-color:red;
+        color:black;*/
+        /*  background-image: url("../img/controls.png");*/
+    }
+    #gui {
+        position: absolute;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* background-color: rgba(40,40,40, 0.5);*/
+  
+        padding: 10px;
+        top: 0;
+        right: 0;
+        border: 1px solid white;
+        /* border: 0.5px solid grey;*/
+        text-align: center;
+        height: auto;
+    }
+    #toggler {
+        position: absolute;
+        right: 0;
+        width: 30vw;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
 }
