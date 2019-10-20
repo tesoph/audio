@@ -31,46 +31,50 @@
 
 <body>
     <main>
-            <button id="buttonX" class="ui-state-default ui-corner-all">Click to hide/display settings menu </button>
-        <div id="toggler">
-               <div id="gui">
-                 
-           <!-- <div id="shortcuts">
-                <p>keyboard shortcuts: <br>
-                    Press spacebar to capture an image</p>
-            </div>-->
-            <div id="capture">
-                <p>Press to save an image</p>
+           
 
-            </div>
-
-            <div id="threshold">
-                <p>Sensitivity to noise</p>
-            </div>
-
-            <div id="lines"></div>
-            <div id="shape"></div>
-            <div id="stroke-width">
-                <label for="stroke-weight-picker">Stroke weight</label>
-                <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10" value="2" />
-            </div>
-
-            <div id="colors" class = "row">
-                <div class="col">
-                <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
-                <input type="color" id="lowMidColor" name="lowMidColor" value="#e66465">
-            </div>
-            <div class="col">
-                <label for="highMidColorPicker">High mid tones [frequency range: 2600-5200Hz]</label>
-                <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#3380FF">
-            </div>
-            </div>
-        </div>
+       <!-- <div id="container"> <button id="buttonX" class="ui-state-default ui-corner-all">
+           Click to hide/display settings menu </button>-->
+           <div id="container"> <button id="buttonX" class="buttonX">SETTINGS</button>
+            <div id="toggler">
+                   <div id="gui">
+                     
+               <!-- <div id="shortcuts">
+                    <p>keyboard shortcuts: <br>
+                        Press spacebar to capture an image</p>
+                </div>-->
+                
+                <div id="capture">
+                    <p>Press to save an image</p>
     
+                </div>
+    
+                <div id="threshold">
+                    <p>Sensitivity to noise</p>
+                </div>
+    
+                <div id="lines"></div>
+                <div id="shape"></div>
+                <div id="stroke-width">
+                    <label for="stroke-weight-picker">Stroke weight</label>
+                    <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10" value="2" />
+                </div>
+    
+                <div id="colors" class = "row">
+                    <div class="col">
+                    <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
+                    <input type="color" id="lowMidColor" name="lowMidColor" value="#e66465">
+                </div>
+                <div class="col">
+                    <label for="highMidColorPicker">High mid tones [frequency range: 2600-5200Hz]</label>
+                    <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#3380FF">
+                </div>
+                </div>
+            </div>
+        
+            </div>
         </div>
-
-        <div id="container"></div>
-        <button id="play"><i class="far fa-play-circle fa-10x"></i></button>
+       <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
     </main>
 
 
@@ -96,13 +100,13 @@ var sketch = function(p){
   //  });
  // } );
  
- $( "#gui" ).draggable();
+ //$( "#gui" ).draggable();
     // Set effect from select menu value
     $( "#buttonX" ).on( "click", function() {
         $("#toggler").toggle("slide",{},100);
     });
     $( function() {
-    $( "#gui" ).draggable();
+ //   $( "#gui" ).draggable();
   } );
 
  //$("#buttonX").on( "click", function() {

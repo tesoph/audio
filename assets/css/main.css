@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 body {
     font-family: 'Roboto Mono', monospace;
+    margin: 0;
 }
 
 main {
-    display: flex;
+    /*display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: column;*/
 }
 
 #container {
@@ -15,19 +16,22 @@ main {
 }
 
 #play {
-    padding: 20px;
+   /* padding: 20px;
     text-align: center;
-    margin: 10px;
+    margin: 10px;*/
 }
 
 #gui {
     position: absolute;
     color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    margin: 0;
-    padding: 0;
+    background-color: rgba(0,0,0, 0.5);
+   /* background-color: rgba(40,40,40, 0.5);*/
+    margin-top:20x;
+    padding: 10px;
     top: 0;
-    border: 5px solid red;
+right:0;
+border: 1px solid white;
+   /* border: 0.5px solid grey;*/
     text-align: center;
 }
 
@@ -53,4 +57,22 @@ main {
 
 p {
     text-align: center;
+}
+
+#toggler{
+    position:absolute;
+    right:0;
+  width:90%;
+  margin-top:10px;
+  margin-right:10px;
+
+}
+
+#buttonX{
+    position:absolute;
+    width:80px;
+    height:80px;
+    background-color:red;
+    color:black;
+    margin:20px;
 }

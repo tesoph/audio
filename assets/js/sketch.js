@@ -128,7 +128,7 @@ let moversHighMid = [];
 //Controls the threshold variable
 var slider;
 //Play/pause button
-var button;
+//var button;
 //Boolean variable if true runs the code inside draw
 var playing;
 let threshold = 80;
@@ -149,11 +149,16 @@ let red;
 let c;
 let highMidColor;
 
+let playImg;
+let pauseImg;
 function preload() {
     //
 }
 
 function setup() {
+
+    playImg = loadImage('assets/img/play.png');
+    pauseImg = loadImage('assets/img/pause.PNG');
   //  frameRate( 30 );
     highMidColor=color(255,0,0);
     red = color(255,0,0);
@@ -204,9 +209,9 @@ h=windowHeight;
     peakDetect = new p5.PeakDetect(1000, 20000, 0.2);
 
     //Play/pause button when pressed calls function togglePlaying
-    button = select("#play");
-    button.mousePressed(togglePlaying);
-
+  //  button = select("#play");
+  //  button.mousePressed(togglePlaying);
+ cnv.mousePressed(togglePlaying);
     //paused-text settings
     textSize(width / 10);
     textAlign(CENTER, CENTER);
@@ -226,9 +231,11 @@ h=windowHeight;
 }
 
 function draw() {
+    
+
     let zzz = slider.value();
     //backwards so the slider makes sense
-    threshold = map(zzz,0,255,230,0);
+    threshold = map(zzz,0,255,200,10);
     if (playing === true) {
         var spectrum = fft.analyze();
         var highMid = fft.getEnergy("highMid");
@@ -307,12 +314,16 @@ if(shapeMode){
     }
     //Paused canvas
     else if (playing == false && getAudioContext().state == "running") {
-        background(150);
-        text("paused", width / 2, height / 2);
+        background(0);
+       // text("paused", width / 2, height / 2);
+       imageMode(CENTER);
+        image(playImg, w/2, h/2, playImg.width / 2, playImg.height / 2);
     }
     //Pre-start canvas
     else {
         background(0);
+        imageMode(CENTER);
+        image(playImg, w/2, h/2, playImg.width / 2, playImg.height / 2);
     }
 }
 
