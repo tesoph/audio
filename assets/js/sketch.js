@@ -151,7 +151,10 @@ let highMidColor;
 
 let playImg;
 let pauseImg;
+w=width;
+h=height;
 function preload() {
+  
     //
 }
 
@@ -187,8 +190,9 @@ function setup() {
     //Canvas width and height are related to the width and height of the display
    // w = displayWidth / 1.1;
    // h = displayHeight / 1.5;
-w= windowWidth;
-h=windowHeight;
+//w= windowWidth;
+//h=windowHeight;
+
     //initial value is false
     playing = false;
 
@@ -235,7 +239,7 @@ function draw() {
 
     let zzz = slider.value();
     //backwards so the slider makes sense
-    threshold = map(zzz,0,255,200,10);
+    threshold = map(zzz,0,255,200,20);
     if (playing === true) {
         var spectrum = fft.analyze();
         var highMid = fft.getEnergy("highMid");

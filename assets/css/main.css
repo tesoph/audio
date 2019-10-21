@@ -6,26 +6,50 @@ html, body {
     padding: 0px;
     overflow-x: hidden;
 }
+
 input[type=range] {
     -webkit-appearance: none;
     background: transparent;
-  }
-  input[type=range]::-webkit-slider-thumb {
+}
+
+input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     background: #fff;
     height: 10px;
     width: 15px;
     margin-top: -3px;
     border-radius: 99px;
-  }
-  input[type=range]::-webkit-slider-runnable-track {
+}
+
+input[type=range]::-webkit-slider-runnable-track {
     width: 300px;
     height: 3px;
     background: #ddd;
-  }
+}
+
 body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
+}
+.navbar{
+    height:7.5vh;
+    background-color:black;
+}
+
+#wrapper{
+    height:92.5vh;
+    padding: 20px;
+    background-color:rgb(30,30,30);
+}
+#container {
+    /*w and h fixed ipad bug*/
+    position: relative;
+    display:block;
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+    padding: 0;
+    margin:0;
 }
 
 main {
@@ -35,12 +59,7 @@ main {
     flex-direction: column;*/
 }
 
-#container {
-    /*w and h fixed ipad bug*/
-    width: 100%;
-    height: 100%;
-    margin-top: 0px;
-}
+
 
 #play {
     /* padding: 20px;
@@ -61,20 +80,21 @@ main {
     background-color: rgba(0, 0, 0, 0.5);
     /* background-color: rgba(40,40,40, 0.5);*/
     top: 7.5px;
-   left: 0;
-right: 0;
-    margin-left:auto;
-    margin-right:auto;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     max-height: 85vh;
     border: 1px solid white;
     /* border: 0.5px solid grey;*/
     text-align: center;
-    width:95%;
+    width: 95%;
 }
 
 input {
-    min-height:25px;
+    min-height: 25px;
 }
+
 #gui2 {
     width: 75%;
     display: flex;
@@ -84,8 +104,6 @@ input {
     flex-wrap: wrap;
     margin-bottom: 25px;
 }
-
-#gui3 {}
 
 #threshold {
     padding: 10px 20px 10px;
@@ -97,15 +115,14 @@ input {
 
 p {
     text-align: center;
-    margin:0;
+    margin: 0;
 }
 
 #toggler {
     position: absolute;
     /* right: 0;*/
     width: 100%;
-    max-height:85vh;
-   
+    max-height: 85vh;
 }
 
 #buttonX {
@@ -113,7 +130,7 @@ p {
     width: 50px;
     height: 50px;
     border: none;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.0);
     margin: 10px;
     bottom: 0;
     background-image: url("../img/controls.png");
@@ -165,7 +182,6 @@ p {
         color: white;
         background-color: rgba(0, 0, 0, 0.5);
         /* background-color: rgba(40,40,40, 0.5);*/
-  
         padding: 10px;
         top: 0;
         right: 0;
