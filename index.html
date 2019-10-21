@@ -10,17 +10,15 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="libraries/popper.min.js"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.dom.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-    <script src="libraries/dat.gui.js"></script>
-    <script src="libraries/p5.gui.js"></script>
-    <script src="libraries/quicksettings.js"></script>
+
     <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/p5.createloop@0.1.3/dist/p5.createloop.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="jquery.ui.touch-punch.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
@@ -78,11 +76,12 @@
 
                     <div id="colors" class="row">
                         <div class="col">
-                            <label for="lowMidColor">Low mid tones [frequency range: 140-400Hz]</label>
+                          
+                            <label for="lowMidColor">Low mid tones  </label>   <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"  data-content="frequency range: 140-400Hz"><img class ="icon" src="assets/img/information.png" alt="More information"></a>
                             <input type="color" id="lowMidColor" name="lowMidColor" value="#e66465">
                         </div>
                         <div class="col">
-                            <label for="highMidColorPicker">High mid tones [frequency range: 2600-5200Hz]</label>
+                            <label for="highMidColorPicker">High mid tones</label><a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus" data-content="frequency range: 2600-5200Hz"><img class ="icon" src="assets/img/information.png" alt="More information"></a>
                             <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#3380FF">
                         </div>
                     </div>
@@ -96,7 +95,12 @@
 
 
     <script>
-
+        $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$('.popover-dismiss').popover({
+  trigger: 'focus'
+})
         /*
      
         //sketch template
