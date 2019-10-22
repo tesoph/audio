@@ -58,26 +58,26 @@
                         Press spacebar to capture an image</p>
                 </div>-->
 
-                        <div id="capture">
+                     <!--   <div id="capture">
                             <p>Press to save an image</p>
 
-                        </div>
+                        </div>--> 
 
-                        <div id="threshold">
-                            <p>Sensitivity to noise</p>
+                        <div id="lines">
+                                <input type="checkbox" id="linesCheckbox" name="linesCheckbox" onchange="toggleLines(this)">
+                         <label for="linesCheckbox">Display lines</label>
                         </div>
-
-                        <div id="lines"></div>
                         <div id="shape"></div>
+
                         <div id="sensitivity-slider-div">
                                 <label for="sensitivity-slider">Sensitivity to noise</label>
-                                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="20" max="230"
+                                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="50" max="230"
                                     value="150" />
                             </div>
                         <div id="stroke-width">
                             <label for="stroke-weight-picker">Stroke weight</label>
-                            <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10"
-                                value="2" />
+                            <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
+                                value="1" />
                         </div>
 
                         <div id="colors" class="row">
@@ -108,7 +108,7 @@
 
     <script>
         //myp5 === sketch variable;
-
+       // let myp5 = new p5(sketch, document.getElementById("container"));
         //More info button uses popper.js
         $(function () {
             $('[data-toggle="popover"]').popover()
@@ -124,8 +124,8 @@
         var width = positionInfo.width;
         console.log("h:" + height);
 
-        //Unsure
-        //$( "#gui" ).draggable();
+        //Make controls menu draggable
+        $( "#gui" ).draggable();
 
         //UI collapse
         // Set effect from select menu value
@@ -136,31 +136,73 @@
             //   $( "#gui" ).draggable();
         });
 
+        //If put this function in the onload function = uncaught reference error toggleLines is not defined
+        function toggleLines(checkboxElem) {
+  if (checkboxElem.checked) {
+      console.log("k");
+    myp5.lines =true;
+  } else {
+    myp5.lines =false;
+  
+  }
+}
         window.onload = function () {
+           
             //Set color variables
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
+            myp5.strokeWidth =$("#stroke-weight-picker").val();
+//Display Lines checkbox
+
+
+/*if(document.getElementById('linesCheckbox').checked) {
+    myp5.lines=true;
+    console.log("XXXXX");
+} else if (document.getElementById('linesCheckbox').checked==false) {
+    console.log("XXsdfsdfsdfXXX");
+    myp5.lines=false;
+}*/
+/*
+function myFunction() {
+  // Get the checkbox
+  var linesCheck= document.getElementById("linesCheckbox");
+  // Get the output text
+
+
+  // If the checkbox is checked, display the output text
+  if (linesCheck.checked == true){
+      console.log("ye");
+    myp5.lines == true;
+  } else {
+      console.log("n")
+   myp5.lines == false;
+  }
+}
+myFunction();
+
+$('input#linesCheckbox').on('click', myFunction());
+*/
 
              //Sensitivity slider
-             var sensitivitySlider = document.getElementById("sensitivity-slider");
+             let sensitivitySlider = document.getElementById("sensitivity-slider");
               sensitivitySlider.oninput = function () {
                 myp5.sensitivity = this.value;
             }
 
             //Stroke Weight slider
-            var SWslider = document.getElementById("stroke-weight-picker");
+            let SWslider = document.getElementById("stroke-weight-picker");
             SWslider.oninput = function () {
                 myp5.strokeWidth = this.value;
             }
 
             //Low mid movers color picker
-            var lowMidColor = document.getElementById("lowMidColor");
+            let lowMidColor = document.getElementById("lowMidColor");
             lowMidColor.oninput = function () {
                 myp5.c = this.value;
             }
 
             //High mid movers color picker
-            var highMidColorPicker = document.getElementById("highMidColorPicker");
+            let highMidColorPicker = document.getElementById("highMidColorPicker");
             highMidColorPicker.oninput = function () {
                 highMidColor = this.value;
             }
@@ -169,6 +211,8 @@
     <!-- <script src="assets/js/sketch.js"></script>-->
     <!--  <script src="assets/js/mover.js" type="module"></script>-->
     <script src="assets/js/sketchinst.js"></script>
+
+    <script>let myp5 = new p5(sketch, document.getElementById("container"));</script>
 
 </body>
 
