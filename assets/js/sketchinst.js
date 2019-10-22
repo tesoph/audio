@@ -150,7 +150,7 @@ let sketch = function (p) {
         //      p.cnv.mousePressed(togglePlaying);
 
         //Declare attractor object.
-        a = new Attractor();
+        p.a = new Attractor(p);
         for (let i = 0; i < 5; i++) {
             p.moversLowMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.c);
             p.moversHighMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.highMidColor);
@@ -192,8 +192,8 @@ let sketch = function (p) {
             //Loop through the array of movers
             for (let i = 0; i < 5; i++) {
                 //Movers are attracted to the Attractor object in center of canvas
-                p.f = a.attract(p.moversLowMid[i]);
-                p.x = a.attract(p.moversHighMid[i]);
+                p.f = p.a.attract(p.moversLowMid[i]);
+                p.x = p.a.attract(p.moversHighMid[i]);
                 p.f.normalize();
                 p.f.mult(1);
                 p.x.normalize();
@@ -203,7 +203,7 @@ let sketch = function (p) {
 
                 //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
                 if (p.lowMid > p.threshold) {
-                    p.t = a.repel(p.moversLowMid[i]);
+                    p.t = p.a.repel(p.moversLowMid[i]);
                     p.t.normalize();
                     p.t.mult(1);
                     p.moversLowMid[i].applyForce(p.t);
@@ -211,7 +211,7 @@ let sketch = function (p) {
                 if (p.highMid > p.threshold) {
                     //below commented out code has interesting effect
                     // var t = a.repel(moversLowMid[i]);
-                    p.t = a.repel(p.moversHighMid[i]);
+                    p.t = p.a.repel(p.moversHighMid[i]);
                     p.t.normalize();
                     p.t.mult(1);
                     p.moversHighMid[i].applyForce(p.t);
@@ -229,15 +229,15 @@ let sketch = function (p) {
                 p.moversHighMid[i].display();
                 p.fill(255);
             }
-            /*
-            if (shapeMode) {
-                noFill();
-                beginShape();
+            
+            if (p.shapeMode) {
+                p.noFill();
+                p.beginShape();
                 for (let i = 0; i < 5; i++) {
-                    vertex(moversLowMid[i].location.x, moversLowMid[i].location.y);
+                    p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
                 }
-                endShape();
-            }*/
+                p.endShape();
+            }
         }
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
@@ -279,4 +279,8 @@ let sketch = function (p) {
             console.log('Unchecking!');
         }
     }
+    p.capture = function() {
+        p.saveCanvas(p.cnv, 'myCanvas.jpg');
+    }
 };
+let myp5 = new p5(sketch, document.getElementById("container"));

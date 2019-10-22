@@ -10,17 +10,18 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <script src="libraries/popper.min.js"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.dom.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-   
-    
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+
+
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -43,13 +44,27 @@
 
     </header>
     <main>
-
-        <!--<img  class="controlsImg" src="assets/img/controls.png" alt="Smiley face" >-->
-        <!-- <div id="container"> <button id="buttonX" class="ui-state-default ui-corner-all">
-           Click to hide/display settings menu </button>-->
         <div id="wrapper">
+            <!--the sketch is attached to #container-->
             <div id="container">
-                <div class="ui-container"> <button id="buttonX" class="buttonX"></button></div>
+                <div class="ui-container ">
+                    <div class="row">
+
+                        <button id="buttonX" class="ui-button"><img class="control-button" src="assets/img/controls.png"
+                                alt="More information"></button>
+
+
+                        <button id="camera" class="ui-button"><img class="control-button" src="assets/img/photo.png"
+                                alt="More information"></button>
+
+                    </div>
+                </div>
+
+                <div id="dialog-confirm" title="Save image?">
+                    <p><span class="ui-icon ui-icon-alert"></span>Save the
+                        current frame as a .jpg image</p>
+                </div>
+
                 <div id="toggler">
                     <div id="gui">
 
@@ -58,22 +73,27 @@
                         Press spacebar to capture an image</p>
                 </div>-->
 
-                     <!--   <div id="capture">
+                        <!--   <div id="capture">
                             <p>Press to save an image</p>
 
-                        </div>--> 
+                        </div>-->
 
                         <div id="lines">
-                                <input type="checkbox" id="linesCheckbox" name="linesCheckbox" onchange="toggleLines(this)">
-                         <label for="linesCheckbox">Display lines</label>
+                            <label for="linesCheckbox">Display lines</label>
+                            <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
                         </div>
-                        <div id="shape"></div>
+
+                        <div id="shape">
+                            <label for="shapeCheckbox">Shape mode</label>
+                            <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
+                        </div>
 
                         <div id="sensitivity-slider-div">
-                                <label for="sensitivity-slider">Sensitivity to noise</label>
-                                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="50" max="230"
-                                    value="150" />
-                            </div>
+                            <label for="sensitivity-slider">Sensitivity to noise</label>
+                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="50" max="230"
+                                value="150" />
+                        </div>
+
                         <div id="stroke-width">
                             <label for="stroke-weight-picker">Stroke weight</label>
                             <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
@@ -82,9 +102,8 @@
 
                         <div id="colors" class="row">
                             <div class="col">
-
                                 <label for="lowMidColor">Low mid tones </label> <a tabindex="0" class="btn"
-                                    role="button" data-toggle="popover" data-trigger="focus"
+                                    role="button" data-toggle="popover" data-trigger="focus" title="Popover title"
                                     data-content="frequency range: 140-400Hz"><img class="icon"
                                         src="assets/img/information.png" alt="More information"></a>
                                 <input type="color" id="lowMidColor" name="lowMidColor" value="#d478c7">
@@ -98,7 +117,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -107,16 +125,19 @@
 
 
     <script>
-        //myp5 === sketch variable;
-       // let myp5 = new p5(sketch, document.getElementById("container"));
-        //More info button uses popper.js
         $(function () {
             $('[data-toggle="popover"]').popover()
         })
         $('.popover-dismiss').popover({
             trigger: 'focus'
         })
-
+        //myp5 === sketch variable;
+        // let myp5 = new p5(sketch, document.getElementById("container"));
+        //More info button uses popper.js
+        //autoOpen:false stops the dialog from appearing on page load
+        $("#dialog-confirm").dialog({
+            autoOpen: false,
+        });
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -125,67 +146,111 @@
         console.log("h:" + height);
 
         //Make controls menu draggable
-        $( "#gui" ).draggable();
+        $("#gui").draggable();
 
-        //UI collapse
-        // Set effect from select menu value
+        //Controls button
         $("#buttonX").on("click", function () {
             $("#toggler").toggle("slide", {}, 100);
         });
-        $(function () {
-            //   $( "#gui" ).draggable();
+
+        //Camera button
+        $("#camera").on("click", function () {
+            //First have to change the autoOpen setting
+            // Getter
+            var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
+            // Setter
+            $("#dialog-confirm").dialog("option", "autoOpen", true);
+            $(function () {
+                //Dialog opens to confirm the user wants to save a picture
+                //if yes it calls the sketch.js function capture()
+                //If no closes dialog box
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    modal: true,
+
+                    buttons: {
+                        "Save": function () {
+                            myp5.capture();
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
         });
 
-        //If put this function in the onload function = uncaught reference error toggleLines is not defined
-        function toggleLines(checkboxElem) {
-  if (checkboxElem.checked) {
-      console.log("k");
-    myp5.lines =true;
-  } else {
-    myp5.lines =false;
-  
-  }
-}
+        //Popovers
+
+
+
         window.onload = function () {
-           
+
             //Set color variables
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
-            myp5.strokeWidth =$("#stroke-weight-picker").val();
-//Display Lines checkbox
+            myp5.strokeWidth = $("#stroke-weight-picker").val();
+            //Display Lines checkbox
+            //on inset of this code width is not defined and sketch wont run.
+            /*
+            let lineCheck= document.getElementById("linesCheckbox");
+            lineCheck.onchange = function(this){
+                if (this.checked) {
+                  console.log("k");
+                myp5.lines =true;
+              } else {
+                myp5.lines =false;
+              
+              }
+            };*/
 
+            /*
+            function myFunction() {
+              // Get the checkbox
+              var linesCheck= document.getElementById("linesCheckbox");
+              // Get the output text
+            
+            
+              // If the checkbox is checked, display the output text
+              if (linesCheck.checked == true){
+                  console.log("ye");
+                myp5.lines == true;
+              } else {
+                  console.log("n")
+               myp5.lines == false;
+              }
+            }
+            myFunction();
+            
+            $('input#linesCheckbox').on('click', myFunction());
+            */
 
-/*if(document.getElementById('linesCheckbox').checked) {
-    myp5.lines=true;
-    console.log("XXXXX");
-} else if (document.getElementById('linesCheckbox').checked==false) {
-    console.log("XXsdfsdfsdfXXX");
-    myp5.lines=false;
-}*/
-/*
-function myFunction() {
-  // Get the checkbox
-  var linesCheck= document.getElementById("linesCheckbox");
-  // Get the output text
+            //Display lines checkbox
+            document.getElementById("linesCheckbox").onchange = function () {
+                if (this.checked == true) {
+                    console.log("display lines checked");
+                    myp5.lines = true;
+                } else {
+                    console.log("display lines unchecked")
+                    myp5.lines = false;
+                }
+            }
 
-
-  // If the checkbox is checked, display the output text
-  if (linesCheck.checked == true){
-      console.log("ye");
-    myp5.lines == true;
-  } else {
-      console.log("n")
-   myp5.lines == false;
-  }
-}
-myFunction();
-
-$('input#linesCheckbox').on('click', myFunction());
-*/
-
-             //Sensitivity slider
-             let sensitivitySlider = document.getElementById("sensitivity-slider");
-              sensitivitySlider.oninput = function () {
+            //Shape mode checkbox
+            document.getElementById("shapeCheckbox").onchange = function () {
+                if (this.checked == true) {
+                    console.log("shape mode checked");
+                    myp5.shapeMode = true;
+                } else {
+                    console.log("shape mode unchecked")
+                    myp5.shapeMode = false;
+                }
+            }
+            //Sensitivity slider
+            let sensitivitySlider = document.getElementById("sensitivity-slider");
+            sensitivitySlider.oninput = function () {
                 myp5.sensitivity = this.value;
             }
 
@@ -212,8 +277,14 @@ $('input#linesCheckbox').on('click', myFunction());
     <!--  <script src="assets/js/mover.js" type="module"></script>-->
     <script src="assets/js/sketchinst.js"></script>
 
-    <script>let myp5 = new p5(sketch, document.getElementById("container"));</script>
 
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })</script>
 </body>
 
 </html>
