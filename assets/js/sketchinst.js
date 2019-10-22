@@ -110,6 +110,7 @@ class Attractor {
     let w=width;
     let h=height;
     p.moversLowMid = [];
+    p.moversHighMid=[];
   //  for (let i = 0; i < 5; i++) {
        // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
       //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
@@ -119,9 +120,9 @@ class Attractor {
 
         p.playImg = p.loadImage('assets/img/play.png');
 
-        p.highMidColor = p.color(255, 0, 0);
+      //  p.highMidColor = p.color(255, 0, 0);
         p.red = p.color(255, 0, 0);
-        p.c = p.color(0, 255, 0);
+     //   p.c = p.color(0, 255, 0);
 
         p.strokeWidth = 2;
         p.lines = false;
@@ -150,7 +151,7 @@ class Attractor {
        a = new Attractor();
        for (let i = 0; i < 5; i++) {
         p.moversLowMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.c);
-        //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
+          p.moversHighMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.highMidColor);
     }
 
      
@@ -158,12 +159,12 @@ class Attractor {
 
     p.draw = function () {
        
-                  p.sensitivity = 100;
-                  p.threshold = p.map(p.sensitivity, 0, 255, 200, 20);
+                //  p.sensitivity = 100;
+                  p.threshold = p.map(p.sensitivity, 20, 230, 230, 20);
             
                if (p.playing === true) {
                 p.spectrum = p.fft.analyze();
-                // var highMid = fft.getEnergy("highMid");
+                p.highMid = p.fft.getEnergy("highMid");
                  p.lowMid = p.fft.getEnergy("lowMid");
                  // var treble = fft.getEnergy("treble");
                  p.bass = p.fft.getEnergy("bass");
@@ -190,13 +191,13 @@ class Attractor {
                  for (let i = 0; i < 5; i++) {
                      //Movers are attracted to the Attractor object in center of canvas
                      p.f = a.attract(p.moversLowMid[i]);
-                    // var x = a.attract(moversHighMid[i]);
+                     p.x = a.attract(p.moversHighMid[i]);
                      p.f.normalize();
                      p.f.mult(1);
-                   //  x.normalize();
-                    // x.mult(1);
+                   p.x.normalize();
+                    p.x.mult(1);
                      p.moversLowMid[i].applyForce(p.f);
-                    // moversHighMid[i].applyForce(x);
+                    p.moversHighMid[i].applyForce(p.x);
      
                      //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
                      if (p.lowMid > p.threshold) {
@@ -205,14 +206,14 @@ class Attractor {
                          p.t.mult(1);
                          p.moversLowMid[i].applyForce(p.t);
                      }
-                    /* if (highMid > threshold) {
+                     if (p.highMid > p.threshold) {
                          //below commented out code has interesting effect
                          // var t = a.repel(moversLowMid[i]);
-                         var t = a.repel(moversHighMid[i]);
-                         t.normalize();
-                         t.mult(1);
-                         moversHighMid[i].applyForce(t);
-                     }*/
+                         p.t = a.repel(p.moversHighMid[i]);
+                         p.t.normalize();
+                         p.t.mult(1);
+                         p.moversHighMid[i].applyForce(p.t);
+                     }
                      p.fill(p.c);
                      // print(c);
                      //Movers reverse direction when they meet the edge of the canvas
@@ -220,12 +221,10 @@ class Attractor {
                      p.moversLowMid[i].update();
                      p.moversLowMid[i].display();
      
-                  //   fill(highMidColor);
-                   //  moversHighMid[i].checkEdges();
-                   //  moversHighMid[i].update();
-     
-                     //   print(highMidColor);
-                   //  moversHighMid[i].display();
+                    p.fill(p.highMidColor);
+                 p.moversHighMid[i].checkEdges();
+                    p.moversHighMid[i].update();
+                    p.moversHighMid[i].display();
                      p.fill(255);
                  }
                  /*
