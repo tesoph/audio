@@ -7,8 +7,6 @@ html, body {
     overflow-x: hidden;
 }
 
-
-
 body {
     font-family: 'Roboto Mono', monospace;
     margin: 0;
@@ -31,6 +29,7 @@ body {
 
 #wrapper {
     height: 100vh;
+    width:100vw;
 }
 
 #container {
@@ -54,11 +53,11 @@ body {
 
 /*----------User Interface--------*/
 
-.icon{
-    max-height:20px;
-
-    max-width:20px;
+.icon {
+    max-height: 20px;
+    max-width: 20px;
 }
+
 .ui-container {
     height: 15vh;
     position: absolute;
@@ -77,15 +76,14 @@ body {
     margin-right: auto;
     max-height: 85vh;
     border: 2px double white;
-    border-radius:5px;
+    border-radius: 5px;
     /* border: 0.5px solid grey;*/
     text-align: center;
     width: 100%;
 }
 
-input {
-    
-}
+input {}
+
 input[type=range] {
     -webkit-appearance: none;
     background: transparent;
@@ -98,7 +96,7 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 99px;
     background: #fff;
     margin-top: -4px;
-   /* background: #fff;
+    /* background: #fff;
     height: 10px;
     width: 15px;
     margin-top: -4px;
@@ -129,37 +127,30 @@ input[type=range]::-webkit-slider-runnable-track {
     padding: 10px 20px 10px;
 }
 
-
 #toggler {
     position: absolute;
     /* right: 0;*/
     width: 100%;
     max-height: 85vh;
 }
-.ui-container .row{
+
+.ui-container .row {
     align-items: flex-start;
-    margin:0;
-}
-.ui-button{
-   background-color:rgba(255,255,255,0.5);
+    margin: 0;
 }
 
-.ui-button img{
-max-width:50px;
-max-height:50px;
+.ui-button {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
-#buttonX {
-   
-    
-    
+.ui-button img {
+    max-width: 50px;
+    max-height: 50px;
 }
 
-#camera{
-  
-    
-    
-}
+#buttonX {}
+
+#camera {}
 
 .controlsImg {
     height: 50px;
@@ -169,6 +160,11 @@ max-height:50px;
 @media (min-width: 576px) {}
 
 @media (min-width: 768px) {
+    .ui-container {
+        height: 7.5vh;
+        top: 0;
+        width: 100%;
+    }
     #gui {
         position: absolute;
         color: white;
@@ -185,13 +181,8 @@ max-height:50px;
 }
 
 @media (min-width: 992px) {
-    .ui-container {
-        height: 15vh;
-        top: 0;
-        width: 100%;
-    }
+  
     #buttonX {
-       
         /*  background-color:red;
         color:black;*/
         /*  background-image: url("../img/controls.png");*/

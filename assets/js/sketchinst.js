@@ -4,7 +4,7 @@ let sketch = function (p) {
         //Our Attractor is a simple object that doesn’t move. We just need a mass and a location.
         constructor(p_) {
             this.p = p_;
-            this.location = p.createVector(width / 2, height / 2);
+            this.location = p.createVector(w / 2, h/ 2);
             this.mass = 60;
             this.velocity = p.createVector(1, 2);
             this.g = 1;
@@ -77,7 +77,7 @@ let sketch = function (p) {
                 p.ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
             }
             if (p.lines) {
-                p.line(width / 2, height / 2, this.location.x, this.location.y);
+                p.line(w / 2, h / 2, this.location.x, this.location.y);
             }
 
 
@@ -89,7 +89,7 @@ let sketch = function (p) {
         }
 
         checkEdges() {
-            if (this.location.x > p.w) {
+            if (this.location.x > w) {
                 this.velocity.x *= -1;
                 //     this.acceleration.x *= -1;
             } else if (this.location.x < 0) {
@@ -97,7 +97,7 @@ let sketch = function (p) {
                 //     this.acceleration.x *= -1;
             }
 
-            if (this.location.y > p.h) {
+            if (this.location.y > h) {
                 this.velocity.y *= -1;
                 // this.acceleration.y *= -1;
             } else if (this.location.y < 0) {
@@ -108,8 +108,8 @@ let sketch = function (p) {
         }
     }
 
-    let w = width;
-    let h = height;
+    let w = containerWidth;
+    let h = containerHeight;
     p.moversLowMid = [];
     p.moversHighMid = [];
     p.lines;
@@ -162,7 +162,7 @@ let sketch = function (p) {
     p.draw = function () {
 
         //  p.sensitivity = 100;
-        p.threshold = p.map(p.sensitivity, 50, 230, 230, 50);
+        p.threshold = p.map(p.sensitivity, 0, 230, 230, 0);
 
         if (p.playing === true) {
             p.spectrum = p.fft.analyze();
@@ -184,7 +184,7 @@ let sketch = function (p) {
             //Creating a gradual fade effect on the background 
             p.noStroke();
             p.fill(0, 0, 0, 5);
-            p.rect(0, 0, width, height);
+            p.rect(0, 0, w, h);
             p.stroke(0);
 
             p.fill("white");
@@ -283,4 +283,3 @@ let sketch = function (p) {
         p.saveCanvas(p.cnv, 'myCanvas.jpg');
     }
 };
-let myp5 = new p5(sketch, document.getElementById("container"));

@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="assets/js/sketchinst.js"></script>
+
 </head>
 
 <body>
@@ -90,7 +93,7 @@
 
                         <div id="sensitivity-slider-div">
                             <label for="sensitivity-slider">Sensitivity to noise</label>
-                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="50" max="230"
+                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="0" max="230"
                                 value="150" />
                         </div>
 
@@ -141,9 +144,9 @@
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
-        var height = positionInfo.height;
-        var width = positionInfo.width;
-        console.log("h:" + height);
+        var containerHeight = positionInfo.height;
+        var containerWidth = positionInfo.width;
+        console.log("h:" + containerHeight);
 
         //Make controls menu draggable
         $("#gui").draggable();
@@ -162,12 +165,13 @@
             $("#dialog-confirm").dialog("option", "autoOpen", true);
             $(function () {
                 //Dialog opens to confirm the user wants to save a picture
-                //if yes it calls the sketch.js function capture()
+                //if yes it calls the myp5 function capture()
                 //If no closes dialog box
                 $("#dialog-confirm").dialog({
                     resizable: false,
                     height: "auto",
                     width: 300,
+                    //why doesn't modal:true freeze sketch
                     modal: true,
 
                     buttons: {
@@ -187,7 +191,7 @@
 
 
         window.onload = function () {
-
+            let myp5 = new p5(sketch, document.getElementById("container"));
             //Set color variables
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
@@ -275,8 +279,7 @@
     </script>
     <!-- <script src="assets/js/sketch.js"></script>-->
     <!--  <script src="assets/js/mover.js" type="module"></script>-->
-    <script src="assets/js/sketchinst.js"></script>
-
+   
 
     <script>
         $(function () {
