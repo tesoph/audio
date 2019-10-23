@@ -9,7 +9,7 @@
     <script src="assets/js/sketchinst.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
- 
+
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <script src="libraries/popper.min.js"></script>
@@ -126,7 +126,7 @@
         <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
     </main>
 
-    
+
 
     <script>
         $(function () {
@@ -139,7 +139,7 @@
         // let myp5 = new p5(sketch, document.getElementById("container"));
         //More info button uses popper.js
         //autoOpen:false stops the dialog from appearing on page load
- 
+
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -147,8 +147,8 @@
         var containerWidth = positionInfo.width;
         console.log("h:" + containerHeight);
 
-   
-       
+
+
         //Popovers
 
 
@@ -160,18 +160,18 @@
             myp5.highMidColor = $('#highMidColorPicker').val();
             myp5.strokeWidth = $("#stroke-weight-picker").val();
 
-                 //Make controls menu draggable
-        $("#gui").draggable();
+            //Make controls menu draggable
+            $("#gui").draggable();
 
-//Controls button
-$("#buttonX").on("click", function () {
-    $("#toggler").toggle("slide", {}, 100);
-});
+            //Controls button
+            $("#buttonX").on("click", function () {
+                $("#toggler").toggle("slide", {}, 100);
+            });
 
-               //autoOpen:false stops the dialog from appearing on page load
-        $("#dialog-confirm").dialog({
-            autoOpen: false,
-        });
+            //autoOpen:false stops the dialog from appearing on page load
+            $("#dialog-confirm").dialog({
+                autoOpen: false,
+            });
             //Display Lines checkbox
             //on inset of this code width is not defined and sketch wont run.
             /*
@@ -253,8 +253,8 @@ $("#buttonX").on("click", function () {
             }
         }
 
-         //Camera button
-         $("#camera").on("click", function () {
+        //Camera button
+        $("#camera").on("click", function () {
             //First have to change the autoOpen setting
             // Getter
             var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
@@ -286,7 +286,7 @@ $("#buttonX").on("click", function () {
     </script>
     <!-- <script src="assets/js/sketch.js"></script>-->
     <!--  <script src="assets/js/mover.js" type="module"></script>-->
-   
+
 
     <script>
         $(function () {
