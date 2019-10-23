@@ -6,24 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
     <script src="assets/js/sketchinst.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="libraries/popper.min.js"></script>
+ 
+       
+        <script src="libraries/popper.min.js"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.dom.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
 
-
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+ 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+    <script src="libraries/jquery-ui.js"></script>
+    <script>
+            /*** Handle jQuery plugin naming conflict between jQuery UI and Bootstrap ***/
+        
+            $.widget.bridge('uibutton', $.ui.button);
+           $.widget.bridge('uitooltip', $.ui.tooltip);
+            </script>
+    <script src="libraries/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+   
+
 
 
 
@@ -82,6 +94,7 @@
                         </div>-->
 
                         <div id="lines">
+                                <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
                             <label for="linesCheckbox">Display lines</label>
                             <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
                         </div>
@@ -105,17 +118,17 @@
 
                         <div id="colors" class="row">
                             <div class="col">
-                                <label for="lowMidColor">Low mid tones </label> <a tabindex="0" class="btn"
+                                <label for="lowMidColor">Low mid tones </label> <button tabindex="-1"   rel="popover" class="btn"
                                     role="button" data-toggle="popover" data-trigger="focus" title="Popover title"
                                     data-content="frequency range: 140-400Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></a>
+                                        src="assets/img/information.png" alt="More information"></button>
                                 <input type="color" id="lowMidColor" name="lowMidColor" value="#d478c7">
                             </div>
                             <div class="col">
-                                <label for="highMidColorPicker">High mid tones</label><a tabindex="0" class="btn"
+                                <label for="highMidColorPicker">High mid tones</label><button tabindex="-1" href="#" rel="popover" class="btn"
                                     role="button" data-toggle="popover" data-trigger="focus"
                                     data-content="frequency range: 2600-5200Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></a>
+                                        src="assets/img/information.png" alt="More information"></button>
                                 <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
                             </div>
                         </div>
@@ -126,20 +139,18 @@
         <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
     </main>
 
-
+    
 
     <script>
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-        $('.popover-dismiss').popover({
-            trigger: 'focus'
-        })
+
+
+
+      
         //myp5 === sketch variable;
         // let myp5 = new p5(sketch, document.getElementById("container"));
         //More info button uses popper.js
         //autoOpen:false stops the dialog from appearing on page load
-
+ 
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -147,31 +158,38 @@
         var containerWidth = positionInfo.width;
         console.log("h:" + containerHeight);
 
-
-
+   
+       
         //Popovers
 
-
-
+   //autoOpen:false stops the dialog from appearing on page load
+   
+        var myp5 = new p5(sketch, document.getElementById("container"));
         window.onload = function () {
-            var myp5 = new p5(sketch, document.getElementById("container"));
+            $("#dialog-confirm").dialog({
+            autoOpen: false,
+        });
+         //   var myp5 = new p5(sketch, document.getElementById("container"));
             //Set color variables
+            $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
             myp5.strokeWidth = $("#stroke-weight-picker").val();
 
-            //Make controls menu draggable
-            $("#gui").draggable();
+                 //Make controls menu draggable
+        $("#gui").draggable();
 
-            //Controls button
-            $("#buttonX").on("click", function () {
-                $("#toggler").toggle("slide", {}, 100);
-            });
+//Controls button
+$("#buttonX").on("click", function () {
+    $("#toggler").toggle("slide", {}, 100);
+});
 
-            //autoOpen:false stops the dialog from appearing on page load
-            $("#dialog-confirm").dialog({
-                autoOpen: false,
-            });
+              
             //Display Lines checkbox
             //on inset of this code width is not defined and sketch wont run.
             /*
@@ -253,8 +271,8 @@
             }
         }
 
-        //Camera button
-        $("#camera").on("click", function () {
+         //Camera button
+         $("#camera").on("click", function () {
             //First have to change the autoOpen setting
             // Getter
             var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
@@ -286,15 +304,12 @@
     </script>
     <!-- <script src="assets/js/sketch.js"></script>-->
     <!--  <script src="assets/js/mover.js" type="module"></script>-->
+   
 
 
-    <script>
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-        $('.popover-dismiss').popover({
-            trigger: 'focus'
-        })</script>
+
+
+        
 </body>
 
 </html>
