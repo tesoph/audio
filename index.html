@@ -188,6 +188,7 @@
                 });
                 if (!localStorage.hideAlert) {
                     $(function () {
+                        myp5.noLoop();
                         //Dialog opens to confirm the user wants to save a picture
                         //if yes it calls the myp5 function capture()
                         //If no closes dialog box
@@ -201,9 +202,11 @@
                                 "Save": function () {
                                     myp5.capture();
                                     $(this).dialog("close");
+                                    myp5.loop();
                                 },
                                 Cancel: function () {
                                     $(this).dialog("close");
+                                    myp5.loop();
                                 }
                             }
                         });
