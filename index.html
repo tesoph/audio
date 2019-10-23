@@ -5,20 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Audio Visualizer</title>
 
     <script src="assets/js/sketchinst.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-
     <script src="libraries/popper.min.js"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.dom.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-
-
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
@@ -34,58 +30,49 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-
-
-
-
 </head>
 
 <body>
     <header>
-
         <nav class="navbar navbar-dark ">
-
             <a class="navbar-brand" href="">Logo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
             </div>
-
         </nav>
-
     </header>
+
     <main>
         <div id="wrapper">
             <!--the sketch is attached to #container-->
             <div id="container">
+
+                <!--Action buttons menu -->
                 <div class="ui-container ">
                     <div class="row">
-
+                        <!--Open settings menu-->
                         <button id="buttonX" class="ui-button"><img class="control-button" src="assets/img/controls.png"
                                 alt="More information"></button>
-
-
+                        <!--Save a picture-->
                         <button id="camera" class="ui-button"><img class="control-button" src="assets/img/photo.png"
                                 alt="More information"></button>
-
                     </div>
                 </div>
+                <!--End action buttons menu-->
 
+                <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
                 <div id="dialog-confirm" title="Save image?">
                     <p><span class="ui-icon ui-icon-alert"></span>Save the
                         current frame as a .jpg image</p>
                     <input type="checkbox" name="no" class="no">Don't show again</br>
-                    <p>(If checked pressing the camera button will automatically save the image without confirmation)
+                    <p>(If checked, pressing the camera button will automatically save the image without confirmation)
                     </p>
                 </div>
 
-
-
+                <!--Settings Menu-->
                 <div id="toggler">
                     <div id="gui">
 
@@ -139,21 +126,14 @@
                         </div>
                     </div>
                 </div>
+                <!--EndSettings Menu -->
             </div>
         </div>
-        <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
     </main>
 
 
 
     <script>
-
-
-        //myp5 === sketch variable;
-        // let myp5 = new p5(sketch, document.getElementById("container"));
-        //More info button uses popper.js
-        //autoOpen:false stops the dialog from appearing on page load
-
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -161,73 +141,79 @@
         var containerWidth = positionInfo.width;
         console.log("h:" + containerHeight);
 
+        //Popovers (doesn't work -conflict between jquery UI js and bootstrap js)
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
 
-
-        //Popovers
-
-        //autoOpen:false stops the dialog from appearing on page load
-
+        //Create sketch and attach it to #container div
         var myp5 = new p5(sketch, document.getElementById("container"));
+
+
         window.onload = function () {
+            //autoOpen:false stops the confirmation dialog from appearing on page load
             $("#dialog-confirm").dialog({
                 autoOpen: false,
             });
-            //   var myp5 = new p5(sketch, document.getElementById("container"));
-            //Set color variables
-            $(function () {
-                $('[data-toggle="popover"]').popover()
-            })
-            $('.popover-dismiss').popover({
-                trigger: 'focus'
-            })
+
+            //Set color variables according to ui menu settings on load
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
             myp5.strokeWidth = $("#stroke-weight-picker").val();
 
-            //Make controls menu draggable
-            $("#gui").draggable();
 
-            //Controls button
+
+            /////////Action buttons/////////
+            //Settings button (Opens settings menu)
             $("#buttonX").on("click", function () {
                 $("#toggler").toggle("slide", {}, 100);
             });
 
+            //Make settings menu draggable
+            $("#gui").draggable();
 
-            //Display Lines checkbox
-            //on inset of this code width is not defined and sketch wont run.
-            /*
-            let lineCheck= document.getElementById("linesCheckbox");
-            lineCheck.onchange = function(this){
-                if (this.checked) {
-                  console.log("k");
-                myp5.lines =true;
-              } else {
-                myp5.lines =false;
-              
-              }
-            };*/
+            //Camera button
+            $("#camera").on("click", function () {
+                //First have to change the autoOpen setting
+                // Getter
+                var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
+                // Setter
+                $("#dialog-confirm").dialog("option", "autoOpen", true);
+                //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
+                $(".no").on("click", function () {
+                    localStorage.setItem('hideAlert', true);
+                });
+                if (!localStorage.hideAlert) {
+                    $(function () {
+                        //Dialog opens to confirm the user wants to save a picture
+                        //if yes it calls the myp5 function capture()
+                        //If no closes dialog box
+                        $("#dialog-confirm").dialog({
+                            resizable: false,
+                            height: "auto",
+                            width: 300,
+                            //why doesn't modal:true freeze sketch
+                            modal: true,
+                            buttons: {
+                                "Save": function () {
+                                    myp5.capture();
+                                    $(this).dialog("close");
+                                },
+                                Cancel: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    myp5.capture();
+                }
+            });
 
-            /*
-            function myFunction() {
-              // Get the checkbox
-              var linesCheck= document.getElementById("linesCheckbox");
-              // Get the output text
-            
-            
-              // If the checkbox is checked, display the output text
-              if (linesCheck.checked == true){
-                  console.log("y");
-                myp5.lines == true;
-              } else {
-                  console.log("n")
-               myp5.lines == false;
-              }
-            }
-            myFunction();
-            
-            $('input#linesCheckbox').on('click', myFunction());
-            */
-
+            /////////Settings Menu//////////
             //Display lines checkbox
             document.getElementById("linesCheckbox").onchange = function () {
                 if (this.checked == true) {
@@ -249,6 +235,7 @@
                     myp5.shapeMode = false;
                 }
             }
+
             //Sensitivity slider
             let sensitivitySlider = document.getElementById("sensitivity-slider");
             sensitivitySlider.oninput = function () {
@@ -272,65 +259,16 @@
             highMidColorPicker.oninput = function () {
                 highMidColor = this.value;
             }
-        }
 
-        //Camera button
-        $("#camera").on("click", function () {
+        }//END ONLOAD
 
-            //First have to change the autoOpen setting
-            // Getter
-            var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
-            // Setter
-            $("#dialog-confirm").dialog("option", "autoOpen", true);
-
-            //https://jsfiddle.net/h5q7pe3m/1/
-            $(".yes").on("click", function () {
-            });
-            $(".no").on("click", function () {
-                localStorage.setItem('hideAlert', true);
-            });
-            if (!localStorage.hideAlert) {
-                $(function () {
-                    //Dialog opens to confirm the user wants to save a picture
-                    //if yes it calls the myp5 function capture()
-                    //If no closes dialog box
-                    $("#dialog-confirm").dialog({
-                        resizable: false,
-                        height: "auto",
-                        width: 300,
-                        //why doesn't modal:true freeze sketch
-                        modal: true,
-                        buttons: {
-                            "Save": function () {
-                                myp5.capture();
-                                $(this).dialog("close");
-                            },
-                            Cancel: function () {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-                });
-            } else {
-                myp5.capture();
-            }
-        });
-
-        //https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
-        //when browser closed - psedocode
+        //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
+        //when browser closed - remove local storage item from image save dialog confirmation
         $(window).on("unload", function (e) {
             localStorage.removeItem('hideAlert');
         });
 
     </script>
-    <!-- <script src="assets/js/sketch.js"></script>-->
-    <!--  <script src="assets/js/mover.js" type="module"></script>-->
-
-
-
-
-
-
 </body>
 
 </html>
