@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
-
+    <script src="assets/js/sketchinst.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+ 
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
         integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
     <script src="libraries/popper.min.js"></script>
@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <script src="assets/js/sketchinst.js"></script>
+
 
 </head>
 
@@ -126,6 +126,7 @@
         <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
     </main>
 
+    
 
     <script>
         $(function () {
@@ -138,9 +139,7 @@
         // let myp5 = new p5(sketch, document.getElementById("container"));
         //More info button uses popper.js
         //autoOpen:false stops the dialog from appearing on page load
-        $("#dialog-confirm").dialog({
-            autoOpen: false,
-        });
+ 
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -148,54 +147,31 @@
         var containerWidth = positionInfo.width;
         console.log("h:" + containerHeight);
 
-        //Make controls menu draggable
-        $("#gui").draggable();
-
-        //Controls button
-        $("#buttonX").on("click", function () {
-            $("#toggler").toggle("slide", {}, 100);
-        });
-
-        //Camera button
-        $("#camera").on("click", function () {
-            //First have to change the autoOpen setting
-            // Getter
-            var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
-            // Setter
-            $("#dialog-confirm").dialog("option", "autoOpen", true);
-            $(function () {
-                //Dialog opens to confirm the user wants to save a picture
-                //if yes it calls the myp5 function capture()
-                //If no closes dialog box
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: "auto",
-                    width: 300,
-                    //why doesn't modal:true freeze sketch
-                    modal: true,
-
-                    buttons: {
-                        "Save": function () {
-                            myp5.capture();
-                        },
-                        Cancel: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-            });
-        });
-
+   
+       
         //Popovers
 
 
 
         window.onload = function () {
-            let myp5 = new p5(sketch, document.getElementById("container"));
+            var myp5 = new p5(sketch, document.getElementById("container"));
             //Set color variables
             myp5.c = $('#lowMidColor').val();
             myp5.highMidColor = $('#highMidColorPicker').val();
             myp5.strokeWidth = $("#stroke-weight-picker").val();
+
+                 //Make controls menu draggable
+        $("#gui").draggable();
+
+//Controls button
+$("#buttonX").on("click", function () {
+    $("#toggler").toggle("slide", {}, 100);
+});
+
+               //autoOpen:false stops the dialog from appearing on page load
+        $("#dialog-confirm").dialog({
+            autoOpen: false,
+        });
             //Display Lines checkbox
             //on inset of this code width is not defined and sketch wont run.
             /*
@@ -219,7 +195,7 @@
             
               // If the checkbox is checked, display the output text
               if (linesCheck.checked == true){
-                  console.log("ye");
+                  console.log("y");
                 myp5.lines == true;
               } else {
                   console.log("n")
@@ -276,6 +252,37 @@
                 highMidColor = this.value;
             }
         }
+
+         //Camera button
+         $("#camera").on("click", function () {
+            //First have to change the autoOpen setting
+            // Getter
+            var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
+            // Setter
+            $("#dialog-confirm").dialog("option", "autoOpen", true);
+            $(function () {
+                //Dialog opens to confirm the user wants to save a picture
+                //if yes it calls the myp5 function capture()
+                //If no closes dialog box
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    //why doesn't modal:true freeze sketch
+                    modal: true,
+
+                    buttons: {
+                        "Save": function () {
+                            myp5.capture();
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
+
     </script>
     <!-- <script src="assets/js/sketch.js"></script>-->
     <!--  <script src="assets/js/mover.js" type="module"></script>-->

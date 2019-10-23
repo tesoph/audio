@@ -194,8 +194,8 @@ let sketch = function (p) {
                 //Movers are attracted to the Attractor object in center of canvas
                 p.f = p.a.attract(p.moversLowMid[i]);
                 p.x = p.a.attract(p.moversHighMid[i]);
-                p.f.normalize();
-                p.f.mult(1);
+               p.f.normalize();
+              //  p.f.mult(1);
                 p.x.normalize();
                 p.x.mult(1);
                 p.moversLowMid[i].applyForce(p.f);

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="libraries/popper.min.js"></script>
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.dom.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <script src="libraries/semantic.min.js"></script>
+    <link rel="stylesheet" href="libraries/semantic.min.css">
+    <script src="https://kit.fontawesome.com/c581b9d9a7.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar navbar-dark ">
+
+            <a class="navbar-brand" href="">Logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            </div>
+
+        </nav>
+
+    </header>
+    <main>
+
+        <!--<img  class="controlsImg" src="assets/img/controls.png" alt="Smiley face" >-->
+        <!-- <div id="container"> <button id="buttonX" class="ui-state-default ui-corner-all">
+           Click to hide/display settings menu </button>-->
+        <div id="wrapper">
+            <div id="container">
+                <div class="ui-container"> <button id="buttonX" class="buttonX"></button></div>
+                <div id="toggler">
+                    <div id="gui">
+
+                        <!-- <div id="shortcuts">
+                    <p>keyboard shortcuts: <br>
+                        Press spacebar to capture an image</p>
+                </div>-->
+
+                        <div id="capture">
+                            <p>Press to save an image</p>
+
+                        </div>
+
+                        <div id="threshold">
+                            <p>Sensitivity to noise</p>
+                        </div>
+
+                        <div id="lines"></div>
+                        <div id="shape"></div>
+                        <div id="stroke-width">
+                            <label for="stroke-weight-picker">Stroke weight</label>
+                            <input type="range" name="stroke_weight" id="stroke-weight-picker" min="0" max="10"
+                                value="2" />
+                        </div>
+
+                        <div id="colors" class="row">
+                            <div class="col">
+
+                                <label for="lowMidColor">Low mid tones </label> <a tabindex="0" class="btn"
+                                    role="button" data-toggle="popover" data-trigger="focus"
+                                    data-content="frequency range: 140-400Hz"><img class="icon"
+                                        src="assets/img/information.png" alt="More information"></a>
+                                <input type="color" id="lowMidColor" name="lowMidColor" value="#d478c7">
+                            </div>
+                            <div class="col">
+                                <label for="highMidColorPicker">High mid tones</label><a tabindex="0" class="btn"
+                                    role="button" data-toggle="popover" data-trigger="focus"
+                                    data-content="frequency range: 2600-5200Hz"><img class="icon"
+                                        src="assets/img/information.png" alt="More information"></a>
+                                <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- <button id="play"><i class="far fa-play-circle fa-10x"></i></button>-->
+    </main>
+
+
+    <script>
+        //let myp5 === sketch variable;
+
+        //More info button uses popper.js
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
+        /*
+     
+        //sketch template
+        //p is arbitrary
+var sketch = function(p){
+    p.variable;
+
+    p.setup = function(){
+
+    }
+}
+     //Making the p5 object
+  var myp5 = new p5(sketch);
+        */
+        //     $( function() {
+        //  $( "#accordion" ).accordion({
+        //     collapsible: true
+        //  });
+        // } );
+        var element = document.getElementById('container');
+        var positionInfo = element.getBoundingClientRect();
+        var height = positionInfo.height;
+        var width = positionInfo.width;
+        console.log("h:" + height);
+        //$( "#gui" ).draggable();
+        // Set effect from select menu value
+        $("#buttonX").on("click", function () {
+            $("#toggler").toggle("slide", {}, 100);
+        });
+        $(function () {
+            //   $( "#gui" ).draggable();
+        });
+
+        //$("#buttonX").on( "click", function() {
+        // $("#toggler").toggle(slow,swing);
+        // });
+
+        //  $("#gui").toggle();
+        $('#play').click(function () {
+            // Is there a way to load the images before they are needed?
+            $("i", this).toggleClass("far fa-play-circle fa-10x far fa-pause-circle fa-10x");
+        });
+
+        window.onload = function () {
+            myp5.c = $('#lowMidColor').val();
+            // var width = document.getElementById('container').offsetWidth;
+            // var height = document.getElementById('container').offsetHeight;
+
+            var slider = document.getElementById("stroke-weight-picker");
+            slider.oninput = function () {
+                myp5.strokeWidth = this.value;
+            }
+
+            var lowMidColor = document.getElementById("lowMidColor");
+            lowMidColor.oninput = function () {
+                // var colorx =hexToRGB(this.value);
+                // c = colorx;
+
+                // console.log(colorx);
+                myp5.c = this.value;
+                console.log("LOW MID:" + c);
+            }
+
+            var highMidColorPicker = document.getElementById("highMidColorPicker");
+            highMidColorPicker.oninput = function () {
+                // var colorx =hexToRGB(this.value);
+                // c = colorx;
+                // console.log(colorx);
+                highMidColor = this.value;
+                console.log("HIGH MID:" + highMidColor);
+            }
+        }
+    </script>
+    <!-- <script src="assets/js/sketch.js"></script>-->
+    <!--  <script src="assets/js/mover.js" type="module"></script>-->
+    <script src="assets/js/sketchinst.js"></script>
+
+</body>
+
+</html>
