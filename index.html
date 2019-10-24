@@ -73,8 +73,8 @@
 
                 <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
                 <div id="dialog-confirm" title="Save image?">
-                    <p><span class="ui-icon ui-icon-alert"></span>Save the
-                        current frame as a .jpg image</p>
+                    <p><span class="ui-icon ui-icon-alert"></span></br>Save the
+                        current frame as an image?</p>
                     <input type="checkbox" name="no" class="no">Don't show this message again.</br>
                     <p>(If checked, pressing the camera button will automatically save the image without further confirmation)
                     </p>
@@ -160,7 +160,10 @@
         //Create sketch and attach it to #container div
         var myp5 = new p5(sketch, document.getElementById("container"));
 
-
+        var elem = document.getElementById("container");
+if (elem.requestFullscreen) {
+  elem.requestFullscreen();
+}
         window.onload = function () {
             //autoOpen:false stops the confirmation dialog from appearing on page load
             $("#dialog-confirm").dialog({
@@ -185,6 +188,7 @@
 
             //Camera button
             $("#camera").on("click", function () {
+                $(".ui-dialog-titlebar").hide();    
                 //First have to change the autoOpen setting
                 // Getter
                 var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
@@ -222,6 +226,23 @@
                 } else {
                     myp5.capture();
                 }
+            });
+            
+            function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+            //Settings button (Opens settings menu)
+            $("#fullScreenButton").on("click", function () {
+                let elem = document.getElementById("container");
+               launchIntoFullscreen(elem);
             });
 
             /////////Settings Menu//////////

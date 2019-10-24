@@ -248,7 +248,7 @@ let sketch = function (p) {
         }
         //Pre-start canvas
         else {
-            p.background(0);
+           // p.background(0);
             p.imageMode(p.CENTER);
        // p.playImg.tint(255,126);
             p.image(p.playImg, w / 2, h / 2, p.playImg.width / 2, p.playImg.height / 2);
