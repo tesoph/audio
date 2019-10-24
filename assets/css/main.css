@@ -45,7 +45,7 @@ body {
 
 @media (min-width: 768px) {
     #wrapper {
-        height: 92.5vh;
+        height: 100vh;
         padding: 20px;
         background-color: rgb(30, 30, 30);
     }
@@ -58,25 +58,18 @@ body {
     max-width: 20px;
 }
 
-.ui-container {
-    height: 15vh;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
 #gui {
     position: absolute;
     color: white;
     background-color: rgba(0, 0, 0, 0.5);
-    top: 0px;
+    top: 0.25rem;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
     max-height: 85vh;
-    border: 2px double white;
-    border-radius: 5px;
+    border: 0.25rem solid white;
+    border-radius: 0;
     /* border: 0.5px solid grey;*/
     text-align: center;
     width: 100%;
@@ -134,18 +127,32 @@ input[type=range]::-webkit-slider-runnable-track {
     max-height: 85vh;
 }
 
+
+.ui-container {
+    /*height: 15vh;*/
+    background-color: rgba(20, 20, 20, 0.5);
+    position: absolute;
+    width:100%;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+
 .ui-container .row {
-    align-items: flex-start;
-    margin: 0;
+  padding: 5px;
+ 
 }
 
-.ui-button {
-    background-color: rgba(255, 255, 255, 0.5);
+.uiButton {
+    border:none;
+   background: none;
+    width:auto;
 }
 
-.ui-button img {
-    max-width: 50px;
-    max-height: 50px;
+.uiButton img {
+    max-width: 60px;
+    max-height: 60px;
 }
 
 #buttonX {}
@@ -161,9 +168,8 @@ input[type=range]::-webkit-slider-runnable-track {
 
 @media (min-width: 768px) {
     .ui-container {
-        height: 7.5vh;
-        top: 0;
-        width: 100%;
+   bottom:5vh;
+   width:auto;
     }
     #gui {
         position: absolute;

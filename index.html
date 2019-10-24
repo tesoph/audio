@@ -34,6 +34,7 @@
 
 <body>
     <header>
+        <!--
         <nav class="navbar navbar-dark ">
             <a class="navbar-brand" href="">Logo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -43,6 +44,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             </div>
         </nav>
+        -->
     </header>
 
     <main>
@@ -52,13 +54,19 @@
 
                 <!--Action buttons menu -->
                 <div class="ui-container ">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <!--Open settings menu-->
-                        <button id="buttonX" class="ui-button"><img class="control-button" src="assets/img/controls.png"
+                        <button id="buttonX" class="uiButton"><img class="control-button img-fluid" src="assets/img/controls.png"
                                 alt="More information"></button>
                         <!--Save a picture-->
-                        <button id="camera" class="ui-button"><img class="control-button" src="assets/img/photo.png"
+                        <button id="camera" class="uiButton"><img class="control-button img-fluid" src="assets/img/photo.png"
                                 alt="More information"></button>
+                                  <!--More information-->
+                        <button id="informationButton" class="uiButton"><img class="control-button img-fluid" src="assets/img/info.png"
+                            alt="More information"></button>
+                         <!--Full screen-->
+                         <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid" src="assets/img/fullscreen.png"
+                            alt="More information"></button>
                     </div>
                 </div>
                 <!--End action buttons menu-->
@@ -67,8 +75,8 @@
                 <div id="dialog-confirm" title="Save image?">
                     <p><span class="ui-icon ui-icon-alert"></span>Save the
                         current frame as a .jpg image</p>
-                    <input type="checkbox" name="no" class="no">Don't show again</br>
-                    <p>(If checked, pressing the camera button will automatically save the image without confirmation)
+                    <input type="checkbox" name="no" class="no">Don't show this message again.</br>
+                    <p>(If checked, pressing the camera button will automatically save the image without further confirmation)
                     </p>
                 </div>
 
@@ -126,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                <!--EndSettings Menu -->
+                <!--End Settings Menu -->
             </div>
         </div>
     </main>
