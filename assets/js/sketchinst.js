@@ -4,7 +4,7 @@ let sketch = function (p) {
         //Our Attractor is a simple object that doesn’t move. We just need a mass and a location.
         constructor(p_) {
             this.p = p_;
-            this.location = p.createVector(w / 2, h/ 2);
+            this.location = p.createVector(p.w / 2, p.h / 2);
             this.mass = 60;
             this.velocity = p.createVector(1, 2);
             this.g = 1;
@@ -77,7 +77,7 @@ let sketch = function (p) {
                 p.ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
             }
             if (p.lines) {
-                p.line(w / 2, h / 2, this.location.x, this.location.y);
+                p.line(p.w / 2, p.h / 2, this.location.x, this.location.y);
             }
 
 
@@ -89,7 +89,7 @@ let sketch = function (p) {
         }
 
         checkEdges() {
-            if (this.location.x > w) {
+            if (this.location.x > p.w) {
                 this.velocity.x *= -1;
                 //     this.acceleration.x *= -1;
             } else if (this.location.x < 0) {
@@ -97,7 +97,7 @@ let sketch = function (p) {
                 //     this.acceleration.x *= -1;
             }
 
-            if (this.location.y > h) {
+            if (this.location.y > p.h) {
                 this.velocity.y *= -1;
                 // this.acceleration.y *= -1;
             } else if (this.location.y < 0) {
@@ -108,8 +108,8 @@ let sketch = function (p) {
         }
     }
 
-    let w = containerWidth;
-    let h = containerHeight;
+    p.w = containerWidth;
+    p.h = containerHeight;
     p.moversLowMid = [];
     p.moversHighMid = [];
     p.lines;
@@ -133,7 +133,7 @@ let sketch = function (p) {
 
         //creating a canvas and attaching it to the #container div in index.html
         //   cnv = createCanvas(w, h);
-        p.cnv = p.createCanvas(w, h);
+        p.cnv = p.createCanvas(p.w, p.h);
 
         p.background(0);
         p.cnv.mousePressed(p.togglePlaying);
@@ -152,15 +152,15 @@ let sketch = function (p) {
         //Declare attractor object.
         p.a = new Attractor(p);
         for (let i = 0; i < 5; i++) {
-            p.moversLowMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.c);
-            p.moversHighMid[i] = new Mover(this, 2, w / 2 + p.random(-10, 10), h / 2, p.highMidColor);
+            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
 
 
     };
 
     p.draw = function () {
-
+        //p.background(244,23,24);
         //  p.sensitivity = 100;
         p.threshold = p.map(p.sensitivity, 0, 230, 230, 0);
 
@@ -176,7 +176,7 @@ let sketch = function (p) {
             p.bassMap = p.map(p.bass, 0, 255, 20, 500);
             // var bassMap2 = map(bass, 0, 255, 5, 100);
             p.noFill();
-            p.ellipse(w / 2, h / 2, p.bassMap, p.bassMap);
+            p.ellipse(p.w / 2, p.h / 2, p.bassMap, p.bassMap);
             //fill(255);
             // ellipse(w / 2, h / 2, bassMap2, bassMap2);
             //   peakDetect.update(fft);
@@ -184,7 +184,7 @@ let sketch = function (p) {
             //Creating a gradual fade effect on the background 
             p.noStroke();
             p.fill(0, 0, 0, 5);
-            p.rect(0, 0, w, h);
+            p.rect(0, 0, p.w, p.h);
             p.stroke(0);
 
             p.fill("white");
@@ -194,8 +194,8 @@ let sketch = function (p) {
                 //Movers are attracted to the Attractor object in center of canvas
                 p.f = p.a.attract(p.moversLowMid[i]);
                 p.x = p.a.attract(p.moversHighMid[i]);
-               p.f.normalize();
-              //  p.f.mult(1);
+                p.f.normalize();
+                //  p.f.mult(1);
                 p.x.normalize();
                 p.x.mult(1);
                 p.moversLowMid[i].applyForce(p.f);
@@ -229,7 +229,7 @@ let sketch = function (p) {
                 p.moversHighMid[i].display();
                 p.fill(255);
             }
-            
+
             if (p.shapeMode) {
                 p.noFill();
                 p.beginShape();
@@ -241,17 +241,17 @@ let sketch = function (p) {
         }
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
-          //  p.background(0);
+            //  p.background(0);
             // text("paused", width / 2, height / 2);
             p.imageMode(p.CENTER);
-         p.image(p.playImg, w / 2, h / 2, p.playImg.width / 2, p.playImg.height / 2);
+            p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
         //Pre-start canvas
         else {
-           // p.background(0);
+            // p.background(0);
             p.imageMode(p.CENTER);
-       // p.playImg.tint(255,126);
-            p.image(p.playImg, w / 2, h / 2, p.playImg.width / 2, p.playImg.height / 2);
+            // p.playImg.tint(255,126);
+            p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
 
 
@@ -282,7 +282,28 @@ let sketch = function (p) {
             console.log('Unchecking!');
         }
     }
-    p.capture = function() {
+    p.capture = function () {
         p.saveCanvas(p.cnv, 'myCanvas.jpg');
+    }
+
+    p.windowResized = function (w_, h_) {
+        p.print("resized");
+
+        p.w = w_;
+        p.h = h_;
+        p.print("new h:" + p.h);
+        //  p.resizeCanvas(p.wid, p.heigh);
+        // p.abort();
+        p.resizeCanvas(p.w, p.h);
+        //Make new attractor and movers orientated to new canvas center
+        p.a = new Attractor(p);
+        for (let i = 0; i < 5; i++) {
+            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+        }
+    }
+
+    p.abort = function () {
+        p.remove();
     }
 };

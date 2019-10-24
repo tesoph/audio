@@ -56,17 +56,17 @@
                 <div class="ui-container ">
                     <div class="row justify-content-center">
                         <!--Open settings menu-->
-                        <button id="buttonX" class="uiButton"><img class="control-button img-fluid" src="assets/img/controls.png"
-                                alt="More information"></button>
+                        <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
+                                src="assets/img/controls.png" alt="More information"></button>
                         <!--Save a picture-->
-                        <button id="camera" class="uiButton"><img class="control-button img-fluid" src="assets/img/photo.png"
-                                alt="More information"></button>
-                                  <!--More information-->
-                        <button id="informationButton" class="uiButton"><img class="control-button img-fluid" src="assets/img/info.png"
-                            alt="More information"></button>
-                         <!--Full screen-->
-                         <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid" src="assets/img/fullscreen.png"
-                            alt="More information"></button>
+                        <button id="camera" class="uiButton"><img class="control-button img-fluid"
+                                src="assets/img/photo.png" alt="More information"></button>
+                        <!--More information-->
+                        <button id="informationButton" class="uiButton"><img class="control-button img-fluid"
+                                src="assets/img/info.png" alt="More information"></button>
+                        <!--Full screen-->
+                        <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
+                                src="assets/img/fullscreen.png" alt="More information"></button>
                     </div>
                 </div>
                 <!--End action buttons menu-->
@@ -76,7 +76,8 @@
                     <p><span class="ui-icon ui-icon-alert"></span></br>Save the
                         current frame as an image?</p>
                     <input type="checkbox" name="no" class="no">Don't show this message again.</br>
-                    <p>(If checked, pressing the camera button will automatically save the image without further confirmation)
+                    <p>(If checked, pressing the camera button will automatically save the image without further
+                        confirmation)
                     </p>
                 </div>
 
@@ -144,17 +145,13 @@
     <script>
         //https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
         // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-// We listen to the resize event
-window.addEventListener('resize', () => {
-  // We execute the same script as before
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-});
+        // We listen to the resize event
+
 
         //window.onresize = function() {
-    //document.body.height = window.innerHeight;
-//}
-//window.onresize(); // called to initially set the height.
+        //document.body.height = window.innerHeight;
+        //}
+        //window.onresize(); // called to initially set the height.
         //Get the height and width of the container so to set the canvas width and height 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
@@ -174,10 +171,34 @@ window.addEventListener('resize', () => {
         var myp5 = new p5(sketch, document.getElementById("container"));
 
         var elem = document.getElementById("container");
-if (elem.requestFullscreen) {
-  elem.requestFullscreen();
-}
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        }
         window.onload = function () {
+
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('orientationchange', resizeCanvas);
+
+            function resizeCanvas() {
+
+                ///////////////???????timeout?
+
+                // We execute the same script as before
+                //let vh = window.innerHeight * 0.01;
+                //document.documentElement.style.setProperty('--vh', `${vh}px`); 
+                var element = document.getElementById('container');
+                var positionInfo = element.getBoundingClientRect();
+                var containerHeight = positionInfo.height;
+                var containerWidth = positionInfo.width;
+                console.log("h:" + containerHeight);
+               // myp5.resizeCanvas(window.innerWidth, window.innerHeight);
+               myp5.windowResized(containerWidth,containerHeight);
+               // window.setTimeout(myp5.windowResized(containerWidth, containerHeight), 2*1000);
+              //  myp5.windowResized(containerWidth, containerHeight);
+                
+               // var myp5 = new p5(sketch, document.getElementById("container"));
+            }
+
             //autoOpen:false stops the confirmation dialog from appearing on page load
             $("#dialog-confirm").dialog({
                 autoOpen: false,
@@ -201,7 +222,7 @@ if (elem.requestFullscreen) {
 
             //Camera button
             $("#camera").on("click", function () {
-                $(".ui-dialog-titlebar").hide();    
+                $(".ui-dialog-titlebar").hide();
                 //First have to change the autoOpen setting
                 // Getter
                 var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
@@ -243,20 +264,20 @@ if (elem.requestFullscreen) {
 
             //https://davidwalsh.name/fullscreen
             function launchIntoFullscreen(element) {
-  if(element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if(element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if(element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  } else if(element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  }
-}
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
             //Settings button (Opens settings menu)
             $("#fullScreenButton").on("click", function () {
                 let elem = document.getElementById("container");
-               launchIntoFullscreen(elem);
+                launchIntoFullscreen(elem);
             });
 
             /////////Settings Menu//////////
