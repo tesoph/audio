@@ -72,7 +72,8 @@ let sketch = function (p) {
 
             p.stroke(255);
             p.strokeWeight(p.strokeWidth);
-            // fill(this.color);
+            //fill(this.color);
+            p.fill(p.c);
             if (p.shapeMode == false) {
                 p.ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
             }
@@ -131,12 +132,11 @@ let sketch = function (p) {
         p.shapeMode = false;
         p.playing = false;
 
-        //creating a canvas and attaching it to the #container div in index.html
-        //   cnv = createCanvas(w, h);
+        //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
 
         p.background(0);
-        p.cnv.mousePressed(p.togglePlaying);
+        
         //Audio input comes from the microphone
         p.mic;
         p.mic = new p5.AudioIn()
@@ -160,74 +160,20 @@ let sketch = function (p) {
     };
 
     p.draw = function () {
-        //p.background(244,23,24);
-        //  p.sensitivity = 100;
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
-p.print("Thre:" + p.threshold);
-        if (p.playing === true) {
-            p.spectrum = p.fft.analyze();
-            p.highMid = p.fft.getEnergy("highMid");
-            p.lowMid = p.fft.getEnergy("lowMid");
-            // var treble = fft.getEnergy("treble");
-            p.bass = p.fft.getEnergy("bass");
-            // var mid = fft.getEnergy("mid");
+        // p.print("Threshold:" + p.threshold);
+        p.cnv.mousePressed(p.togglePlaying);
+        p.fadeBackground();
 
-            //radius of center ellipse is mapped to the amplitude of the bass frequency
-            p.bassMap = p.map(p.bass, 0, 255, 20, 500);
-            // var bassMap2 = map(bass, 0, 255, 5, 100);
-            p.noFill();
-            p.ellipse(p.w / 2, p.h / 2, p.bassMap, p.bassMap);
-            //fill(255);
-            // ellipse(w / 2, h / 2, bassMap2, bassMap2);
+        if (p.playing) {
+            p.analyzeAudio();
+            p.drawBass();
+            p.moveMovers(p.moversLowMid);
             //   peakDetect.update(fft);
-
-            //Creating a gradual fade effect on the background 
-            p.noStroke();
-            p.fill(0, 0, 0, 5);
-            p.rect(0, 0, p.w, p.h);
-            p.stroke(0);
-
-            p.fill("white");
-
-            //Loop through the array of movers
             for (let i = 0; i < p.numberOfMovers; i++) {
-                //Movers are attracted to the Attractor object in center of canvas
-                p.f = p.a.attract(p.moversLowMid[i]);
-                //  p.x = p.a.attract(p.moversHighMid[i]);
-                p.f.normalize();
-                p.f.mult(1);
-                // p.x.normalize();
-                //  p.x.mult(1);
-                p.moversLowMid[i].applyForce(p.f);
-                // p.moversHighMid[i].applyForce(p.x);
-
-                //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
-                if (p.lowMid > p.threshold) {
-                    p.t = p.a.repel(p.moversLowMid[i]);
-                    p.t.normalize();
-                    p.t.mult(1);
-                    p.moversLowMid[i].applyForce(p.t);
-                }
-                // if (p.highMid > p.threshold) {
-                //below commented out code has interesting effect
-                // var t = a.repel(moversLowMid[i]);
-                // p.t = p.a.repel(p.moversHighMid[i]);
-                // p.t.normalize();
-                // p.t.mult(1);
-                // p.moversHighMid[i].applyForce(p.t);
-                //}
-                p.fill(p.c);
-                // print(c);
-                //Movers reverse direction when they meet the edge of the canvas
                 p.moversLowMid[i].checkEdges();
                 p.moversLowMid[i].update();
                 p.moversLowMid[i].display();
-
-              //  p.fill(p.highMidColor);
-                // p.moversHighMid[i].checkEdges();
-                // p.moversHighMid[i].update();
-                //  p.moversHighMid[i].display();
-                p.fill(255);
             }
 
             if (p.shapeMode) {
@@ -239,23 +185,90 @@ p.print("Thre:" + p.threshold);
                 p.endShape();
             }
         }
+
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
-            //  p.background(0);
-            // text("paused", width / 2, height / 2);
             p.imageMode(p.CENTER);
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
-        //Pre-start canvas
+
+        //Initial canvas
         else {
-            // p.background(0);
             p.imageMode(p.CENTER);
-            // p.playImg.tint(255,126);
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
-
-
     };
+
+    p.fadeBackground = function () {
+        //Creating a gradual fade effect on the background 
+        p.noStroke();
+        p.fill(0, 0, 0, 5);
+        p.rect(0, 0, p.w, p.h);
+        p.stroke(0);
+    }
+
+    p.analyzeAudio = function () {
+        p.spectrum = p.fft.analyze();
+        p.highMid = p.fft.getEnergy("highMid");
+        p.lowMid = p.fft.getEnergy("lowMid");
+        // var treble = fft.getEnergy("treble");
+        p.bass = p.fft.getEnergy("bass");
+        // var mid = fft.getEnergy("mid");
+    }
+
+    p.drawBass = function () {
+        //radius of center ellipse is mapped to the amplitude of the bass frequency
+        p.bassMap = p.map(p.bass, 0, 255, 20, 500);
+        // var bassMap2 = map(bass, 0, 255, 5, 100);
+        p.noFill();
+        p.stroke(255);
+        p.ellipse(p.w / 2, p.h / 2, p.bassMap, p.bassMap);
+        //fill(255);
+        // ellipse(w / 2, h / 2, bassMap2, bassMap2);
+    }
+
+    p.attractMovers = function () {
+        //Loop through the array of movers
+        for (let i = 0; i < p.numberOfMovers; i++) {
+            p.f = p.a.attract(p.moversLowMid[i]);
+            p.f.normalize();
+            p.f.mult(1);
+            p.moversLowMid[i].applyForce(p.f);
+            p.fill(255);
+        }
+    }
+
+    p.repelMovers = function () {
+        //Loop through the array of movers
+        for (let i = 0; i < p.numberOfMovers; i++) {
+            if (p.lowMid > p.threshold) {
+                p.t = p.a.repel(p.moversLowMid[i]);
+                p.t.normalize();
+                p.t.mult(1);
+                p.moversLowMid[i].applyForce(p.t);
+            }
+        }
+    }
+
+    p.moveMovers = function (movers_) {
+        p.movers = movers_;
+        //Loop through the array of movers
+        for (let i = 0; i < p.numberOfMovers; i++) {
+            //Movers are attracted to the Attractor object in center of canvas
+            p.f = p.a.attract(p.movers[i]);
+            p.f.normalize();
+            p.f.mult(1);
+            p.movers[i].applyForce(p.f);
+
+            //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
+            if (p.lowMid > p.threshold) {
+                p.t = p.a.repel(p.movers[i]);
+                p.t.normalize();
+                p.t.mult(1);
+                p.movers[i].applyForce(p.t);
+            }
+        }
+    }
 
     p.togglePlaying = function () {
 
@@ -263,12 +276,19 @@ p.print("Thre:" + p.threshold);
         if (p.getAudioContext().state !== 'running') {
             p.userStartAudio();
         }
+        if (p.getAudioContext().state !== 'running') {
+            p.userStartAudio();
+        }
         if (p.playing == true) {
             p.playing = false;
             p.noLoop();
         } else if (p.playing == false) {
-            //clear the background (to remove "paused" text)
-            p.background(0);
+            //clear the background (to remove play image)
+          // 
+          p.background(0);
+     //     p.rectMode(p.CENTER); 
+      //    p.fill(0);
+       //   p.rect(p.w/2, p.h/2,100,100);
             p.playing = true;
             p.loop();
         }
@@ -296,13 +316,10 @@ p.print("Thre:" + p.threshold);
 
         //Make new attractor and movers orientated to new canvas center
         p.a = new Attractor(p);
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < p.numberOfMovers; i++) {
             p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
             //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
     }
 
-    p.abort = function () {
-        p.remove();
-    }
 };
