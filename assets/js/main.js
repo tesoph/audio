@@ -180,12 +180,12 @@ window.onload = function () {
     lowMidColor.oninput = function () {
         myp5.c = this.value;
     }
-
+/*
     //High mid movers color picker
     let highMidColorPicker = document.getElementById("highMidColorPicker");
     highMidColorPicker.oninput = function () {
         highMidColor = this.value;
-    }
+    }*/
 
 }//END ONLOAD
 

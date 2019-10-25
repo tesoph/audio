@@ -162,8 +162,8 @@ let sketch = function (p) {
     p.draw = function () {
         //p.background(244,23,24);
         //  p.sensitivity = 100;
-        p.threshold = p.map(p.sensitivity, 0, 230, 230, 0);
-
+        p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
+p.print("Thre:" + p.threshold);
         if (p.playing === true) {
             p.spectrum = p.fft.analyze();
             p.highMid = p.fft.getEnergy("highMid");
@@ -223,7 +223,7 @@ let sketch = function (p) {
                 p.moversLowMid[i].update();
                 p.moversLowMid[i].display();
 
-                p.fill(p.highMidColor);
+              //  p.fill(p.highMidColor);
                 // p.moversHighMid[i].checkEdges();
                 // p.moversHighMid[i].update();
                 //  p.moversHighMid[i].display();
