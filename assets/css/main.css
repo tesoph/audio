@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
-/*
+
 
 * {
     background: #000 !important;
@@ -7,7 +7,7 @@
     outline: solid #f00 1px !important;
   }
 
-  */
+  
 
 html, body {
     width: 100%;
@@ -93,7 +93,7 @@ main {
 }
 
 .ui-container .row {
-    padding: 5px;
+    margin:0;
 }
 
 .uiButton {
