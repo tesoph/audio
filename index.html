@@ -50,42 +50,45 @@
 
     <main>
         <div id="wrapper">
+            <!--Action buttons menu -->
+            <div class="ui-container ">
+                <div class="row justify-content-center">
+                    <!--Open settings menu-->
+                    <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
+                            src="assets/img/controls.png" alt="More information"></button>
+                    <!--Save a picture-->
+                    <button id="camera" class="uiButton"><img class="control-button img-fluid"
+                            src="assets/img/photo.png" alt="More information"></button>
+                    <!--More information-->
+                    <button id="informationButton" class="uiButton"><img class="control-button img-fluid"
+                            src="assets/img/info.png" alt="More information"></button>
+                    <!--Full screen-->
+                    <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
+                            src="assets/img/fullscreen.png" alt="More information"></button>
+                </div>
+            </div>
+            <!--End action buttons menu-->
+
+            <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
+            <div id="dialog-confirm" title="Save image?">
+                <p><span class="ui-icon ui-icon-alert"></span></br>Save the
+                    current frame as an image?</p>
+                <input type="checkbox" name="no" class="no">Don't show this message again.</br>
+                <p>(If checked, pressing the camera button will automatically save the image without further
+                    confirmation)
+                </p>
+            </div>
+
+
             <!--the sketch is attached to #container-->
             <div id="container">
-
-                <!--Action buttons menu -->
-                <div class="ui-container ">
-                    <div class="row justify-content-center">
-                        <!--Open settings menu-->
-                        <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
-                                src="assets/img/controls.png" alt="More information"></button>
-                        <!--Save a picture-->
-                        <button id="camera" class="uiButton"><img class="control-button img-fluid"
-                                src="assets/img/photo.png" alt="More information"></button>
-                        <!--More information-->
-                        <button id="informationButton" class="uiButton"><img class="control-button img-fluid"
-                                src="assets/img/info.png" alt="More information"></button>
-                        <!--Full screen-->
-                        <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
-                                src="assets/img/fullscreen.png" alt="More information"></button>
-                    </div>
-                </div>
-                <!--End action buttons menu-->
-
-                <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
-                <div id="dialog-confirm" title="Save image?">
-                    <p><span class="ui-icon ui-icon-alert"></span></br>Save the
-                        current frame as an image?</p>
-                    <input type="checkbox" name="no" class="no">Don't show this message again.</br>
-                    <p>(If checked, pressing the camera button will automatically save the image without further
-                        confirmation)
-                    </p>
-                </div>
-
                 <!--Settings Menu-->
                 <div id="toggler">
                     <div id="gui">
-
+                        <div class="close">
+                            <button id="close-settings">X</button>
+                        </div>
+                  
                         <!-- <div id="shortcuts">
                     <p>keyboard shortcuts: <br>
                         Press spacebar to capture an image</p>

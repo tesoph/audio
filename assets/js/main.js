@@ -136,6 +136,10 @@ window.onload = function () {
     });
 
     /////////Settings Menu//////////
+    $("#close-settings").on("click", function () {
+        $("#toggler").toggle("slide", {}, 100);
+    });
+    
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {
