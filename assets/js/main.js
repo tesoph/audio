@@ -117,6 +117,7 @@ window.onload = function () {
         }
     });
 
+    //?On Android samsung internet browser launches into fullscreen when opened
     //https://davidwalsh.name/fullscreen
     function launchIntoFullscreen(element) {
         if (element.requestFullscreen) {
@@ -139,7 +140,7 @@ window.onload = function () {
     $("#close-settings").on("click", function () {
         $("#toggler").toggle("slide", {}, 100);
     });
-    
+
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {

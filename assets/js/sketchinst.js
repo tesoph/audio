@@ -113,6 +113,7 @@ let sketch = function (p) {
     p.moversLowMid = [];
     p.moversHighMid = [];
     p.lines;
+    p.numberOfMovers;
     //  for (let i = 0; i < 5; i++) {
     // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
     //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
@@ -125,9 +126,8 @@ let sketch = function (p) {
         //  p.highMidColor = p.color(255, 0, 0);
         p.red = p.color(255, 0, 0);
         //   p.c = p.color(0, 255, 0);
-
+        p.numberOfMovers = 50;
         p.strokeWidth = 1;
-
         p.shapeMode = false;
         p.playing = false;
 
@@ -151,9 +151,9 @@ let sketch = function (p) {
 
         //Declare attractor object.
         p.a = new Attractor(p);
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < p.numberOfMovers; i++) {
             p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
 
 
@@ -190,16 +190,16 @@ let sketch = function (p) {
             p.fill("white");
 
             //Loop through the array of movers
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < p.numberOfMovers; i++) {
                 //Movers are attracted to the Attractor object in center of canvas
                 p.f = p.a.attract(p.moversLowMid[i]);
-                p.x = p.a.attract(p.moversHighMid[i]);
+                //  p.x = p.a.attract(p.moversHighMid[i]);
                 p.f.normalize();
-                //  p.f.mult(1);
-                p.x.normalize();
-                p.x.mult(1);
+                p.f.mult(1);
+                // p.x.normalize();
+                //  p.x.mult(1);
                 p.moversLowMid[i].applyForce(p.f);
-                p.moversHighMid[i].applyForce(p.x);
+                // p.moversHighMid[i].applyForce(p.x);
 
                 //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
                 if (p.lowMid > p.threshold) {
@@ -208,14 +208,14 @@ let sketch = function (p) {
                     p.t.mult(1);
                     p.moversLowMid[i].applyForce(p.t);
                 }
-                if (p.highMid > p.threshold) {
-                    //below commented out code has interesting effect
-                    // var t = a.repel(moversLowMid[i]);
-                    p.t = p.a.repel(p.moversHighMid[i]);
-                    p.t.normalize();
-                    p.t.mult(1);
-                    p.moversHighMid[i].applyForce(p.t);
-                }
+                // if (p.highMid > p.threshold) {
+                //below commented out code has interesting effect
+                // var t = a.repel(moversLowMid[i]);
+                // p.t = p.a.repel(p.moversHighMid[i]);
+                // p.t.normalize();
+                // p.t.mult(1);
+                // p.moversHighMid[i].applyForce(p.t);
+                //}
                 p.fill(p.c);
                 // print(c);
                 //Movers reverse direction when they meet the edge of the canvas
@@ -224,16 +224,16 @@ let sketch = function (p) {
                 p.moversLowMid[i].display();
 
                 p.fill(p.highMidColor);
-                p.moversHighMid[i].checkEdges();
-                p.moversHighMid[i].update();
-                p.moversHighMid[i].display();
+                // p.moversHighMid[i].checkEdges();
+                // p.moversHighMid[i].update();
+                //  p.moversHighMid[i].display();
                 p.fill(255);
             }
 
             if (p.shapeMode) {
                 p.noFill();
                 p.beginShape();
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < p.numberOfMovers; i++) {
                     p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
                 }
                 p.endShape();
@@ -256,6 +256,7 @@ let sketch = function (p) {
 
 
     };
+
     p.togglePlaying = function () {
 
         //Start Audio context on user gesture
@@ -288,18 +289,16 @@ let sketch = function (p) {
 
     p.windowResized = function (w_, h_) {
         p.print("resized");
-
         p.w = w_;
         p.h = h_;
         p.print("new h:" + p.h);
-        //  p.resizeCanvas(p.wid, p.heigh);
-        // p.abort();
         p.resizeCanvas(p.w, p.h);
+
         //Make new attractor and movers orientated to new canvas center
         p.a = new Attractor(p);
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 50; i++) {
             p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
     }
 

@@ -1,13 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
-
-
+/*
 * {
     background: #000 !important;
     color: #0f0 !important;
     outline: solid #f00 1px !important;
   }
-
-  
+*/
 
 html, body {
     width: 100%;
@@ -45,17 +43,20 @@ canvas {
 /*----------Wrappers--------*/
 
 main {
+    height: 100vh;
+    width: 100vw;
     background-color: black;
 }
 
+/*
 #wrapper {
-    /*https://css-tricks.com/the-trick-to-viewport-units-on-mobile/*/
-    /*  height: calc(var(--vh, 1vh) * 100);*/
+    https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+     height: calc(var(--vh, 1vh) * 100);
     height: 100vh;
     width: 100vw;
-    /*  padding-top:2.5%;
-    padding-bottom:2.5%;*/
-}
+      padding-top:2.5%;
+    padding-bottom:2.5%;
+}*/
 
 #container {
     /*w and h fixed ipad bug*/
@@ -63,15 +64,18 @@ main {
     display: block;
     height: 100%;
     width: 100%;
-    margin-top: 0px;
     padding: 0;
     margin: 0;
     z-index: 0;
 }
 
 @media (min-width: 768px) {
-    #wrapper {
+    /*  #wrapper {
         height: 100vh;
+        padding: 20px;
+        background-color: rgb(30, 30, 30);
+    }*/
+    main {
         padding: 20px;
         background-color: rgb(30, 30, 30);
     }
@@ -83,17 +87,19 @@ main {
     /*height: 15vh;*/
     background-color: rgba(20, 20, 20, 0.5);
     position: absolute;
-    width: 90%; /*fix gap on right hand side*/
-    bottom: 0;
+    width: 95%; /*fix gap on right hand side*/
+    bottom: 2vh;
+    padding: 5px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     z-index: 1;
+    max-height:15vh; /*Can't overlap settings menu max-height 85vh*/
     /*so that it appears on top of sketch when not in fullscreen*/
 }
 
 .ui-container .row {
-    margin:0;
+    margin: 0;
 }
 
 .uiButton {
@@ -131,7 +137,7 @@ main {
 }
 
 .close {
-    width: 100%;
+   
 }
 
 .icon {
@@ -146,6 +152,7 @@ main {
     top: 0.25rem;
     left: 0;
     right: 0;
+    padding: 10px;
     margin-left: auto;
     margin-right: auto;
     max-height: 85vh;
@@ -176,6 +183,7 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #ddd;
 }
 
+/*
 #gui2 {
     width: 75%;
     display: flex;
@@ -185,10 +193,10 @@ input[type=range]::-webkit-slider-runnable-track {
     flex-wrap: wrap;
     margin-bottom: 25px;
 }
+*/
 
 #toggler {
     position: absolute;
-    /* right: 0;*/
     width: 100%;
     max-height: 85vh;
 }
@@ -196,41 +204,39 @@ input[type=range]::-webkit-slider-runnable-track {
 @media (min-width: 576px) {}
 
 @media (min-width: 768px) {
-    #gui {
+    #toggler {
         position: absolute;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* background-color: rgba(40,40,40, 0.5);*/
-        margin: 2.5% 2.5% 0 2.5%;
-        padding: 2.5%;
-        width: 90%;
-        border: 1px solid white;
-        /* border: 0.5px solid grey;*/
-        text-align: center;
-        height: auto;
+        right: 0;
+        width: 50vw;
+        margin-top: 10px;
+        margin-right: 10px;
     }
-}
-
-@media (min-width: 992px) {
     #gui {
-        position: absolute;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* background-color: rgba(40,40,40, 0.5);*/
         padding: 10px;
         top: 0;
         right: 0;
         border: 1px solid white;
-        /* border: 0.5px solid grey;*/
         text-align: center;
         height: auto;
     }
-    /*get rid*/
-    #toggler {
+
+    /*
+    #gui {
         position: absolute;
-        right: 0;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        margin: 2.5% 2.5% 0 2.5%;
+        padding: 2.5%;
+        width: 90%;
+        border: 1px solid white;
+        text-align: center;
+        height: auto;
+    }*/
+}
+
+@media (min-width: 992px) {
+    /*don't get rid*/
+  #toggler {
         width: 30vw;
-        margin-top: 5px;
-        margin-right: 10px;
     }
 }

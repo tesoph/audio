@@ -49,80 +49,81 @@
     </header>
 
     <main>
-        <div id="wrapper">
-            <!--Action buttons menu -->
-            <div class="ui-container ">
-                <div class="row justify-content-center">
-                    <!--Open settings menu-->
-                    <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/controls.png" alt="More information"></button>
-                    <!--Save a picture-->
-                    <button id="camera" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/photo.png" alt="More information"></button>
-                    <!--More information-->
-                    <button id="informationButton" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/info.png" alt="More information"></button>
-                    <!--Full screen-->
-                    <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/fullscreen.png" alt="More information"></button>
-                </div>
+
+        <!--Action buttons menu -->
+        <div class="ui-container ">
+            <div class="row justify-content-center">
+                <!--Open settings menu-->
+                <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
+                        src="assets/img/controls.png" alt="More information"></button>
+                <!--Save a picture-->
+                <button id="camera" class="uiButton"><img class="control-button img-fluid" src="assets/img/photo.png"
+                        alt="More information"></button>
+                <!--More information-->
+                <button id="informationButton" class="uiButton"><img class="control-button img-fluid"
+                        src="assets/img/info.png" alt="More information"></button>
+                <!--Full screen-->
+                <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
+                        src="assets/img/fullscreen.png" alt="More information"></button>
             </div>
-            <!--End action buttons menu-->
+        </div>
+        <!--End action buttons menu-->
 
-            <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
-            <div id="dialog-confirm" title="Save image?">
-                <p><span class="ui-icon ui-icon-alert"></span>Save the
-                    current frame as an image?</p>
-                <input type="checkbox" name="no" class="no">Don't show this message again.
-                <p>(If checked, pressing the camera button will automatically save the image without further
-                    confirmation)
-                </p>
-            </div>
+        <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
+        <div id="dialog-confirm" title="Save image?">
+            <p><span class="ui-icon ui-icon-alert"></span>Save the
+                current frame as an image?</p>
+            <input type="checkbox" name="no" class="no">Don't show this message again.
+            <p>(If checked, pressing the camera button will automatically save the image without further
+                confirmation)
+            </p>
+        </div>
 
 
-            <!--the sketch is attached to #container-->
-            <div id="container">
-                <!--Settings Menu-->
-                <div id="toggler">
-                    <div id="gui">
-                        <div class="close">
-                            <button id="close-settings">X</button>
-                        </div>
-                  
-                        <!-- <div id="shortcuts">
+        <!--the sketch is attached to #container-->
+        <div id="container">
+            <!--Settings Menu-->
+            <div id="toggler">
+                <div id="gui">
+                    <div class="close">
+                        <button id="close-settings">X</button>
+                    </div>
+
+                    <!-- <div id="shortcuts">
                     <p>keyboard shortcuts: <br>
                         Press spacebar to capture an image</p>
                 </div>-->
-                        <div id="lines">
-                            <label for="linesCheckbox">Display lines</label>
-                            <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
-                        </div>
+                    <div id="lines">
+                        <label for="linesCheckbox">Display lines</label>
+                        <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
+                    </div>
 
-                        <div id="shape">
-                            <label for="shapeCheckbox">Shape mode</label>
-                            <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
-                        </div>
+                    <div id="shape">
+                        <label for="shapeCheckbox">Shape mode</label>
+                        <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
+                    </div>
 
-                        <div id="sensitivity-slider-div">
-                            <label for="sensitivity-slider">Sensitivity to noise</label>
-                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="0" max="230"
-                                value="150" />
-                        </div>
+                    <div id="sensitivity-slider-div">
+                        <label for="sensitivity-slider">Sensitivity to noise</label>
+                        <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="0" max="230"
+                            value="150" />
+                    </div>
 
-                        <div id="stroke-width">
-                            <label for="stroke-weight-picker">Stroke weight</label>
-                            <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
-                                value="1" />
-                        </div>
+                    <div id="stroke-width">
+                        <label for="stroke-weight-picker">Stroke weight</label>
+                        <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10" value="1" />
+                    </div>
 
-                        <div id="colors" class="">
-                            <div class="">
-                                <label for="lowMidColor">Low mid tones </label> <button tabindex="-1" rel="popover"
-                                    class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                    title="Popover title" data-content="frequency range: 140-400Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></button>
-                                <input type="color" id="lowMidColor" name="lowMidColor" value="#d478c7">
-                            </div>
+                    <div id="colors" class="">
+                        <div class="">
+                            <label for="lowMidColor">Low mid tones </label> <button tabindex="-1" rel="popover"
+                                class="btn" role="button" data-toggle="popover" data-trigger="focus"
+                                title="Popover title" data-content="frequency range: 140-400Hz"><img class="icon"
+                                    src="assets/img/information.png" alt="More information"></button>
+                            <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
+                        </div>
+                        
+                        <!--
                             <div class="">
                                 <label for="highMidColorPicker">High mid tones</label><button tabindex="-1" href="#"
                                     rel="popover" class="btn" role="button" data-toggle="popover" data-trigger="focus"
@@ -130,12 +131,13 @@
                                         src="assets/img/information.png" alt="More information"></button>
                                 <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
                             </div>
-                        </div>
+-->
                     </div>
                 </div>
-                <!--End Settings Menu -->
             </div>
+            <!--End Settings Menu -->
         </div>
+
     </main>
 
     <script src="assets/js/sketchinst.js"></script>
