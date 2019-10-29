@@ -115,6 +115,7 @@ let sketch = function (p) {
     p.moversHighMid = [];
     p.lines;
     p.numberOfMovers;
+    p.backgroundColor;
     //  for (let i = 0; i < 5; i++) {
     // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
     //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
@@ -131,12 +132,12 @@ let sketch = function (p) {
         p.strokeWidth = 1;
         p.shapeMode = false;
         p.playing = false;
-
+        p.backgroundColor = p.color(0, 0, 0);
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
 
-        p.background(0);
-        
+        p.background(p.backgroundColor);
+        p.backgroundColor.setAlpha(5);
         //Audio input comes from the microphone
         p.mic;
         p.mic = new p5.AudioIn()
@@ -155,12 +156,15 @@ let sketch = function (p) {
             p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
             //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
-
-
     };
 
     p.draw = function () {
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
+        //p.threshold = p.map(p.sensitivity, 30, 170, 20, 180);
+        //  p.threshold = p.sensitivty;
+        //   p.print(p.sensitivity);
+        //  p.print(p.threshold);
+        // p.threshold = p.map(p.threshold, 30,170,30,170);
         // p.print("Threshold:" + p.threshold);
         p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
@@ -168,7 +172,7 @@ let sketch = function (p) {
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
-            p.moveMovers(p.moversLowMid);
+            p.moveMovers(p.moversLowMid, p.threshold);
             //   peakDetect.update(fft);
             for (let i = 0; i < p.numberOfMovers; i++) {
                 p.moversLowMid[i].checkEdges();
@@ -188,7 +192,7 @@ let sketch = function (p) {
 
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
-     
+
             p.imageMode(p.CENTER);
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
@@ -199,11 +203,18 @@ let sketch = function (p) {
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
     };
-
+    
+    p.changeBackgroundColor = function (bgCol_) {
+        if(bgCol_ ==="white"){
+            p.backgroundColor = p.color(255,255,255,5);
+        }else if(bgCol_ ==="black"){
+            p.backgroundColor = p.color(0,0,0,5);
+        }
+    }
     p.fadeBackground = function () {
         //Creating a gradual fade effect on the background 
         p.noStroke();
-        p.fill(0, 0, 0, 5);
+        p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
         p.stroke(0);
     }
@@ -251,7 +262,9 @@ let sketch = function (p) {
         }
     }
 
-    p.moveMovers = function (movers_) {
+    p.moveMovers = function (movers_, threshold_) {
+        //  p.print(p.threshold);
+        p.threshold = threshold_
         p.movers = movers_;
         //Loop through the array of movers
         for (let i = 0; i < p.numberOfMovers; i++) {
@@ -282,11 +295,11 @@ let sketch = function (p) {
             p.noLoop();
         } else if (p.playing == false) {
             //clear the background (to remove play image)
-          // 
-          p.background(0);
-     //     p.rectMode(p.CENTER); 
-      //    p.fill(0);
-       //   p.rect(p.w/2, p.h/2,100,100);
+            // 
+            p.background(0);
+            //     p.rectMode(p.CENTER); 
+            //    p.fill(0);
+            //   p.rect(p.w/2, p.h/2,100,100);
             p.playing = true;
             p.loop();
         }
@@ -311,18 +324,16 @@ let sketch = function (p) {
         p.h = h_;
         p.print("new h:" + p.h);
         p.resizeCanvas(p.w, p.h);
-
-       p.refresh();
+        p.refresh();
     }
 
-    p.refresh = function(){
-  //Make new attractor and movers orientated to new canvas center
-  p.a = new Attractor(p);
-  for (let i = 0; i < p.numberOfMovers; i++) {
-      p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-      //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
-  }
-
+    p.refresh = function () {
+        //Make new attractor and movers orientated to new canvas center
+        p.a = new Attractor(p);
+        for (let i = 0; i < p.numberOfMovers; i++) {
+            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+        }
     }
 
 };

@@ -1,5 +1,5 @@
-  //autoOpen:false stops the confirmation dialog from appearing on page load
-  $("#dialog-confirm").dialog({
+//autoOpen:false stops the confirmation dialog from appearing on page load
+$("#dialog-confirm").dialog({
     autoOpen: false,
 });
 
@@ -72,9 +72,9 @@ window.onload = function () {
         $(".ui-dialog-titlebar").hide();
         //First have to change the autoOpen setting
         // Getter
-      //  var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
+        //  var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
         // Setter
-       // $("#dialog-confirm").dialog("option", "autoOpen", true);
+        // $("#dialog-confirm").dialog("option", "autoOpen", true);
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
@@ -98,11 +98,11 @@ window.onload = function () {
                         "Save": function () {
                             myp5.capture();
                             $(this).dialog("close");
-                             myp5.loop();
+                            myp5.loop();
                         },
                         Cancel: function () {
                             $(this).dialog("close");
-                             myp5.loop();
+                            myp5.loop();
                         }
                     }
                 });
@@ -158,6 +158,13 @@ window.onload = function () {
         $("#toggler").toggle("slide", {}, 100);
     });
 
+    //Background Color radio
+    $('input[type="radio"]').on('click change', function (e) {
+        let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
+       // console.log(bgCol);
+        myp5.changeBackgroundColor(bgCol);
+    });
+
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {
@@ -181,6 +188,7 @@ window.onload = function () {
     }
 
     //To get the sensitivity value from the slider before input
+    //  myp5.sensitivity = document.getElementById('sensitivity-slider').value;
     myp5.sensitivity = document.getElementById('sensitivity-slider').value;
     //Sensitivity slider
     let sensitivitySlider = document.getElementById("sensitivity-slider");
