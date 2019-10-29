@@ -83,10 +83,20 @@ main {
 }
 
 /*----------Action Buttons--------*/
-
-.ui-container {
-    /*height: 15vh;*/
+.ui-container{
     background-color: rgba(10, 10, 10, 0.5);
+}
+/*
+.ui-container-dark{
+    background-color: rgba(10, 10, 10, 0.5);
+}
+.ui-container-light{
+    background-color: rgba(10, 10, 10, 0.5);
+}*/
+
+#ui-container {
+    /*height: 15vh;*/
+ /*   background-color: rgba(10, 10, 10, 0.5);*/
     position: absolute;
     width: 99%; /*fix gap on right hand side*/
     bottom: 2vh;
@@ -140,7 +150,8 @@ button{
 }
 
 @media (min-width: 768px) {
-    .ui-container {
+    #ui-container {
+        padding:10px;
         bottom: 5vh;
         width: auto;
     }

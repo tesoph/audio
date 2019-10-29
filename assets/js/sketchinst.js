@@ -70,7 +70,7 @@ let sketch = function (p) {
 
         display() {
 
-            p.stroke(255);
+          //  p.stroke(255);
             p.strokeWeight(p.strokeWidth);
             //fill(this.color);
             p.fill(p.c);
@@ -116,6 +116,7 @@ let sketch = function (p) {
     p.lines;
     p.numberOfMovers;
     p.backgroundColor;
+    p.strokeColor;
     //  for (let i = 0; i < 5; i++) {
     // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
     //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
@@ -133,6 +134,8 @@ let sketch = function (p) {
         p.shapeMode = false;
         p.playing = false;
         p.backgroundColor = p.color(0, 0, 0);
+        p.strokeColor=p.color(255,255,255);
+
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
 
@@ -168,7 +171,7 @@ let sketch = function (p) {
         // p.print("Threshold:" + p.threshold);
         p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
-
+p.stroke(p.strokeColor);
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
@@ -203,12 +206,14 @@ let sketch = function (p) {
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
     };
-    
+
     p.changeBackgroundColor = function (bgCol_) {
         if(bgCol_ ==="white"){
             p.backgroundColor = p.color(255,255,255,5);
+            p.strokeColor = p.color(0,0,0);
         }else if(bgCol_ ==="black"){
             p.backgroundColor = p.color(0,0,0,5);
+            p.strokeColor= p.color(255,255,255);
         }
     }
     p.fadeBackground = function () {
@@ -216,7 +221,7 @@ let sketch = function (p) {
         p.noStroke();
         p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
-        p.stroke(0);
+    //    p.stroke(0);
     }
 
     p.analyzeAudio = function () {
@@ -233,7 +238,7 @@ let sketch = function (p) {
         p.bassMap = p.map(p.bass, 0, 255, 20, 500);
         // var bassMap2 = map(bass, 0, 255, 5, 100);
         p.noFill();
-        p.stroke(255);
+        p.stroke(p.strokeColor);
         p.ellipse(p.w / 2, p.h / 2, p.bassMap, p.bassMap);
         //fill(255);
         // ellipse(w / 2, h / 2, bassMap2, bassMap2);

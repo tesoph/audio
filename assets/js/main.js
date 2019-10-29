@@ -161,8 +161,16 @@ window.onload = function () {
     //Background Color radio
     $('input[type="radio"]').on('click change', function (e) {
         let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
+        //?Change .ui-container bg color and icons color?
+        /*
+        if(bgCol ==="white"){
+            $('.ui-container').css('background-color', 'rgba(10, 10, 10, 0.5)');
+        }else if(bgCol==="black"){
+            $('.ui-container').css('background-color', 'rgba(10, 10, 10, 0.5)');
+        }*/
        // console.log(bgCol);
         myp5.changeBackgroundColor(bgCol);
+     
     });
 
     //Display lines checkbox
