@@ -74,7 +74,7 @@ window.onload = function () {
         var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
         // Setter
         $("#dialog-confirm").dialog("option", "autoOpen", true);
-         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
+        //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
             localStorage.setItem('hideAlert', true);
@@ -95,11 +95,11 @@ window.onload = function () {
                         "Save": function () {
                             myp5.capture();
                             $(this).dialog("close");
-                           // myp5.loop();
+                            // myp5.loop();
                         },
                         Cancel: function () {
                             $(this).dialog("close");
-                           // myp5.loop();
+                            // myp5.loop();
                         }
                     }
                 });
@@ -109,29 +109,50 @@ window.onload = function () {
         }
     });
 
-   
+    //More information button
+    $('#information-modal').on('shown.bs.modal', function () {
+        // let vis = record if settings menu was open when more information button was clicked.
+        let vis = $("#toggler").is(":visible");
+        //Pause sketch.
+        myp5.noLoop();
+        //If settings menu was open, hide it.
+        if (vis) {
+            $("#toggler").hide();
+        }
+        $('#information-modal').on('hidden.bs.modal', function () {
+            //if the settings menu was open when more information button was clicked, show it again.
+            if (vis) {
+                $("#toggler").show();
+            }
+            //Play sketch.
+            myp5.loop();
+        });
+    });
+
+
+
     //Settings button (Opens settings menu)
     $("#fullScreenButton").on("click", function () {
-         //?On Android samsung internet browser launches into fullscreen when opened
-    //https://davidwalsh.name/fullscreen
-    function launchIntoFullscreen(element) {
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
+        //?On Android samsung internet browser launches into fullscreen when opened
+        //https://davidwalsh.name/fullscreen
+        function launchIntoFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
         }
-    }
         let elem = document.getElementById("container");
         launchIntoFullscreen(elem);
     });
 
     /////////Settings Menu//////////
     //For changing sketch variables 
-    
+
     $("#close-settings").on("click", function () {
         $("#toggler").toggle("slide", {}, 100);
     });
@@ -177,14 +198,14 @@ window.onload = function () {
     lowMidColor.oninput = function () {
         myp5.c = this.value;
     }
-/*
-    //High mid movers color picker
-    let highMidColorPicker = document.getElementById("highMidColorPicker");
-    highMidColorPicker.oninput = function () {
-        highMidColor = this.value;
-    }*/
+    /*
+        //High mid movers color picker
+        let highMidColorPicker = document.getElementById("highMidColorPicker");
+        highMidColorPicker.oninput = function () {
+            highMidColor = this.value;
+        }*/
 
-}//END ONLOAD
+}
 
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
 //when browser closed - remove local storage item from image save dialog confirmation
