@@ -18,15 +18,16 @@
     <script src="libraries/p5.sound.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
     <script src="libraries/jquery-ui.js"></script>
-    <script>
+    <!--<script>
         /*** Handle jQuery plugin naming conflict between jQuery UI and Bootstrap ***/
 
         $.widget.bridge('uibutton', $.ui.button);
         $.widget.bridge('uitooltip', $.ui.tooltip);
-    </script>
+    </script>-->
     <script src="libraries/bootstrap.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -49,9 +50,9 @@
     </header>
 
     <main>
-
+<div id="wrapper">
         <!--Action buttons menu -->
-        <div class="ui-container ">
+        <div class="ui-container">
             <div class="row justify-content-center">
                 <!--Open settings menu-->
                 <button id="buttonX" class="uiButton"><img class="control-button img-fluid"
@@ -137,7 +138,7 @@
             </div>
             <!--End Settings Menu -->
         </div>
-
+    </div>
     </main>
 
     <script src="assets/js/sketchinst.js"></script>
