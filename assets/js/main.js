@@ -1,12 +1,3 @@
-//https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-// First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-// We listen to the resize event
-
-
-//window.onresize = function() {
-//document.body.height = window.innerHeight;
-//}
-//window.onresize(); // called to initially set the height.
 //Get the height and width of the container so to set the canvas width and height 
 var element = document.getElementById('container');
 var positionInfo = element.getBoundingClientRect();
@@ -29,6 +20,7 @@ var elem = document.getElementById("container");
 if (elem.requestFullscreen) {
     elem.requestFullscreen();
 }
+
 window.onload = function () {
 
     window.addEventListener('resize', resizeCanvas);
@@ -59,11 +51,10 @@ window.onload = function () {
         autoOpen: false,
     });
 
-    //Set color variables according to ui menu settings on load
+    //Set sketch variables according to ui menu settings on load
     myp5.c = $('#lowMidColor').val();
     myp5.highMidColor = $('#highMidColorPicker').val();
     myp5.strokeWidth = $("#stroke-weight-picker").val();
-
 
 
     /////////Action buttons/////////
@@ -83,7 +74,8 @@ window.onload = function () {
         var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
         // Setter
         $("#dialog-confirm").dialog("option", "autoOpen", true);
-        //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
+         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
+        //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
             localStorage.setItem('hideAlert', true);
         });
@@ -103,11 +95,11 @@ window.onload = function () {
                         "Save": function () {
                             myp5.capture();
                             $(this).dialog("close");
-                            myp5.loop();
+                           // myp5.loop();
                         },
                         Cancel: function () {
                             $(this).dialog("close");
-                            myp5.loop();
+                           // myp5.loop();
                         }
                     }
                 });
@@ -117,7 +109,10 @@ window.onload = function () {
         }
     });
 
-    //?On Android samsung internet browser launches into fullscreen when opened
+   
+    //Settings button (Opens settings menu)
+    $("#fullScreenButton").on("click", function () {
+         //?On Android samsung internet browser launches into fullscreen when opened
     //https://davidwalsh.name/fullscreen
     function launchIntoFullscreen(element) {
         if (element.requestFullscreen) {
@@ -130,13 +125,13 @@ window.onload = function () {
             element.msRequestFullscreen();
         }
     }
-    //Settings button (Opens settings menu)
-    $("#fullScreenButton").on("click", function () {
         let elem = document.getElementById("container");
         launchIntoFullscreen(elem);
     });
 
     /////////Settings Menu//////////
+    //For changing sketch variables 
+    
     $("#close-settings").on("click", function () {
         $("#toggler").toggle("slide", {}, 100);
     });
@@ -163,6 +158,8 @@ window.onload = function () {
         }
     }
 
+    //To get the sensitivity value from the slider before input
+    myp5.sensitivity = document.getElementById('sensitivity-slider').value;
     //Sensitivity slider
     let sensitivitySlider = document.getElementById("sensitivity-slider");
     sensitivitySlider.oninput = function () {
@@ -194,3 +191,11 @@ window.onload = function () {
 $(window).on("unload", function (e) {
     localStorage.removeItem('hideAlert');
 });
+
+
+///////////Reference////
+//https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+//window.onresize = function() {
+//document.body.height = window.innerHeight;
+//}
+//window.onresize(); // called to initially set the height.

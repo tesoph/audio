@@ -188,6 +188,7 @@ let sketch = function (p) {
 
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
+     
             p.imageMode(p.CENTER);
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
@@ -276,9 +277,6 @@ let sketch = function (p) {
         if (p.getAudioContext().state !== 'running') {
             p.userStartAudio();
         }
-        if (p.getAudioContext().state !== 'running') {
-            p.userStartAudio();
-        }
         if (p.playing == true) {
             p.playing = false;
             p.noLoop();
@@ -314,12 +312,17 @@ let sketch = function (p) {
         p.print("new h:" + p.h);
         p.resizeCanvas(p.w, p.h);
 
-        //Make new attractor and movers orientated to new canvas center
-        p.a = new Attractor(p);
-        for (let i = 0; i < p.numberOfMovers; i++) {
-            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
-        }
+       p.refresh();
+    }
+
+    p.refresh = function(){
+  //Make new attractor and movers orientated to new canvas center
+  p.a = new Attractor(p);
+  for (let i = 0; i < p.numberOfMovers; i++) {
+      p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+      //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+  }
+
     }
 
 };
