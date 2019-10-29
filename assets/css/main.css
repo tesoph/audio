@@ -82,7 +82,7 @@ main {
     }
 }
 
-/*----------Toolbar--------*/
+/*----------Action Buttons--------*/
 
 .ui-container {
     /*height: 15vh;*/
@@ -125,6 +125,7 @@ main {
 
 #dialog-confirm{
     background-color:white;
+    display:none;
 }
 
 .ui-dialog{
@@ -141,6 +142,10 @@ button{
         bottom: 5vh;
         width: auto;
     }
+}
+
+.dialog{
+    
 }
 
 /*----------Settings Menu--------*/

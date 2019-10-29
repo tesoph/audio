@@ -1,3 +1,8 @@
+  //autoOpen:false stops the confirmation dialog from appearing on page load
+  $("#dialog-confirm").dialog({
+    autoOpen: false,
+});
+
 //Get the height and width of the container so to set the canvas width and height 
 var element = document.getElementById('container');
 var positionInfo = element.getBoundingClientRect();
@@ -46,10 +51,6 @@ window.onload = function () {
         // var myp5 = new p5(sketch, document.getElementById("container"));
     }
 
-    //autoOpen:false stops the confirmation dialog from appearing on page load
-    $("#dialog-confirm").dialog({
-        autoOpen: false,
-    });
 
     //Set sketch variables according to ui menu settings on load
     myp5.c = $('#lowMidColor').val();
@@ -71,9 +72,9 @@ window.onload = function () {
         $(".ui-dialog-titlebar").hide();
         //First have to change the autoOpen setting
         // Getter
-        var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
+      //  var autoOpen = $("#dialog-confirm").dialog("option", "autoOpen");
         // Setter
-        $("#dialog-confirm").dialog("option", "autoOpen", true);
+       // $("#dialog-confirm").dialog("option", "autoOpen", true);
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
@@ -86,6 +87,8 @@ window.onload = function () {
                 //if yes it calls the myp5 function capture()
                 //If no closes dialog box
                 $("#dialog-confirm").dialog({
+                    //?With autoOpen: false it won't open at all
+                    autoOpen: true,
                     resizable: false,
                     height: "auto",
                     width: 300,
@@ -95,11 +98,11 @@ window.onload = function () {
                         "Save": function () {
                             myp5.capture();
                             $(this).dialog("close");
-                            // myp5.loop();
+                             myp5.loop();
                         },
                         Cancel: function () {
                             $(this).dialog("close");
-                            // myp5.loop();
+                             myp5.loop();
                         }
                     }
                 });
@@ -113,7 +116,7 @@ window.onload = function () {
     $('#information-modal').on('shown.bs.modal', function () {
         // let vis = record if settings menu was open when more information button was clicked.
         let vis = $("#toggler").is(":visible");
-        //Pause sketch.
+        //Pause sketch while modal is showing.
         myp5.noLoop();
         //If settings menu was open, hide it.
         if (vis) {
@@ -124,12 +127,10 @@ window.onload = function () {
             if (vis) {
                 $("#toggler").show();
             }
-            //Play sketch.
+            //Play sketch when modal is closed.
             myp5.loop();
         });
     });
-
-
 
     //Settings button (Opens settings menu)
     $("#fullScreenButton").on("click", function () {
