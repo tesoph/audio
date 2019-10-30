@@ -316,7 +316,8 @@ let sketch = function (p) {
         }
     }
     p.capture = function () {
-        p.saveCanvas(p.cnv, 'myCanvas.jpg');
+       // p.saveCanvas(p.cnv, 'myCanvas.jpg');
+       p.save('myCanvas.jpg');
     }
 
     p.windowResized = function (w_, h_) {
