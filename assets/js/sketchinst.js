@@ -59,6 +59,7 @@ let sketch = function (p) {
             this.acceleration = p.createVector(-0.001, 0.01);
             this.topspeed = 5;
             this.mass = m_;
+            this.radius = this.mass * 10;
         }
 
         update() {
@@ -70,12 +71,12 @@ let sketch = function (p) {
 
         display() {
 
-          //  p.stroke(255);
+            //  p.stroke(255);
             p.strokeWeight(p.strokeWidth);
             //fill(this.color);
             p.fill(p.c);
             if (p.shapeMode == false) {
-                p.ellipse(this.location.x, this.location.y, this.mass * 10, this.mass * 10);
+                p.ellipse(this.location.x, this.location.y, this.radius,this.radius);
             }
             if (p.lines) {
                 p.line(p.w / 2, p.h / 2, this.location.x, this.location.y);
@@ -90,22 +91,17 @@ let sketch = function (p) {
         }
 
         checkEdges() {
-            if (this.location.x > p.w) {
+            //Reverse direction if reaches this.radius distance from edge of sketch
+            if (this.location.x > p.w - this.radius) {
                 this.velocity.x *= -1;
-                //     this.acceleration.x *= -1;
-            } else if (this.location.x < 0) {
+            } else if (this.location.x < 0 + this.radius) {
                 this.velocity.x *= -1;
-                //     this.acceleration.x *= -1;
             }
-
-            if (this.location.y > p.h) {
+            if (this.location.y > p.h - this.radius) {
                 this.velocity.y *= -1;
-                // this.acceleration.y *= -1;
-            } else if (this.location.y < 0) {
+            } else if (this.location.y < 0 + this.radius) {
                 this.velocity.y *= -1;
-                //   this.acceleration.y *= -1;
             }
-
         }
     }
 
@@ -134,7 +130,7 @@ let sketch = function (p) {
         p.shapeMode = false;
         p.playing = false;
         p.backgroundColor = p.color(0, 0, 0);
-        p.strokeColor=p.color(255,255,255);
+        p.strokeColor = p.color(255, 255, 255);
 
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
@@ -171,7 +167,7 @@ let sketch = function (p) {
         // p.print("Threshold:" + p.threshold);
         p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
-p.stroke(p.strokeColor);
+        p.stroke(p.strokeColor);
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
@@ -208,12 +204,12 @@ p.stroke(p.strokeColor);
     };
 
     p.changeBackgroundColor = function (bgCol_) {
-        if(bgCol_ ==="white"){
-            p.backgroundColor = p.color(255,255,255,5);
-            p.strokeColor = p.color(0,0,0);
-        }else if(bgCol_ ==="black"){
-            p.backgroundColor = p.color(0,0,0,5);
-            p.strokeColor= p.color(255,255,255);
+        if (bgCol_ === "white") {
+            p.backgroundColor = p.color(255, 255, 255, 5);
+            p.strokeColor = p.color(0, 0, 0);
+        } else if (bgCol_ === "black") {
+            p.backgroundColor = p.color(0, 0, 0, 5);
+            p.strokeColor = p.color(255, 255, 255);
         }
     }
     p.fadeBackground = function () {
@@ -221,7 +217,7 @@ p.stroke(p.strokeColor);
         p.noStroke();
         p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
-    //    p.stroke(0);
+        //    p.stroke(0);
     }
 
     p.analyzeAudio = function () {
