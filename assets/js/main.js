@@ -19,6 +19,7 @@ $('.popover-dismiss').popover({
     trigger: 'focus'
 })
 */
+
 //Create sketch and attach it to #container div
 var myp5 = new p5(sketch, document.getElementById("container"));
 
@@ -259,8 +260,38 @@ window.onload = function () {
 $(window).on("unload", function (e) {
     localStorage.removeItem('hideAlert');
 });
+/*
+function unloadHandler()
+{
+    if (_scriptSettings.browser.isIE) {
+        // Run some unload code for Internet Explorer
+        //...
+    }
+}*/
 
+window.addEventListener('onbeforeunload', function (e) {
+    // the absence of a returnValue property on the event will guarantee the browser unload happens
+  //  alert("on before unload");
+    //delete e['returnValue'];
+   // e.returnValue = '';
+  });
 
+//https://stackoverflow.com/questions/3239834/window-onbeforeunload-not-working-on-the-ipad
+  var isOnIOS = navigator.userAgent.match(/iPad/i)|| navigator.userAgent.match(/iPhone/i);
+var eventName = isOnIOS ? "pagehide" : "beforeunload";
+window.addEventListener(eventName, function (event) { 
+   // window.event.cancelBubble = true; // Don't know if this works on iOS but it might!
+   //event.returnValue = '';
+   //https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
+   document.body.opacity = 0; 
+} );
+
+//https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
+$(window).bind("pageshow", function(event) {
+    if (event.originalEvent.persisted) {
+        window.location.reload() 
+    }
+});
 ///////////Reference////
 //https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 //window.onresize = function() {
