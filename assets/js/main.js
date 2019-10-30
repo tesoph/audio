@@ -10,6 +10,7 @@ var containerHeight = positionInfo.height;
 var containerWidth = positionInfo.width;
 console.log("h:" + containerHeight);
 
+/*
 //Popovers (doesn't work -conflict between jquery UI js and bootstrap js)
 $(function () {
     $('[data-toggle="popover"]').popover()
@@ -17,7 +18,7 @@ $(function () {
 $('.popover-dismiss').popover({
     trigger: 'focus'
 })
-
+*/
 //Create sketch and attach it to #container div
 var myp5 = new p5(sketch, document.getElementById("container"));
 
@@ -205,20 +206,20 @@ window.onload = function () {
     }
 
     //To keep the movers moving
-   // var intervalID = setInterval(randomizeSensitivity, 5000);
-   /* let randomSensitivity = (function (sens_) {
-        let min = 1;
-        let max = 4;
-        let sens = sens_
-        let randomNumber = Math.floor(Math.random() * (max - min)) + min;
-        let randomSensitivity_ = sens + randomNumber;
-        console.log("r" + randomSensitivity_);
-        return randomSensitivity_;
-    })();
-
-    let intervalID = setInterval(randomSensitivity, 5000, myp5.sensitivity);
-*/
-let intervalID = setInterval(randomizeSensitivity, 5000);
+    // var intervalID = setInterval(randomizeSensitivity, 5000);
+    /* let randomSensitivity = (function (sens_) {
+         let min = 1;
+         let max = 4;
+         let sens = sens_
+         let randomNumber = Math.floor(Math.random() * (max - min)) + min;
+         let randomSensitivity_ = sens + randomNumber;
+         console.log("r" + randomSensitivity_);
+         return randomSensitivity_;
+     })();
+ 
+     let intervalID = setInterval(randomSensitivity, 5000, myp5.sensitivity);
+ */
+    let intervalID = setInterval(randomizeSensitivity, 5000);
     function randomizeSensitivity() {
         let min = 1;
         let max = 4;
@@ -228,9 +229,9 @@ let intervalID = setInterval(randomizeSensitivity, 5000);
         myp5.sensitvity = randomSensitivity;
         console.log("new sensitivity:" + myp5.sensitivity);
     }
-    
 
-    
+
+
 
 
     //Stroke Weight slider
