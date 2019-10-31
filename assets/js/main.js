@@ -30,6 +30,8 @@ if (elem.requestFullscreen) {
     elem.requestFullscreen();
 }
 myp5.sensitivity = document.getElementById('sensitivity-slider').value;
+
+
 window.onload = function () {
 
     window.addEventListener('resize', resizeCanvas);
@@ -37,7 +39,7 @@ window.onload = function () {
  
     //New getUserMedia() request kills existing stream track
     //If your application grabs media streams from multiple getUserMedia()  requests, you are likely in for problems with iOS. From my testing, the issue can be summarized as follows: if getUserMedia()  requests a media type requested in a previous getUserMedia() , the previously requested media track’s muted  property is set to true, and there is no way to programmatically unmute it. Data will still be sent along a peer connection, but it’s not of much use to the other party with the track muted! This limitation is currently expected behavior on iOS. https://webrtchacks.com/guide-to-safari-webrtc/
-    
+
     $(window).focus(function(e) {
         console.log("focused");
         myp5.getAudioInput();
@@ -90,9 +92,9 @@ window.onload = function () {
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
-            localStorage.setItem('hideAlert', true);
+            localStorage.setItem('hideAlert2', true);
         });
-        if (!localStorage.hideAlert) {
+      //  if (!localStorage.hideAlert2) {
             $(function () {
                 myp5.noLoop();
                 //Dialog opens to confirm the user wants to save a picture
@@ -104,6 +106,7 @@ window.onload = function () {
                     resizable: false,
                     height: "auto",
                     width: 300,
+                    closeOnEscape: true,
                     //why doesn't modal:true freeze sketch
                     modal: true,
                     buttons: {
@@ -116,10 +119,12 @@ window.onload = function () {
                             $(this).dialog("close");
                             myp5.loop();
                         }
-                    }
+                    },
+                    //position: "center" 
                 });
             });
-        } else {
+//} else {
+        {
             myp5.capture();
         }
     });
@@ -268,7 +273,7 @@ window.onload = function () {
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
 //when browser closed - remove local storage item from image save dialog confirmation
 $(window).on("unload", function (e) {
-    localStorage.removeItem('hideAlert');
+    localStorage.removeItem('hideAlert2');
 });
 
 
