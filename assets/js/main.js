@@ -1,5 +1,6 @@
 //https://stackoverflow.com/questions/29209308/window-localstorage-setitem-not-working-on-mobile-phone
 //So finally found the solution, I need to set webSettings.setDomStorageEnabled(true); on android code and after this localstorage is working perfectlly.
+//webSettings.setDomStorageEnabled(true);
 
 //autoOpen:false stops the confirmation dialog from appearing on page load
 $("#dialog-confirm").dialog({
@@ -95,7 +96,7 @@ window.onload = function () {
         $(".no").on("click", function () {
             localStorage.setItem('hideAlert2', true);
         });
-        if (!localStorage.hideAlert2) {
+        if (!localStorage.hideAlert2 || localStorage === null) {
             $(function () {
                 myp5.noLoop();
                 //Dialog opens to confirm the user wants to save a picture
@@ -124,7 +125,7 @@ window.onload = function () {
                     //position: "center" 
                 });
             });
-        } else if (localStorage.hideAlert2) {
+        } else {
             //  {
             myp5.capture();
         }
