@@ -1,4 +1,5 @@
-
+//https://stackoverflow.com/questions/29209308/window-localstorage-setitem-not-working-on-mobile-phone
+//So finally found the solution, I need to set webSettings.setDomStorageEnabled(true); on android code and after this localstorage is working perfectlly.
 
 //autoOpen:false stops the confirmation dialog from appearing on page load
 $("#dialog-confirm").dialog({
@@ -36,15 +37,15 @@ window.onload = function () {
 
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', resizeCanvas);
- 
+
     //New getUserMedia() request kills existing stream track
     //If your application grabs media streams from multiple getUserMedia()  requests, you are likely in for problems with iOS. From my testing, the issue can be summarized as follows: if getUserMedia()  requests a media type requested in a previous getUserMedia() , the previously requested media track’s muted  property is set to true, and there is no way to programmatically unmute it. Data will still be sent along a peer connection, but it’s not of much use to the other party with the track muted! This limitation is currently expected behavior on iOS. https://webrtchacks.com/guide-to-safari-webrtc/
 
-    $(window).focus(function(e) {
+    $(window).focus(function (e) {
         console.log("focused");
         myp5.getAudioInput();
     });
-    
+
     function resizeCanvas() {
 
         ///////////////???????timeout?
@@ -56,7 +57,7 @@ window.onload = function () {
         var positionInfo = element.getBoundingClientRect();
         var containerHeight = positionInfo.height;
         var containerWidth = positionInfo.width;
-       // console.log("h:" + containerHeight);
+        // console.log("h:" + containerHeight);
         // myp5.resizeCanvas(window.innerWidth, window.innerHeight);
         myp5.windowResized(containerWidth, containerHeight);
         // window.setTimeout(myp5.windowResized(containerWidth, containerHeight), 2*1000);
@@ -94,7 +95,7 @@ window.onload = function () {
         $(".no").on("click", function () {
             localStorage.setItem('hideAlert2', true);
         });
-      //  if (!localStorage.hideAlert2) {
+        if (!localStorage.hideAlert2) {
             $(function () {
                 myp5.noLoop();
                 //Dialog opens to confirm the user wants to save a picture
@@ -123,8 +124,8 @@ window.onload = function () {
                     //position: "center" 
                 });
             });
-//} else {
-        {
+        } else if (localStorage.hideAlert2) {
+            //  {
             myp5.capture();
         }
     });
@@ -193,10 +194,10 @@ window.onload = function () {
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {
-           // console.log("display lines checked");
+            // console.log("display lines checked");
             myp5.lines = true;
         } else {
-           // console.log("display lines unchecked")
+            // console.log("display lines unchecked")
             myp5.lines = false;
         }
     }
@@ -204,10 +205,10 @@ window.onload = function () {
     //Shape mode checkbox
     document.getElementById("shapeCheckbox").onchange = function () {
         if (this.checked == true) {
-           // console.log("shape mode checked");
+            // console.log("shape mode checked");
             myp5.shapeMode = true;
         } else {
-           // console.log("shape mode unchecked")
+            // console.log("shape mode unchecked")
             myp5.shapeMode = false;
         }
     }
@@ -243,12 +244,8 @@ window.onload = function () {
         let randomNumber = Math.floor(Math.random() * (max - min)) + min;
         let randomSensitivity = sens_ + randomNumber;
         myp5.sensitvity = randomSensitivity;
-       // console.log("new sensitivity:" + myp5.sensitivity);
+        // console.log("new sensitivity:" + myp5.sensitivity);
     }
-
-
-
-
 
     //Stroke Weight slider
     let SWslider = document.getElementById("stroke-weight-picker");
@@ -293,12 +290,12 @@ $(window).on("unload", function (e) {
 }
    // myp5 = new p5(sketch, document.getElementById("container"));
   //  window.location.reload();
-        
+
  //   window.location.reload();
-    // This is either a load event for older browsers, 
+    // This is either a load event for older browsers,
     // or a pageshow event for the initial load in supported browsers.
     // It's safe to do everything my old load event handler did here.
-   
+
 
 
 function myUnloadHandler(evt)
@@ -314,7 +311,7 @@ function myUnloadHandler(evt)
    // alert("unloadin");
    console.log("hi");
    // window.location.reload();
-    // This is either an unload event for older browsers, 
+    // This is either an unload event for older browsers,
     // or a pagehide event for page tear-down in supported browsers.
     // It's safe to do everything my old unload event handler did here.
 
@@ -341,7 +338,7 @@ function makeAudioOnlyStreamFromExistingStream(stream) {
   console.log('created audio only stream, new stream tracks: ', audioStream.getTracks());
   return audioStream;
 }
- 
+
 function handleSuccess(stream) {
   var audioOnlyStream = makeAudioOnlyStreamFromExistingStream(stream);
   //var videoOnlyStream = makeVideoOnlyStreamFromExistingStream(stream);
