@@ -1,3 +1,5 @@
+
+
 //autoOpen:false stops the confirmation dialog from appearing on page load
 $("#dialog-confirm").dialog({
     autoOpen: false,
@@ -27,12 +29,20 @@ var elem = document.getElementById("container");
 if (elem.requestFullscreen) {
     elem.requestFullscreen();
 }
-
+myp5.sensitivity = document.getElementById('sensitivity-slider').value;
 window.onload = function () {
 
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', resizeCanvas);
-
+ 
+    //New getUserMedia() request kills existing stream track
+    //If your application grabs media streams from multiple getUserMedia()  requests, you are likely in for problems with iOS. From my testing, the issue can be summarized as follows: if getUserMedia()  requests a media type requested in a previous getUserMedia() , the previously requested media track’s muted  property is set to true, and there is no way to programmatically unmute it. Data will still be sent along a peer connection, but it’s not of much use to the other party with the track muted! This limitation is currently expected behavior on iOS. https://webrtchacks.com/guide-to-safari-webrtc/
+    
+    $(window).focus(function(e) {
+        console.log("focused");
+        myp5.getAudioInput();
+    });
+    
     function resizeCanvas() {
 
         ///////////////???????timeout?
@@ -44,7 +54,7 @@ window.onload = function () {
         var positionInfo = element.getBoundingClientRect();
         var containerHeight = positionInfo.height;
         var containerWidth = positionInfo.width;
-        console.log("h:" + containerHeight);
+       // console.log("h:" + containerHeight);
         // myp5.resizeCanvas(window.innerWidth, window.innerHeight);
         myp5.windowResized(containerWidth, containerHeight);
         // window.setTimeout(myp5.windowResized(containerWidth, containerHeight), 2*1000);
@@ -178,10 +188,10 @@ window.onload = function () {
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {
-            console.log("display lines checked");
+           // console.log("display lines checked");
             myp5.lines = true;
         } else {
-            console.log("display lines unchecked")
+           // console.log("display lines unchecked")
             myp5.lines = false;
         }
     }
@@ -189,10 +199,10 @@ window.onload = function () {
     //Shape mode checkbox
     document.getElementById("shapeCheckbox").onchange = function () {
         if (this.checked == true) {
-            console.log("shape mode checked");
+           // console.log("shape mode checked");
             myp5.shapeMode = true;
         } else {
-            console.log("shape mode unchecked")
+           // console.log("shape mode unchecked")
             myp5.shapeMode = false;
         }
     }
@@ -228,7 +238,7 @@ window.onload = function () {
         let randomNumber = Math.floor(Math.random() * (max - min)) + min;
         let randomSensitivity = sens_ + randomNumber;
         myp5.sensitvity = randomSensitivity;
-        console.log("new sensitivity:" + myp5.sensitivity);
+       // console.log("new sensitivity:" + myp5.sensitivity);
     }
 
 
@@ -260,41 +270,87 @@ window.onload = function () {
 $(window).on("unload", function (e) {
     localStorage.removeItem('hideAlert');
 });
-/*
-function unloadHandler()
+
+
+
+/*ion myLoadHandler(evt)
 {
-    if (_scriptSettings.browser.isIE) {
-        // Run some unload code for Internet Explorer
-        //...
+    if (evt.persisted) {
+        // This is actually a pageshow event and the page is coming out of the Page Cache.
+        // Make sure to not perform the "one-time work" that we'd normally do in the onload handler.
+       // window.reload();
+       console.log("persisted");
+       alert("Hello world!");
+        return;
     }
-}*/
+    console.log('not persisted');
 
-window.addEventListener('onbeforeunload', function (e) {
-    // the absence of a returnValue property on the event will guarantee the browser unload happens
-  //  alert("on before unload");
-    //delete e['returnValue'];
-   // e.returnValue = '';
-  });
+}
+   // myp5 = new p5(sketch, document.getElementById("container"));
+  //  window.location.reload();
+        
+ //   window.location.reload();
+    // This is either a load event for older browsers, 
+    // or a pageshow event for the initial load in supported browsers.
+    // It's safe to do everything my old load event handler did here.
+   
 
-//https://stackoverflow.com/questions/3239834/window-onbeforeunload-not-working-on-the-ipad
-  var isOnIOS = navigator.userAgent.match(/iPad/i)|| navigator.userAgent.match(/iPhone/i);
-var eventName = isOnIOS ? "pagehide" : "beforeunload";
-window.addEventListener(eventName, function (event) { 
-   // window.event.cancelBubble = true; // Don't know if this works on iOS but it might!
-   //event.returnValue = '';
-   //https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
-   document.body.opacity = 0; 
-} );
 
-//https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
-$(window).bind("pageshow", function(event) {
-    if (event.originalEvent.persisted) {
-        window.location.reload() 
+function myUnloadHandler(evt)
+{
+    if (evt.persisted) {
+        // This is actually a pagehide event and the page is going into the Page Cache.
+        // Make sure that we don't do any destructive work, or work that shouldn't be duplicated.
+       // window.location.reload();
+       console.log("bye");
+       evt.returnValue = '';
+        return;
     }
-});
-///////////Reference////
-//https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-//window.onresize = function() {
-//document.body.height = window.innerHeight;
-//}
-//window.onresize(); // called to initially set the height.
+   // alert("unloadin");
+   console.log("hi");
+   // window.location.reload();
+    // This is either an unload event for older browsers, 
+    // or a pagehide event for page tear-down in supported browsers.
+    // It's safe to do everything my old unload event handler did here.
+
+}
+
+if ("onpagehide" in window) {
+    window.addEventListener("pageshow", myLoadHandler, false);
+    window.addEventListener("pagehide", myUnloadHandler, false);
+} else {
+    window.addEventListener("load", myLoadHandler, false);
+    window.addEventListener("unload", myUnloadHandler, false);
+}
+*/
+
+/*
+
+function makeAudioOnlyStreamFromExistingStream(stream) {
+  var audioStream = stream.clone();
+  var videoTracks = audioStream.getVideoTracks();
+  for (var i = 0, len = videoTracks.length; i < len; i++) {
+    audioStream.removeTrack(videoTracks[i]);
+  }
+  console.log('created audio only stream, original stream tracks: ', stream.getTracks());
+  console.log('created audio only stream, new stream tracks: ', audioStream.getTracks());
+  return audioStream;
+}
+ 
+function handleSuccess(stream) {
+  var audioOnlyStream = makeAudioOnlyStreamFromExistingStream(stream);
+  //var videoOnlyStream = makeVideoOnlyStreamFromExistingStream(stream);
+  // Do stuff with all the streams...
+  console.log("handle success function");
+}
+function handleError(error) {
+  console.error('getUserMedia() error: ', error);
+}
+var constraints = {
+  audio: true,
+ // video: true,
+};
+navigator.mediaDevices.getUserMedia(constraints).
+    then(handleSuccess).catch(handleError);
+
+    */

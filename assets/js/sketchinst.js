@@ -119,7 +119,6 @@ let sketch = function (p) {
     //  }
 
     p.setup = function () {
-
         p.playImg = p.loadImage('assets/img/play.png');
 
         //  p.highMidColor = p.color(255, 0, 0);
@@ -131,20 +130,13 @@ let sketch = function (p) {
         p.playing = false;
         p.backgroundColor = p.color(0, 0, 0);
         p.strokeColor = p.color(255, 255, 255);
-
+       // p.sensitivity=140;
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
 
         p.background(p.backgroundColor);
         p.backgroundColor.setAlpha(5);
-        //Audio input comes from the microphone
-        p.mic;
-        p.mic = new p5.AudioIn()
-        p.mic.start();
-
-        //FFT object analyzes the audio input
-        p.fft = new p5.FFT();
-        p.fft.setInput(p.mic);
+        p.getAudioInput();
 
         //Play/pause button when pressed calls function togglePlaying
         //      p.cnv.mousePressed(togglePlaying);
@@ -202,6 +194,17 @@ let sketch = function (p) {
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
         }
     };
+
+       p.getAudioInput = function(){
+        //Audio input comes from the microphone
+        p.mic;
+        p.mic = new p5.AudioIn()
+        p.mic.start();
+
+        //FFT object analyzes the audio input
+        p.fft = new p5.FFT();
+        p.fft.setInput(p.mic);
+}
 
     p.changeBackgroundColor = function (bgCol_) {
         if (bgCol_ === "white") {
@@ -315,16 +318,17 @@ let sketch = function (p) {
             console.log('Unchecking!');
         }
     }
+    
     p.capture = function () {
        // p.saveCanvas(p.cnv, 'myCanvas.jpg');
        p.save('myCanvas.jpg');
     }
 
     p.windowResized = function (w_, h_) {
-        p.print("resized");
+       // p.print("resized");
         p.w = w_;
         p.h = h_;
-        p.print("new h:" + p.h);
+       // p.print("new h:" + p.h);
         p.resizeCanvas(p.w, p.h);
         p.refresh();
     }
