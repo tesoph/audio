@@ -257,6 +257,13 @@ window.onload = function () {
             myp5.displayHighMid = false;
         }
     }
+
+    //Topspeed slider
+
+    let topspeedSlider= document.getElementById("topspeed-slider");
+    topspeedSlider.oninput = function () {
+        myp5.topspeed2= this.value;
+    }
 }
 
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.

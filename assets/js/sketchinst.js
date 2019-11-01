@@ -48,8 +48,7 @@ let sketch = function (p) {
         }
 
     }
-
-
+p.topSpeed2;
     class Mover {
         constructor(p_, m_, x_, y_, c_) {
             this.p = p_;
@@ -64,7 +63,7 @@ let sketch = function (p) {
 
         update() {
             this.velocity.add(this.acceleration);
-            this.velocity.limit(this.topspeed);
+            this.velocity.limit(p.topspeed2);
             this.location.add(this.velocity);
             this.acceleration.mult(0);
         }
@@ -104,7 +103,7 @@ let sketch = function (p) {
             }
         }
     }
-
+    p.moversList = [];
     p.w = containerWidth;
     p.h = containerHeight;
     p.moversLowMid = [];
@@ -125,7 +124,7 @@ let sketch = function (p) {
         //  p.highMidColor = p.color(255, 0, 0);
         p.red = p.color(255, 0, 0);
         //   p.c = p.color(0, 255, 0);
-        p.numberOfMovers = 20;
+        p.numberOfMovers = 40;
         p.strokeWidth = 1;
         p.shapeMode = false;
         p.playing = false;
@@ -141,7 +140,12 @@ let sketch = function (p) {
         p.displayHighMid = false;
         //Play/pause button when pressed calls function togglePlaying
         //      p.cnv.mousePressed(togglePlaying);
-
+      /*  for (let x = 0; x < 2; x++) {
+            distances[x] = []; // create nested array
+            for (let y = 0; y < numberOfMovers; y++) {
+              
+            }
+          }*/
         //Create an attractor object and an array
         p.initialize();
     };
@@ -151,13 +155,13 @@ let sketch = function (p) {
         p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
         p.stroke(p.strokeColor);
-     //   p.frequencyRange =p.lowMid;
+        //   p.frequencyRange =p.lowMid;
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
             p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
             if (p.displayHighMid) {
-                p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
+                p.moveMovers(p.moversHighMid, p.threshold, p.treble);
             }
             //   peakDetect.update(fft);
             for (let i = 0; i < p.numberOfMovers; i++) {
@@ -197,6 +201,20 @@ let sketch = function (p) {
         }
     };
 
+    p.initialize = function () {
+        let list = [1, 2, 3, 4, 5];
+        let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
+        //Make new attractor and movers orientated to canvas center
+        p.a = new Attractor(p);
+        for (let i = 0; i < p.numberOfMovers; i++) {
+            //   p.randomMass = p.floor(p.random(1,4));
+            //  p.print(p.randomMass);
+            p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            //  p.moversLowMid[i] = new Mover(this, 1, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+        }
+    }
+
     p.getAudioInput = function () {
         //Audio input comes from the microphone
         p.mic;
@@ -227,9 +245,9 @@ let sketch = function (p) {
 
     p.analyzeAudio = function () {
         p.spectrum = p.fft.analyze();
-        p.highMid = p.fft.getEnergy("highMid");
+      // p.highMid = p.fft.getEnergy("highMid");
         p.lowMid = p.fft.getEnergy("lowMid");
-        // var treble = fft.getEnergy("treble");
+        p.treble = p.fft.getEnergy("treble");
         p.bass = p.fft.getEnergy("bass");
         // var mid = fft.getEnergy("mid");
     }
@@ -335,19 +353,6 @@ let sketch = function (p) {
         p.initialize();
     }
 
-    p.initialize = function () {
-        let list = [1, 2, 3, 4, 5];
-        let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
-        //Make new attractor and movers orientated to canvas center
-        p.a = new Attractor(p);
-        for (let i = 0; i < p.numberOfMovers; i++) {
-            //   p.randomMass = p.floor(p.random(1,4));
-            //  p.print(p.randomMass);
-            //  p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            p.moversLowMid[i] = new Mover(this, 1, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            p.moversHighMid[i] = new Mover(this, 3, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
-        }
-    }
 
     // https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
     let rand = function (min, max) {
