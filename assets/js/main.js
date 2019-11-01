@@ -14,6 +14,11 @@ var containerHeight = positionInfo.height;
 var containerWidth = positionInfo.width;
 console.log("h:" + containerHeight);
 
+//Enable popovers everywhere
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})
+
 /*
 //Popovers (doesn't work -conflict between jquery UI js and bootstrap js)
 $(function () {
@@ -27,10 +32,6 @@ $('.popover-dismiss').popover({
 //Create sketch and attach it to #container div
 var myp5 = new p5(sketch, document.getElementById("container"));
 
-var elem = document.getElementById("container");
-if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-}
 myp5.sensitivity = document.getElementById('sensitivity-slider').value;
 
 
@@ -48,31 +49,17 @@ window.onload = function () {
     });
 
     function resizeCanvas() {
-
-        ///////////////???????timeout?
-
-        // We execute the same script as before
-        //let vh = window.innerHeight * 0.01;
-        //document.documentElement.style.setProperty('--vh', `${vh}px`); 
         var element = document.getElementById('container');
         var positionInfo = element.getBoundingClientRect();
         var containerHeight = positionInfo.height;
         var containerWidth = positionInfo.width;
-        // console.log("h:" + containerHeight);
-        // myp5.resizeCanvas(window.innerWidth, window.innerHeight);
         myp5.windowResized(containerWidth, containerHeight);
-        // window.setTimeout(myp5.windowResized(containerWidth, containerHeight), 2*1000);
-        //  myp5.windowResized(containerWidth, containerHeight);
-
-        // var myp5 = new p5(sketch, document.getElementById("container"));
     }
-
 
     //Set sketch variables according to ui menu settings on load
     myp5.c = $('#lowMidColor').val();
     myp5.highMidColor = $('#highMidColorPicker').val();
     myp5.strokeWidth = $("#stroke-weight-picker").val();
-
 
     /////////Action buttons/////////
     //Settings button (Opens settings menu)
@@ -96,7 +83,7 @@ window.onload = function () {
         $(".no").on("click", function () {
             localStorage.setItem('hideAlert2', true);
         });
-        if (!localStorage.hideAlert2 || localStorage === null) {
+        if (!localStorage.hideAlert2 || localStorage == null) {
             $(function () {
                 myp5.noLoop();
                 //Dialog opens to confirm the user wants to save a picture
@@ -195,10 +182,8 @@ window.onload = function () {
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
         if (this.checked == true) {
-            // console.log("display lines checked");
             myp5.lines = true;
         } else {
-            // console.log("display lines unchecked")
             myp5.lines = false;
         }
     }
@@ -206,17 +191,14 @@ window.onload = function () {
     //Shape mode checkbox
     document.getElementById("shapeCheckbox").onchange = function () {
         if (this.checked == true) {
-            // console.log("shape mode checked");
             myp5.shapeMode = true;
         } else {
-            // console.log("shape mode unchecked")
             myp5.shapeMode = false;
         }
     }
 
     //To get the sensitivity value from the slider before input
     //  myp5.sensitivity = document.getElementById('sensitivity-slider').value;
-    myp5.sensitivity = document.getElementById('sensitivity-slider').value;
     //Sensitivity slider
     let sensitivitySlider = document.getElementById("sensitivity-slider");
     sensitivitySlider.oninput = function () {
@@ -237,6 +219,7 @@ window.onload = function () {
  
      let intervalID = setInterval(randomSensitivity, 5000, myp5.sensitivity);
  */
+    //randomizeSensitivty to replicate moving the sensitivity slider, which seems to help if the movers get stuck.
     let intervalID = setInterval(randomizeSensitivity, 5000);
     function randomizeSensitivity() {
         let min = 1;
@@ -259,13 +242,21 @@ window.onload = function () {
     lowMidColor.oninput = function () {
         myp5.c = this.value;
     }
-    /*
-        //High mid movers color picker
-        let highMidColorPicker = document.getElementById("highMidColorPicker");
-        highMidColorPicker.oninput = function () {
-            highMidColor = this.value;
-        }*/
 
+    //High mid movers color picker
+    let highMidColorPicker = document.getElementById("highMidColorPicker");
+    highMidColorPicker.oninput = function () {
+        myp5.highMidColor = this.value;
+    }
+
+    //Display high mid movers checkbox
+    document.getElementById("highMidCheckbox").onchange = function () {
+        if (this.checked == true) {
+            myp5.displayHighMid = true;
+        } else {
+            myp5.displayHighMid = false;
+        }
+    }
 }
 
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.

@@ -39,6 +39,8 @@
      window.location.reload() ;
  }
 };</script>
+<!--https://github.com/GoogleWebComponents/model-viewer/issues/543-->
+<!--<script src="https://unpkg.com/fullscreen-polyfill@1.0.2/dist/fullscreen.polyfill.js"></script>-->
 </head>
 
 <body>
@@ -169,16 +171,17 @@
                                         src="assets/img/information.png" alt="More information"></button>
                                 <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
                             </div>
-
-                            <!--
+                            
                             <div class="">
-                                <label for="highMidColorPicker">High mid tones</label><button tabindex="-1" href="#"
-                                    rel="popover" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                    data-content="frequency range: 2600-5200Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></button>
+                                <label for="highMidColorPicker">High mid tones</label><button rel="popover"
+                                class="btn" role="button" data-toggle="popover" 
+                                data-content="These react to sound in the high mid tones, frequency range: 2600-5200Hz"><img class="icon"
+                                    src="assets/img/information.png" alt="More information"></button>
                                 <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
+                                <label for="highMidCheckbox">Display</label>
+                                <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
                             </div>
--->
+
                         </div>
                     </div>
                 </div>

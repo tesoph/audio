@@ -74,9 +74,9 @@ let sketch = function (p) {
             //  p.stroke(255);
             p.strokeWeight(p.strokeWidth);
             //fill(this.color);
-            p.fill(p.c);
+            //p.fill(p.c);
             if (p.shapeMode == false) {
-                p.ellipse(this.location.x, this.location.y, this.radius,this.radius);
+                p.ellipse(this.location.x, this.location.y, this.radius, this.radius);
             }
             if (p.lines) {
                 p.line(p.w / 2, p.h / 2, this.location.x, this.location.y);
@@ -113,6 +113,7 @@ let sketch = function (p) {
     p.numberOfMovers;
     p.backgroundColor;
     p.strokeColor;
+    //p.frequencyRange;
     //  for (let i = 0; i < 5; i++) {
     // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
     //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
@@ -124,51 +125,52 @@ let sketch = function (p) {
         //  p.highMidColor = p.color(255, 0, 0);
         p.red = p.color(255, 0, 0);
         //   p.c = p.color(0, 255, 0);
-        p.numberOfMovers = 50;
+        p.numberOfMovers = 20;
         p.strokeWidth = 1;
         p.shapeMode = false;
         p.playing = false;
         p.backgroundColor = p.color(0, 0, 0);
         p.strokeColor = p.color(255, 255, 255);
-       // p.sensitivity=140;
+        // p.sensitivity=140;
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
 
         p.background(p.backgroundColor);
         p.backgroundColor.setAlpha(5);
         p.getAudioInput();
-
+        p.displayHighMid = false;
         //Play/pause button when pressed calls function togglePlaying
         //      p.cnv.mousePressed(togglePlaying);
 
-        //Declare attractor object.
-        p.a = new Attractor(p);
-        for (let i = 0; i < p.numberOfMovers; i++) {
-            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
-        }
+        //Create an attractor object and an array
+        p.initialize();
     };
 
     p.draw = function () {
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
-        //p.threshold = p.map(p.sensitivity, 30, 170, 20, 180);
-        //  p.threshold = p.sensitivty;
-        //   p.print(p.sensitivity);
-        //  p.print(p.threshold);
-        // p.threshold = p.map(p.threshold, 30,170,30,170);
-        // p.print("Threshold:" + p.threshold);
         p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
         p.stroke(p.strokeColor);
+     //   p.frequencyRange =p.lowMid;
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
-            p.moveMovers(p.moversLowMid, p.threshold);
+            p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
+            if (p.displayHighMid) {
+                p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
+            }
             //   peakDetect.update(fft);
             for (let i = 0; i < p.numberOfMovers; i++) {
+                p.fill(p.c);
                 p.moversLowMid[i].checkEdges();
                 p.moversLowMid[i].update();
                 p.moversLowMid[i].display();
+                if (p.displayHighMid) {
+                    p.fill(p.highMidColor);
+                    p.moversHighMid[i].checkEdges();
+                    p.moversHighMid[i].update();
+                    p.moversHighMid[i].display();
+                }
             }
 
             if (p.shapeMode) {
@@ -195,7 +197,7 @@ let sketch = function (p) {
         }
     };
 
-       p.getAudioInput = function(){
+    p.getAudioInput = function () {
         //Audio input comes from the microphone
         p.mic;
         p.mic = new p5.AudioIn()
@@ -204,7 +206,7 @@ let sketch = function (p) {
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
-}
+    }
 
     p.changeBackgroundColor = function (bgCol_) {
         if (bgCol_ === "white") {
@@ -215,12 +217,12 @@ let sketch = function (p) {
             p.strokeColor = p.color(255, 255, 255);
         }
     }
+
     p.fadeBackground = function () {
         //Creating a gradual fade effect on the background 
         p.noStroke();
         p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
-        //    p.stroke(0);
     }
 
     p.analyzeAudio = function () {
@@ -235,8 +237,10 @@ let sketch = function (p) {
     p.drawBass = function () {
         //radius of center ellipse is mapped to the amplitude of the bass frequency
         p.bassMap = p.map(p.bass, 0, 255, 20, 500);
+        p.bassStrokeWeight = p.map(p.bass, 0, 255, 0, 10);
         // var bassMap2 = map(bass, 0, 255, 5, 100);
         p.noFill();
+        p.strokeWeight(p.bassStrokeWeight);
         p.stroke(p.strokeColor);
         p.ellipse(p.w / 2, p.h / 2, p.bassMap, p.bassMap);
         //fill(255);
@@ -266,10 +270,11 @@ let sketch = function (p) {
         }
     }
 
-    p.moveMovers = function (movers_, threshold_) {
+    p.moveMovers = function (movers_, threshold_, frequencyRange_) {
         //  p.print(p.threshold);
         p.threshold = threshold_
         p.movers = movers_;
+        p.frequencyRange = frequencyRange_;
         //Loop through the array of movers
         for (let i = 0; i < p.numberOfMovers; i++) {
             //Movers are attracted to the Attractor object in center of canvas
@@ -279,7 +284,7 @@ let sketch = function (p) {
             p.movers[i].applyForce(p.f);
 
             //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
-            if (p.lowMid > p.threshold) {
+            if (p.frequencyRange > p.threshold) {
                 p.t = p.a.repel(p.movers[i]);
                 p.t.normalize();
                 p.t.mult(1);
@@ -299,7 +304,6 @@ let sketch = function (p) {
             p.noLoop();
         } else if (p.playing == false) {
             //clear the background (to remove play image)
-            // 
             p.background(0);
             //     p.rectMode(p.CENTER); 
             //    p.fill(0);
@@ -318,28 +322,55 @@ let sketch = function (p) {
             console.log('Unchecking!');
         }
     }
-    
+
     p.capture = function () {
-       // p.saveCanvas(p.cnv, 'myCanvas.jpg');
-       p.save('myCanvas.jpg');
+        // p.saveCanvas(p.cnv, 'myCanvas.jpg');
+        p.save('myCanvas.jpg');
     }
 
     p.windowResized = function (w_, h_) {
-       // p.print("resized");
         p.w = w_;
         p.h = h_;
-       // p.print("new h:" + p.h);
         p.resizeCanvas(p.w, p.h);
-        p.refresh();
+        p.initialize();
     }
 
-    p.refresh = function () {
-        //Make new attractor and movers orientated to new canvas center
+    p.initialize = function () {
+        let list = [1, 2, 3, 4, 5];
+        let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
+        //Make new attractor and movers orientated to canvas center
         p.a = new Attractor(p);
         for (let i = 0; i < p.numberOfMovers; i++) {
-            p.moversLowMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
-            //  p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
+            //   p.randomMass = p.floor(p.random(1,4));
+            //  p.print(p.randomMass);
+            //  p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversLowMid[i] = new Mover(this, 1, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversHighMid[i] = new Mover(this, 3, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
     }
 
+    // https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
+    let rand = function (min, max) {
+        return Math.random() * (max - min) + min;
+    };
+
+    let getRandomItem = function (list, weight) {
+        let total_weight = weight.reduce(function (prev, cur, i, arr) {
+            return prev + cur;
+        });
+
+        let random_num = rand(0, total_weight);
+        let weight_sum = 0;
+
+        for (let i = 0; i < list.length; i++) {
+            weight_sum += weight[i];
+            weight_sum = +weight_sum.toFixed(2);
+
+            if (random_num <= weight_sum) {
+                return list[i];
+            }
+        }
+
+        // end of function
+    };
 };
