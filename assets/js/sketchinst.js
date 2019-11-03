@@ -5,7 +5,7 @@ let sketch = function (p) {
         constructor(p_) {
             this.p = p_;
             this.location = p.createVector(p.w / 2, p.h / 2);
-            this.mass = 60;
+            this.mass = 100;
             this.velocity = p.createVector(1, 2);
             this.g = 1;
         }
@@ -48,7 +48,7 @@ let sketch = function (p) {
         }
 
     }
-p.topSpeed2;
+
     class Mover {
         constructor(p_, m_, x_, y_, c_) {
             this.p = p_;
@@ -62,8 +62,9 @@ p.topSpeed2;
         }
 
         update() {
+      //  p.print(p.topseed2);
             this.velocity.add(this.acceleration);
-            this.velocity.limit(p.topspeed2);
+            this.velocity.limit(this.topspeed);
             this.location.add(this.velocity);
             this.acceleration.mult(0);
         }
@@ -130,6 +131,7 @@ p.topSpeed2;
         p.playing = false;
         p.backgroundColor = p.color(0, 0, 0);
         p.strokeColor = p.color(255, 255, 255);
+        p.topSpeed2=5;
         // p.sensitivity=140;
         //creating a canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
@@ -152,16 +154,16 @@ p.topSpeed2;
 
     p.draw = function () {
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
-        p.cnv.mousePressed(p.togglePlaying);
+     //   p.cnv.mousePressed(p.togglePlaying);
         p.fadeBackground();
         p.stroke(p.strokeColor);
-        //   p.frequencyRange =p.lowMid;
+     
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
             p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
             if (p.displayHighMid) {
-                p.moveMovers(p.moversHighMid, p.threshold, p.treble);
+                p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
             }
             //   peakDetect.update(fft);
             for (let i = 0; i < p.numberOfMovers; i++) {
@@ -186,7 +188,7 @@ p.topSpeed2;
                 p.endShape();
             }
         }
-
+/*
         //Paused canvas
         else if (p.playing == false && p.getAudioContext().state == "running") {
 
@@ -198,7 +200,7 @@ p.topSpeed2;
         else {
             p.imageMode(p.CENTER);
             p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
-        }
+        }*/
     };
 
     p.initialize = function () {
@@ -265,6 +267,7 @@ p.topSpeed2;
         // ellipse(w / 2, h / 2, bassMap2, bassMap2);
     }
 
+    /*
     p.attractMovers = function () {
         //Loop through the array of movers
         for (let i = 0; i < p.numberOfMovers; i++) {
@@ -286,7 +289,7 @@ p.topSpeed2;
                 p.moversLowMid[i].applyForce(p.t);
             }
         }
-    }
+    }*/
 
     p.moveMovers = function (movers_, threshold_, frequencyRange_) {
         //  p.print(p.threshold);
@@ -312,7 +315,6 @@ p.topSpeed2;
     }
 
     p.togglePlaying = function () {
-
         //Start Audio context on user gesture
         if (p.getAudioContext().state !== 'running') {
             p.userStartAudio();
@@ -320,12 +322,9 @@ p.topSpeed2;
         if (p.playing == true) {
             p.playing = false;
             p.noLoop();
-        } else if (p.playing == false) {
+        } else {
             //clear the background (to remove play image)
-            p.background(0);
-            //     p.rectMode(p.CENTER); 
-            //    p.fill(0);
-            //   p.rect(p.w/2, p.h/2,100,100);
+          //  p.background(0);
             p.playing = true;
             p.loop();
         }

@@ -40,6 +40,29 @@ canvas {
     height: 100% !important;
 }
 
+#play{
+    position:absolute;
+    left: 0; 
+    right: 0; 
+    top:0;
+    bottom:0;
+    margin: auto auto;
+    width: 200px;
+}
+
+#play img {
+    max-width:300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+@media (min-width: 768px) {
+   #play img{
+       max-width:500px;
+   }
+}
 /*----------Wrappers--------*/
 
 main {

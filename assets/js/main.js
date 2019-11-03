@@ -1,3 +1,4 @@
+
 //https://stackoverflow.com/questions/29209308/window-localstorage-setitem-not-working-on-mobile-phone
 //So finally found the solution, I need to set webSettings.setDomStorageEnabled(true); on android code and after this localstorage is working perfectlly.
 //webSettings.setDomStorageEnabled(true);
@@ -36,7 +37,18 @@ myp5.sensitivity = document.getElementById('sensitivity-slider').value;
 
 
 window.onload = function () {
-
+    let sketchCanvas = document.getElementById("container");
+    sketchCanvas.addEventListener('click', play);
+    function play() {
+        console.log("k");
+        let playButton = document.getElementById("play");
+        if (myp5.playing) {
+            playButton.style.display = "inline";
+        } else {
+            playButton.style.display = "none";
+        }
+        myp5.togglePlaying();
+    }
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', resizeCanvas);
 
@@ -60,6 +72,9 @@ window.onload = function () {
     myp5.c = $('#lowMidColor').val();
     myp5.highMidColor = $('#highMidColorPicker').val();
     myp5.strokeWidth = $("#stroke-weight-picker").val();
+
+
+    
 
     /////////Action buttons/////////
     //Settings button (Opens settings menu)
@@ -259,11 +274,13 @@ window.onload = function () {
     }
 
     //Topspeed slider
-
-    let topspeedSlider= document.getElementById("topspeed-slider");
-    topspeedSlider.oninput = function () {
-        myp5.topspeed2= this.value;
-    }
+    /*
+        let topspeedSlider= document.getElementById("topspeed-slider");
+        topspeedSlider.oninput = function () {
+            myp5.topspeed2= this.value;
+            console.log("speed" + this.value);
+        }
+        */
 }
 
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
