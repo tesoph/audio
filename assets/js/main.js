@@ -99,7 +99,7 @@ window.onload = function () {
     $("#camera").on("click", function () {
         //?Not working on andoird chrome
         alert("Hello! Camera button was pressed!");
-        $(".ui-dialog-titlebar").hide();
+       // $(".ui-dialog-titlebar").hide();
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
         $(".no").on("click", function () {
@@ -107,7 +107,7 @@ window.onload = function () {
             sessionStorage.setItem('hideAlert2', true);
         });
        // if (!localStorage.hideAlert2 || localStorage == null) {
-        if (!sessionStorage.hideAlert2 || isMobile) {
+        if (!sessionStorage.hideAlert2 || !isMobile) {
             $(function () {
                 myp5.noLoop();
                 //Dialog opens to confirm the user wants to save a picture
