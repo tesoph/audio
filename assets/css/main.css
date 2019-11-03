@@ -159,6 +159,7 @@ main {
 #dialog-confirm{
     background-color:white;
     display:none;
+    z-index:999;
 }
 
 
