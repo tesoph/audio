@@ -20,7 +20,6 @@ let sketch = function (p) {
             this.location.p.add(this.velocity);
         }
 
-
         attract(m) {
             var force = p5.Vector.sub(this.location, m.location);
             var distance = force.mag();

@@ -1,11 +1,19 @@
+var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+
+if (isMobile) {
+    alert("Mobile browser detected!");
+    //Conditional script here
+}
+/*
 $( document ).ready(function() {      
     var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 
     if (isMobile) {
+        alert("Mobile browser detected!");
         //Conditional script here
     }
  });
-
+*/
 //https://stackoverflow.com/questions/29209308/window-localstorage-setitem-not-working-on-mobile-phone
 //So finally found the solution, I need to set webSettings.setDomStorageEnabled(true); on android code and after this localstorage is working perfectlly.
 //webSettings.setDomStorageEnabled(true);
@@ -135,7 +143,7 @@ window.onload = function () {
                     //position: "center" 
                 });
             });
-        } else {
+        } else if(sessionStorage.hideAlert2 || isMobile) {
             //  {
             myp5.capture();
         }
