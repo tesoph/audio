@@ -82,7 +82,7 @@ main {
   height:100%;
 }
 
-#container {
+#sketch-container {
     /*w and h fixed ipad bug*/
     position: relative;
     display: block;
@@ -184,7 +184,6 @@ button{
 /*----------Settings Menu--------*/
 
 #close-settings {
-
     color: white;
     padding: 5px;
     float: right;
@@ -193,8 +192,8 @@ button{
     outline: none;
 }
 
-.close-settings-container {
-display:block;
+.close {
+   
 }
 
 .icon {

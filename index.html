@@ -132,12 +132,12 @@
             Press spacebar to capture an image</p>
     </div>-->
     <div id="backgroundColorRadio">
-        Background color:
+        Theme:
         <input type="radio" name="backgroundColorRadio" value="black"
                checked>
-        <label for="huey">Black</label>
+        <label for="backgroundColorRadio">Dark</label>
         <input type="radio" name="backgroundColorRadio" value="white">
-        <label for="huey">White</label>
+        <label for="backgroundColorRadio">Light</label>
       </div>
             <div id="lines">
                 <label for="linesCheckbox">Display lines</label>
@@ -151,8 +151,8 @@
 
             <div id="sensitivity-slider-div">
                 <label for="sensitivity-slider">Sensitivity to noise</label>
-                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="160"
-                    value="140" />
+                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
+                    value="90" />
             </div>
 
             <div id="stroke-width">
@@ -182,7 +182,7 @@
 
                 <div>
                     <label for="topspeed-slider">Speed</label>
-                    <input type="range" name="topspeed-slider" id="topspeed-slider" min="3" max="8"
+                    <input type="range" name="topspeed-slider" id="topspeed-slider" min="2" max="6" step="1"
                         value="5" />
                 </div>
 
@@ -191,8 +191,8 @@
     </div>
     <!--End Settings Menu -->
 
-            <!--the sketch is attached to #container-->
-            <div id="container">
+            <!--the sketch is attached to #sketch-container-->
+            <div id="sketch-container">
                 <div id="play">
                     <img src="assets/img/play.png" alt="play button">
                 </div>

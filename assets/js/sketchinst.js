@@ -61,10 +61,10 @@ let sketch = function (p) {
             this.radius = this.mass * 10;
         }
 
-        update(topspeed_) {
-      //  p.print(p.topseed2);
+        update() {
+            //  p.print(p.topseed2);
             this.velocity.add(this.acceleration);
-            this.velocity.limit(topspeed_);
+            this.velocity.limit(p.topspeed2);
             this.location.add(this.velocity);
             this.acceleration.mult(0);
         }
@@ -107,69 +107,41 @@ let sketch = function (p) {
     p.moversList = [];
     p.w = containerWidth;
     p.h = containerHeight;
-    p.moversLowMid = [];
-    p.moversHighMid = [];
-    p.lines;
-    p.numberOfMovers;
-    p.backgroundColor;
-    p.strokeColor;
-    //p.frequencyRange;
-    //  for (let i = 0; i < 5; i++) {
-    // p.moversLowMid[i] = new Mover(this,2, w / 2 + p.random(-10, 10), h / 2, p.c);
-    //  p.moversHighMid[i] = new Mover(2, w / 2 + random(-10, 10), h / 2, highMidColor);
-    //  }
 
     p.setup = function () {
-       // p.playImg = p.loadImage('assets/img/play.png');
-
-        //  p.highMidColor = p.color(255, 0, 0);
-        p.red = p.color(255, 0, 0);
-        //   p.c = p.color(0, 255, 0);
-        p.numberOfMovers = 40;
-        p.strokeWidth = 1;
-        p.shapeMode = false;
+        //Initial value set to false to stop sketch from playing until a user gesture on the page
         p.playing = false;
-        p.backgroundColor = p.color(0, 0, 0);
-        p.strokeColor = p.color(255, 255, 255);
-        p.topSpeed2=5;
-        // p.sensitivity=140;
-        //creating a canvas with width and height from the parent container
+        //creating the sketch canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
-
+        p.initializeVariables();
+        p.initializeMovers();
         p.background(p.backgroundColor);
         p.backgroundColor.setAlpha(5);
+        //Get the mic and attach an fft object to analyse the audio from it
         p.getAudioInput();
         p.displayHighMid = false;
-        //Play/pause button when pressed calls function togglePlaying
-        //      p.cnv.mousePressed(togglePlaying);
-      /*  for (let x = 0; x < 2; x++) {
-            distances[x] = []; // create nested array
-            for (let y = 0; y < numberOfMovers; y++) {
-              
-            }
-          }*/
-        //Create an attractor object and an array
-        p.initialize();
     };
 
     p.draw = function () {
-        p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
-     //   p.cnv.mousePressed(p.togglePlaying);
+        //Create a gradual fade effect on the background
         p.fadeBackground();
         p.stroke(p.strokeColor);
-     
+
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
+            //Move according to the bolume of the audio
             p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
             if (p.displayHighMid) {
-                p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
+                p.moveMovers(p.moversHighMid, p.threshold, p.treble);
             }
             //   peakDetect.update(fft);
             for (let i = 0; i < p.numberOfMovers; i++) {
-                p.fill(p.c);
+                p.fill(p.myColor); 
                 p.moversLowMid[i].checkEdges();
-                p.moversLowMid[i].update(p.topspeed2);
+                //?if you pass in the topspeed it goes v slow
+                //  p.moversLowMid[i].update(p.topspeed2);
+                p.moversLowMid[i].update();
                 p.moversLowMid[i].display();
                 if (p.displayHighMid) {
                     p.fill(p.highMidColor);
@@ -179,39 +151,46 @@ let sketch = function (p) {
                 }
             }
 
+            //shape mode
             if (p.shapeMode) {
                 p.noFill();
                 p.beginShape();
                 for (let i = 0; i < p.numberOfMovers; i++) {
-                    p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
+                p.makeShapeMode(i);
                 }
                 p.endShape();
             }
         }
-/*
-        //Paused canvas
-        else if (p.playing == false && p.getAudioContext().state == "running") {
-
-            p.imageMode(p.CENTER);
-            p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
-        }
-
-        //Initial canvas
-        else {
-            p.imageMode(p.CENTER);
-            p.image(p.playImg, p.w / 2, p.h / 2, p.playImg.width / 2, p.playImg.height / 2);
-        }*/
     };
+    p.makeShapeMode = function (i_) {
+        //needs to be in draw()
+        let i=i_;
+        p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
+    }
+    p.initializeVariables = function () {
+        p.numberOfMovers = 40;
+        p.moversLowMid = [];
+        p.moversHighMid = [];
+        p.strokeWidth = 1;
+        p.shapeMode = false;
+        p.backgroundColor = p.color(0, 0, 0);
+        p.strokeColor = p.color(255, 255, 255);
+        p.topspeed2 = 5;
+        p.sensitivity = 90;
+    }
 
-    p.initialize = function () {
+    p.initializeMovers = function () {
+        //? Array of array of movers(?)
+
+        //Use list and weight to bias the size of the movers (more small movers than large one)
         let list = [1, 2, 3, 4, 5];
         let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
         //Make new attractor and movers orientated to canvas center
         p.a = new Attractor(p);
         for (let i = 0; i < p.numberOfMovers; i++) {
-            //   p.randomMass = p.floor(p.random(1,4));
+            //  p.randomMass = p.floor(p.random(1,4));
             //  p.print(p.randomMass);
-            p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
+            p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.myColor);
             //  p.moversLowMid[i] = new Mover(this, 1, p.w / 2 + p.random(-10, 10), p.h / 2, p.c);
             p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
@@ -222,7 +201,6 @@ let sketch = function (p) {
         p.mic;
         p.mic = new p5.AudioIn()
         p.mic.start();
-
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
@@ -239,7 +217,7 @@ let sketch = function (p) {
     }
 
     p.fadeBackground = function () {
-        //Creating a gradual fade effect on the background 
+        //Creating a gradual fade effect on the background by drawing a 100% width and height slightly transparent rectangle on top of the sketch
         p.noStroke();
         p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
@@ -247,11 +225,13 @@ let sketch = function (p) {
 
     p.analyzeAudio = function () {
         p.spectrum = p.fft.analyze();
-      // p.highMid = p.fft.getEnergy("highMid");
+        // p.highMid = p.fft.getEnergy("highMid");
         p.lowMid = p.fft.getEnergy("lowMid");
         p.treble = p.fft.getEnergy("treble");
         p.bass = p.fft.getEnergy("bass");
         // var mid = fft.getEnergy("mid");
+        //Sensitivity value from slider mapped backwards to threshold so that the amplitude can be > threshold
+        p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
     }
 
     p.drawBass = function () {
@@ -292,7 +272,6 @@ let sketch = function (p) {
     }*/
 
     p.moveMovers = function (movers_, threshold_, frequencyRange_) {
-        //  p.print(p.threshold);
         p.threshold = threshold_
         p.movers = movers_;
         p.frequencyRange = frequencyRange_;
@@ -323,8 +302,6 @@ let sketch = function (p) {
             p.playing = false;
             p.noLoop();
         } else {
-            //clear the background (to remove play image)
-          //  p.background(0);
             p.playing = true;
             p.loop();
         }
@@ -341,6 +318,7 @@ let sketch = function (p) {
     }
 
     p.capture = function () {
+        //?Which is better
         // p.saveCanvas(p.cnv, 'myCanvas.jpg');
         p.save('myCanvas.jpg');
     }
@@ -349,7 +327,7 @@ let sketch = function (p) {
         p.w = w_;
         p.h = h_;
         p.resizeCanvas(p.w, p.h);
-        p.initialize();
+        p.initializeMovers();
     }
 
 
@@ -374,7 +352,6 @@ let sketch = function (p) {
                 return list[i];
             }
         }
-
         // end of function
     };
 };
