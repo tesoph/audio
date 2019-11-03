@@ -184,6 +184,7 @@ button{
 /*----------Settings Menu--------*/
 
 #close-settings {
+
     color: white;
     padding: 5px;
     float: right;
@@ -192,8 +193,8 @@ button{
     outline: none;
 }
 
-.close {
-   
+.close-settings-container {
+display:block;
 }
 
 .icon {

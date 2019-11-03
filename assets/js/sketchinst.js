@@ -61,10 +61,10 @@ let sketch = function (p) {
             this.radius = this.mass * 10;
         }
 
-        update() {
+        update(topspeed_) {
       //  p.print(p.topseed2);
             this.velocity.add(this.acceleration);
-            this.velocity.limit(this.topspeed);
+            this.velocity.limit(topspeed_);
             this.location.add(this.velocity);
             this.acceleration.mult(0);
         }
@@ -120,7 +120,7 @@ let sketch = function (p) {
     //  }
 
     p.setup = function () {
-        p.playImg = p.loadImage('assets/img/play.png');
+       // p.playImg = p.loadImage('assets/img/play.png');
 
         //  p.highMidColor = p.color(255, 0, 0);
         p.red = p.color(255, 0, 0);
@@ -169,7 +169,7 @@ let sketch = function (p) {
             for (let i = 0; i < p.numberOfMovers; i++) {
                 p.fill(p.c);
                 p.moversLowMid[i].checkEdges();
-                p.moversLowMid[i].update();
+                p.moversLowMid[i].update(p.topspeed2);
                 p.moversLowMid[i].display();
                 if (p.displayHighMid) {
                     p.fill(p.highMidColor);
