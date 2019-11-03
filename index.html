@@ -118,83 +118,83 @@
                     </div>
                 </div>
             </div>
+<!--Settings Menu-->
+<div id="toggler">
+        <div id="gui">
+            <div class="close">
+                <button id="close-settings">X</button>
+            </div>
 
+            <!-- <div id="shortcuts">
+        <p>keyboard shortcuts: <br>
+            Press spacebar to capture an image</p>
+    </div>-->
+    <div id="backgroundColorRadio">
+        Background color:
+        <input type="radio" name="backgroundColorRadio" value="black"
+               checked>
+        <label for="huey">Black</label>
+        <input type="radio" name="backgroundColorRadio" value="white">
+        <label for="huey">White</label>
+      </div>
+            <div id="lines">
+                <label for="linesCheckbox">Display lines</label>
+                <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
+            </div>
+
+            <div id="shape">
+                <label for="shapeCheckbox">Shape mode</label>
+                <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
+            </div>
+
+            <div id="sensitivity-slider-div">
+                <label for="sensitivity-slider">Sensitivity to noise</label>
+                <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="160"
+                    value="140" />
+            </div>
+
+            <div id="stroke-width">
+                <label for="stroke-weight-picker">Stroke weight</label>
+                <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
+                    value="1" />
+            </div>
+
+            <div id="colors" class="">
+                <div class="">
+                    <label for="lowMidColor">Low mid tones color: </label> <!--<button rel="popover"
+                        class="btn" role="button" data-toggle="popover" 
+                        data-content="The circles react to sound in the low mid tones, frequency range: 140-400Hz"><img class="icon"
+                            src="assets/img/information.png" alt="More information"></button>-->
+                    <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
+                </div>
+                
+                <div class="">
+                    <label for="highMidColorPicker">High mid tones</label><!--<button rel="popover"
+                        class="btn" role="button" data-toggle="popover" 
+                        data-content="These react to sound in the high mid tones, frequency range: 2600-5200Hz"><img class="icon"
+                            src="assets/img/information.png" alt="More information"></button>-->
+                    <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
+                    <label for="highMidCheckbox">Display</label>
+                    <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
+                </div>
+
+                <div>
+                    <label for="topspeed-slider">Speed</label>
+                    <input type="range" name="topspeed-slider" id="topspeed-slider" min="3" max="8"
+                        value="5" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--End Settings Menu -->
 
             <!--the sketch is attached to #container-->
             <div id="container">
                 <div id="play">
                     <img src="assets/img/play.png" alt="play button">
                 </div>
-                <!--Settings Menu-->
-                <div id="toggler">
-                    <div id="gui">
-                        <div class="close">
-                            <button id="close-settings">X</button>
-                        </div>
-
-                        <!-- <div id="shortcuts">
-                    <p>keyboard shortcuts: <br>
-                        Press spacebar to capture an image</p>
-                </div>-->
-                <div id="backgroundColorRadio">
-                    Background color:
-                    <input type="radio" name="backgroundColorRadio" value="black"
-                           checked>
-                    <label for="huey">Black</label>
-                    <input type="radio" name="backgroundColorRadio" value="white">
-                    <label for="huey">White</label>
-                  </div>
-                        <div id="lines">
-                            <label for="linesCheckbox">Display lines</label>
-                            <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
-                        </div>
-
-                        <div id="shape">
-                            <label for="shapeCheckbox">Shape mode</label>
-                            <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
-                        </div>
-
-                        <div id="sensitivity-slider-div">
-                            <label for="sensitivity-slider">Sensitivity to noise</label>
-                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="160"
-                                value="140" />
-                        </div>
-
-                        <div id="stroke-width">
-                            <label for="stroke-weight-picker">Stroke weight</label>
-                            <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
-                                value="1" />
-                        </div>
-
-                        <div id="colors" class="">
-                            <div class="">
-                                <label for="lowMidColor">Low mid tones color: </label> <!--<button rel="popover"
-                                    class="btn" role="button" data-toggle="popover" 
-                                    data-content="The circles react to sound in the low mid tones, frequency range: 140-400Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></button>-->
-                                <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
-                            </div>
-                            
-                            <div class="">
-                                <label for="highMidColorPicker">High mid tones</label><!--<button rel="popover"
-                                    class="btn" role="button" data-toggle="popover" 
-                                    data-content="These react to sound in the high mid tones, frequency range: 2600-5200Hz"><img class="icon"
-                                        src="assets/img/information.png" alt="More information"></button>-->
-                                <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
-                                <label for="highMidCheckbox">Display</label>
-                                <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
-                            </div>
-
-                            <div>
-                                <label for="topspeed-slider">Speed</label>
-                                <input type="range" name="topspeed-slider" id="topspeed-slider" min="3" max="8"
-                                    value="5" />
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!--End Settings Menu -->
+                
             </div>
         </div>
     </main>
