@@ -105,19 +105,26 @@ window.onload = function () {
 
     //Camera button
     $("#camera").on("click", function () {
+        if (storageAvailable('sessionStorage')) {
+            var avail=true;
+          }
+          else {
+            var avail=false;
+          }
         //?Not working on andoird chrome
         alert("Hello! Camera button was pressed!");
        // $(".ui-dialog-titlebar").hide();
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
-        $(".no").on("click", function () {
-           // localStorage.setItem('hideAlert2', true);
-            sessionStorage.setItem('hideAlert2', true);
-        });
+        
        // if (!localStorage.hideAlert2 || localStorage == null) {
-        if (!sessionStorage.hideAlert2 || !isMobile) {
+        if (!sessionStorage.hideAlert2 && avail) {
             $(function () {
                 myp5.noLoop();
+                $(".no").on("click", function () {
+                    // localStorage.setItem('hideAlert2', true);
+                     sessionStorage.setItem('hideAlert2', true);
+                 });
                 //Dialog opens to confirm the user wants to save a picture
                 //if yes it calls the myp5 function capture()
                 //If no closes dialog box
@@ -143,7 +150,7 @@ window.onload = function () {
                     //position: "center" 
                 });
             });
-        } else if(sessionStorage.hideAlert2 || isMobile) {
+        } else  {
             //  {
             myp5.capture();
         }
@@ -319,3 +326,29 @@ function myUnloadHandler(evt) {
 $(window).on("unload", function (e) {
    // localStorage.removeItem('hideAlert2');
 });
+
+//https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
