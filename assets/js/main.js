@@ -1,7 +1,7 @@
 var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 
 if (isMobile) {
-    alert("Mobile browser detected!");
+    //alert("Mobile browser detected!");
     //Conditional script here
 }
 /*
@@ -26,8 +26,8 @@ $("#dialog-confirm").dialog({
 //Get the height and width of the container so to set the canvas width and height 
 let sketchContainer = document.getElementById('sketch-container');
 let positionInfo = sketchContainer.getBoundingClientRect();
-var containerHeight = positionInfo.height;
-var containerWidth = positionInfo.width;
+let containerHeight = positionInfo.height;
+let containerWidth = positionInfo.width;
 console.log("h:" + containerHeight);
 
 //Enable popovers everywhere
@@ -48,16 +48,11 @@ $('.popover-dismiss').popover({
 //Create sketch and attach it to #container div
 var myp5 = new p5(sketch, document.getElementById("sketch-container"));
 
-myp5.sensitivity = document.getElementById('sensitivity-slider').value;
-
-
 window.onload = function () {
 
-
-    let sketchContainer = document.getElementById("sketch-container");
     sketchContainer.addEventListener('click', play);
+
     function play() {
-        console.log("k");
         let playButton = document.getElementById("play");
         if (myp5.playing) {
             playButton.style.display = "inline";
@@ -66,6 +61,7 @@ window.onload = function () {
         }
         myp5.togglePlaying();
     }
+
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('orientationchange', resizeCanvas);
 
@@ -78,25 +74,22 @@ window.onload = function () {
     });
 
     function resizeCanvas() {
-        var sketchContainer = document.getElementById('sketch-container');
-        var positionInfo = sketchContainer.getBoundingClientRect();
-        var containerHeight = positionInfo.height;
-        var containerWidth = positionInfo.width;
+        let sketchContainer = document.getElementById('sketch-container');
+        let positionInfo = sketchContainer.getBoundingClientRect();
+        let containerHeight = positionInfo.height;
+        let containerWidth = positionInfo.width;
         myp5.windowResized(containerWidth, containerHeight);
-
     }
 
     //Set sketch variables according to ui menu settings on load
-    myp5.myColor = $('#lowMidColor').val();
-    myp5.highMidColor = $('#highMidColorPicker').val();
-    myp5.strokeWidth = $("#stroke-weight-picker").val();
-
-
-
+   // myp5.myColor = $('#lowMidColor').val();
+    //myp5.highMidColor = $('#highMidColorPicker').val();
+   // myp5.strokeWidth = $("#stroke-weight-picker").val();
+   // myp5.sensitivity = $('#sensitivity-slider').val();
 
     /////////Action buttons/////////
     //Settings button (Opens settings menu)
-    $("#buttonX").on("click", function () {
+    $("#settings").on("click", function () {
         $("#toggler").toggle("slide", {}, 100);
     });
 
@@ -106,25 +99,25 @@ window.onload = function () {
     //Camera button
     $("#camera").on("click", function () {
         if (storageAvailable('sessionStorage')) {
-            var avail=true;
-          }
-          else {
-            var avail=false;
-          }
-        //?Not working on andoird chrome
+            var avail = true;
+        }
+        else {
+            var avail = false;
+        }
+        //?Not working on android chrome
         alert("Hello! Camera button was pressed!");
-       // $(".ui-dialog-titlebar").hide();
+        // $(".ui-dialog-titlebar").hide();
         //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
         //Sets local storage item so user won't be asked again to confirm saving an image
-        
-       // if (!localStorage.hideAlert2 || localStorage == null) {
+
+        // if (!localStorage.hideAlert2 || localStorage == null) {
         if (!sessionStorage.hideAlert2 && avail) {
             $(function () {
                 myp5.noLoop();
                 $(".no").on("click", function () {
                     // localStorage.setItem('hideAlert2', true);
-                     sessionStorage.setItem('hideAlert2', true);
-                 });
+                    sessionStorage.setItem('hideAlert2', true);
+                });
                 //Dialog opens to confirm the user wants to save a picture
                 //if yes it calls the myp5 function capture()
                 //If no closes dialog box
@@ -150,7 +143,7 @@ window.onload = function () {
                     //position: "center" 
                 });
             });
-        } else  {
+        } else {
             //  {
             myp5.capture();
         }
@@ -209,8 +202,9 @@ window.onload = function () {
     });
 
     $("#audio-input-mode").on("click", function () {
-        if(!myp5.playingAudioFile){
-      myp5.getAudioInput2();}
+        if (!myp5.playingAudioFile) {
+            myp5.getAudioInput2();
+        }
     });
 
     //Background Color radio
@@ -221,7 +215,7 @@ window.onload = function () {
 
     //Display lines checkbox
     document.getElementById("linesCheckbox").onchange = function () {
-        if (this.checked == true) {
+        if (this.checked) {
             myp5.lines = true;
         } else {
             myp5.lines = false;
@@ -309,27 +303,27 @@ window.onload = function () {
 
 //? Doesn't seem to be working 
 if ("onpagehide" in window) {
-   // window.addEventListener("pageshow", myLoadHandler, false);
+    // window.addEventListener("pageshow", myLoadHandler, false);
     window.addEventListener("pagehide", myUnloadHandler, false);
 } else {
-   // window.addEventListener("load", myLoadHandler, false);
+    // window.addEventListener("load", myLoadHandler, false);
     window.addEventListener("unload", myUnloadHandler, false);
     window.addEventListener("beforeunload", myUnloadHandler, false);
 }
 
 function myUnloadHandler(evt) {
     if (evt.persisted) {
-        localStorage.removeItem('hideAlert2');
+        sessionStorage.removeItem('hideAlert2');
         return;
     }
-    localStorage.removeItem('hideAlert2');
+    sessionStorage.removeItem('hideAlert2');
 
 }
 //Code from: https://stackoverflow.com/questions/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed#targetText=Using%20vanilla%20JavaScript%20you%20could,the%20close%20window%2Ftab%20action.
 //when browser closed - remove local storage item from image save dialog confirmation
 
 $(window).on("unload", function (e) {
-   // localStorage.removeItem('hideAlert2');
+    // localStorage.removeItem('hideAlert2');
 });
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -342,7 +336,7 @@ function storageAvailable(type) {
         storage.removeItem(x);
         return true;
     }
-    catch(e) {
+    catch (e) {
         return e instanceof DOMException && (
             // everything except Firefox
             e.code === 22 ||

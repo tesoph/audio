@@ -174,15 +174,22 @@ let sketch = function (p) {
     }
 
     p.initializeVariables = function () {
+     
+        p.sensitivity = $('#sensitivity-slider').val();
+        p.myColor = $('#lowMidColor').val();
+        p.strokeWidth = $("#stroke-weight-picker").val();
+        p.highMidColor = $('#highMidColorPicker').val();
+        p.lines = $('#linesCheckbox').is(":checked");
+        p.shapeMode = $('#shapeCheckbox').is(":checked");
+        p.topspeed2= $('#topspeed-slider').val();
+        
         p.numberOfMovers = 40;
         p.moversLowMid = [];
         p.moversHighMid = [];
-        p.strokeWidth = 1;
-        p.shapeMode = false;
-        p.backgroundColor = p.color(0, 0, 0);
-        p.strokeColor = p.color(255, 255, 255);
-        p.topspeed2 = 5;
-        p.sensitivity = 90;
+
+        let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
+        myp5.changeBackgroundColor(bgCol);
+        
     }
 
     p.initializeMovers = function () {
@@ -321,9 +328,9 @@ let sketch = function (p) {
     p.toggleLines = function () {
         if (this.checked()) {
             console.log('Checking!');
-            lines = true;
+            p.lines = true;
         } else {
-            lines = false;
+            p.lines = false;
             console.log('Unchecking!');
         }
     }
