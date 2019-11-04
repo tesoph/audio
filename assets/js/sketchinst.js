@@ -59,7 +59,11 @@ let sketch = function (p) {
             this.mass = m_;
             this.radius = this.mass * 10;
         }
-
+run(){
+    this.update();
+    this.display();
+    this.checkEdges();
+}
         update() {
             //  p.print(p.topseed2);
             this.velocity.add(this.acceleration);
@@ -106,10 +110,15 @@ let sketch = function (p) {
     p.moversList = [];
     p.w = containerWidth;
     p.h = containerHeight;
+    /*
+        p.preload = function () {
+            p.mySound = p.loadSound("assets/audio/aiwdily.mp3");
+        }*/
 
     p.setup = function () {
         //Initial value set to false to stop sketch from playing until a user gesture on the page
         p.playing = false;
+        p.playingAudioFile = false;
         //creating the sketch canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
         p.initializeVariables();
@@ -119,6 +128,7 @@ let sketch = function (p) {
         //Get the mic and attach an fft object to analyse the audio from it
         p.getAudioInput();
         p.displayHighMid = false;
+
     };
 
     p.draw = function () {
@@ -129,33 +139,65 @@ let sketch = function (p) {
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
-            //Move according to the bolume of the audio
             p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
-            if (p.displayHighMid) {
-                p.moveMovers(p.moversHighMid, p.threshold, p.treble);
-            }
-            //   peakDetect.update(fft);
+        
+         /*  if(p.frequencyRange > p.threshold){
+           p.repelMovers(p.moversLowMid);}else{
+            p.attractMovers(p.moversLowMid);
+           }*/
+           for (let i = 0; i < p.numberOfMovers; i++) {
+              //p.moveMovers(p.moversLowMid, i, p.threshold, p.lowMid);
+              p.fill(p.myColor);
+              p.moversLowMid[i].run();
+           
+           }
+         //p.attractMovers(p.moversLowMid);
+         //p.repelMovers(p.moversLowMid,p.threshold,p.frequencyRange);
+            /*
             for (let i = 0; i < p.numberOfMovers; i++) {
-                p.fill(p.myColor); 
+                p.attractMovers(p.moversLowMid, i);
+                if(p.frequencyRange>p.threshold){
+                p.repelMovers(p.moversLowMid, i, p.threshold, p.frequencyRange);}
+   
+            }*/
+/*
+            for (let i = 0; i < p.numberOfMovers; i++) {
+                p.fill(p.myColor);
                 p.moversLowMid[i].checkEdges();
                 //?if you pass in the topspeed it goes v slow
                 //  p.moversLowMid[i].update(p.topspeed2);
                 p.moversLowMid[i].update();
                 p.moversLowMid[i].display();
-                if (p.displayHighMid) {
-                    p.fill(p.highMidColor);
-                    p.moversHighMid[i].checkEdges();
-                    p.moversHighMid[i].update();
-                    p.moversHighMid[i].display();
-                }
             }
-
+*/
+            //Move according to the bolume of the audio
+            /*
+                      p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
+                        if (p.displayHighMid) {
+                            p.moveMovers(p.moversHighMid, p.threshold, p.treble);
+                        }
+                        //   peakDetect.update(fft);
+                        for (let i = 0; i < p.numberOfMovers; i++) {
+                            p.fill(p.myColor);
+                            p.moversLowMid[i].checkEdges();
+                            //?if you pass in the topspeed it goes v slow
+                            //  p.moversLowMid[i].update(p.topspeed2);
+                            p.moversLowMid[i].update();
+                            p.moversLowMid[i].display();
+                            if (p.displayHighMid) {
+                                p.fill(p.highMidColor);
+                                p.moversHighMid[i].checkEdges();
+                                p.moversHighMid[i].update();
+                                p.moversHighMid[i].display();
+                            }
+                        }
+            */
             //shape mode
             if (p.shapeMode) {
                 p.noFill();
                 p.beginShape();
                 for (let i = 0; i < p.numberOfMovers; i++) {
-                p.makeShapeMode(i);
+                    p.makeShapeMode(i);
                 }
                 p.endShape();
             }
@@ -163,7 +205,7 @@ let sketch = function (p) {
     };
     p.makeShapeMode = function (i_) {
         //needs to be in draw()
-        let i=i_;
+        let i = i_;
         p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
     }
     p.initializeVariables = function () {
@@ -203,8 +245,24 @@ let sketch = function (p) {
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
+        p.peakDetect = new p5.PeakDetect();
+        p.peakDetect.update(p.fft);
+        //    p.peakDetect.onPeak(p.triggerBeat);
     }
+    p.triggerBeat = function () {
 
+    }
+    p.getAudioInput2 = function () {
+        //Audio input comes from the microphone
+        // p.mic;
+        //p.mic = new p5.AudioIn()
+        // p.mic.start();
+        //FFT object analyzes the audio input
+        p.fft = new p5.FFT();
+        p.fft.setInput(p.mySound);
+        p.mySound.play();
+        p.playingAudioFile = true;
+    }
     p.changeBackgroundColor = function (bgCol_) {
         if (bgCol_ === "white") {
             p.backgroundColor = p.color(255, 255, 255, 5);
@@ -246,50 +304,84 @@ let sketch = function (p) {
         // ellipse(w / 2, h / 2, bassMap2, bassMap2);
     }
 
-    /*
-    p.attractMovers = function () {
-        //Loop through the array of movers
+
+    p.attractMovers = function (movers_) {
+        let movers = movers_;
+    //   let i = i_;
         for (let i = 0; i < p.numberOfMovers; i++) {
-            p.f = p.a.attract(p.moversLowMid[i]);
-            p.f.normalize();
-            p.f.mult(1);
-            p.moversLowMid[i].applyForce(p.f);
-            p.fill(255);
+        p.t = p.a.attract(movers[i]);
+        p.t.normalize();
+        p.t.mult(1);
+        movers[i].applyForce(p.t);
         }
     }
 
-    p.repelMovers = function () {
+    p.repelMovers = function (movers_) {
         //Loop through the array of movers
+        let movers = movers_;
+      //  let i = i_;
+      //  let threshold = threshold_
+       // let frequencyRange = frequencyRange_;
         for (let i = 0; i < p.numberOfMovers; i++) {
-            if (p.lowMid > p.threshold) {
-                p.t = p.a.repel(p.moversLowMid[i]);
-                p.t.normalize();
-                p.t.mult(1);
-                p.moversLowMid[i].applyForce(p.t);
-            }
+     //if (frequencyRange > threshold) {
+            p.t = p.a.repel(movers[i]);
+            p.t.normalize();
+            p.t.mult(1);
+            movers[i].applyForce(p.t);
+  //   }
         }
-    }*/
+    }
 
-    p.moveMovers = function (movers_, threshold_, frequencyRange_) {
+    p.moveMovers = function (movers_,threshold_, frequencyRange_) {
+    //    let i = i_;
         p.threshold = threshold_
         p.movers = movers_;
         p.frequencyRange = frequencyRange_;
         //Loop through the array of movers
-        for (let i = 0; i < p.numberOfMovers; i++) {
-            //Movers are attracted to the Attractor object in center of canvas
+       for (let i = 0; i < p.numberOfMovers; i++) {
             p.f = p.a.attract(p.movers[i]);
             p.f.normalize();
-            p.f.mult(1);
+            p.f.mult(1.0025);
             p.movers[i].applyForce(p.f);
 
+            //Movers are attracted to the Attractor object in center of canvas
+
+
+            //p.peakDetect.onPeak(p.repelMovers(p.movers, i, p.threshold, p.frequencyRange));
             //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
             if (p.frequencyRange > p.threshold) {
-                p.t = p.a.repel(p.movers[i]);
-                p.t.normalize();
-                p.t.mult(1);
-                p.movers[i].applyForce(p.t);
-            }
-        }
+                  p.t = p.a.repel(p.movers[i]);
+                  p.t.normalize();
+                  p.t.mult(1.025);
+                  p.movers[i].applyForce(p.t);
+              }
+       }
+    }
+
+    p.moveMovers2 = function (movers_,i_,threshold_, frequencyRange_) {
+        let i = i_;
+        p.threshold = threshold_
+        p.movers = movers_;
+        p.frequencyRange = frequencyRange_;
+        //Loop through the array of movers
+       for (let i = 0; i < p.numberOfMovers; i++) {
+            p.f = p.a.attract(p.movers[i]);
+            p.f.normalize();
+            p.f.mult(1.0025);
+            p.movers[i].applyForce(p.f);
+
+            //Movers are attracted to the Attractor object in center of canvas
+
+
+            //p.peakDetect.onPeak(p.repelMovers(p.movers, i, p.threshold, p.frequencyRange));
+            //If a certain frequency is above a certain amplitude threshold the movers are repelled by the attractor object
+            if (p.frequencyRange > p.threshold) {
+                  p.t = p.a.repel(p.movers[i]);
+                  p.t.normalize();
+                  p.t.mult(1.025);
+                  p.movers[i].applyForce(p.t);
+              }
+       }
     }
 
     p.togglePlaying = function () {

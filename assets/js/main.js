@@ -208,6 +208,11 @@ window.onload = function () {
         $("#toggler").toggle("slide", {}, 100);
     });
 
+    $("#audio-input-mode").on("click", function () {
+        if(!myp5.playingAudioFile){
+      myp5.getAudioInput2();}
+    });
+
     //Background Color radio
     $('input[type="radio"]').on('click change', function (e) {
         let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
@@ -304,10 +309,10 @@ window.onload = function () {
 
 //? Doesn't seem to be working 
 if ("onpagehide" in window) {
-    window.addEventListener("pageshow", myLoadHandler, false);
+   // window.addEventListener("pageshow", myLoadHandler, false);
     window.addEventListener("pagehide", myUnloadHandler, false);
 } else {
-    window.addEventListener("load", myLoadHandler, false);
+   // window.addEventListener("load", myLoadHandler, false);
     window.addEventListener("unload", myUnloadHandler, false);
     window.addEventListener("beforeunload", myUnloadHandler, false);
 }
