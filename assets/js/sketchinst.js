@@ -121,12 +121,14 @@ let sketch = function (p) {
         p.playingAudioFile = false;
         //creating the sketch canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
+
         p.initializeVariables();
         //Array initialised with max (100) number of movers
-        p.numberOfMovers = 100;
+        //p.numberOfMovers = 100;
         p.initializeMovers();
         //Number of movers then changed to match slider input value
-        p.numberOfMovers = $('#number-of-movers').val();
+
+
         p.background(p.backgroundColor);
         p.backgroundColor.setAlpha(5);
         //Get the mic and attach an fft object to analyse the audio from it
@@ -141,16 +143,16 @@ let sketch = function (p) {
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
-          //  p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
-           p.attractMovers(p.moversLowMid);
-           p.repelMovers(p.moversLowMid, p.threshold,p.lowMid);
+            //  p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
+            p.attractMovers(p.moversLowMid);
+            p.repelMovers(p.moversLowMid, p.threshold, p.lowMid);
             if (p.displayHighMid) {
                 p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
             }
             for (let i = 0; i < p.numberOfMovers; i++) {
-              //  p.attractMovers(p.moversLowMid, i);
-               // p.repelMovers(p.moversLowMid, i, p.threshold, p.lowMid);
-              // p.moveMovers(p.moversLowMid, i, p.threshold, p.lowMid);
+                //  p.attractMovers(p.moversLowMid, i);
+                // p.repelMovers(p.moversLowMid, i, p.threshold, p.lowMid);
+                // p.moveMovers(p.moversLowMid, i, p.threshold, p.lowMid);
                 p.fill(p.myColor);
                 //run() contains update, checkedges,and display functions
                 p.moversLowMid[i].run();
@@ -178,21 +180,21 @@ let sketch = function (p) {
     }
 
     p.initializeVariables = function () {
-     
+
         p.sensitivity = $('#sensitivity-slider').val();
         p.myColor = $('#lowMidColor').val();
         p.strokeWidth = $("#stroke-weight-picker").val();
         p.highMidColor = $('#highMidColorPicker').val();
         p.lines = $('#linesCheckbox').is(":checked");
         p.shapeMode = $('#shapeCheckbox').is(":checked");
-        p.topspeed2= $('#topspeed-slider').val();
-
+        p.topspeed2 = $('#topspeed-slider').val();
+        p.numberOfMovers = $('#number-of-movers').val();
         p.moversLowMid = [];
         p.moversHighMid = [];
 
         let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
         myp5.changeBackgroundColor(bgCol);
-        
+
     }
 
     p.initializeMovers = function () {
@@ -203,7 +205,7 @@ let sketch = function (p) {
         let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
         //Make new attractor and movers orientated to canvas center
         p.a = new Attractor(p);
-        for (let i = 0; i < p.numberOfMovers; i++) {
+        for (let i = 0; i < 100; i++) {
             //  p.randomMass = p.floor(p.random(1,4));
             //  p.print(p.randomMass);
             p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.myColor);
@@ -343,8 +345,8 @@ let sketch = function (p) {
         let r = Math.random().toString(36).substring(7);
         let filename = `Audio-${r}.jpg`;
         //?Which is better
-         p.saveCanvas(p.cnv, filename);
-       // p.save('myCanvas.jpg');
+        p.saveCanvas(p.cnv, filename);
+        // p.save('myCanvas.jpg');
     }
 
     p.windowResized = function (w_, h_) {

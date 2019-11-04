@@ -19,9 +19,9 @@ $( document ).ready(function() {
 //webSettings.setDomStorageEnabled(true);
 
 //autoOpen:false stops the confirmation dialog from appearing on page load
-$("#dialog-confirm").dialog({
-    autoOpen: false,
-});
+//$("#dialog-confirm").dialog({
+  //  autoOpen: false,
+//});
 
 //Get the height and width of the container so to set the canvas width and height 
 let sketchContainer = document.getElementById('sketch-container');
@@ -94,59 +94,13 @@ window.onload = function () {
     });
 
     //Make settings menu draggable
-    $("#gui").draggable();
+   // $("#gui").draggable();
 
     //Camera button
     $("#camera").on("click", function () {
-        if (storageAvailable('sessionStorage')) {
-            var avail = true;
-        }
-        else {
-            var avail = false;
-        }
-        //?Not working on android chrome
-        alert("Hello! Camera button was pressed!");
-        // $(".ui-dialog-titlebar").hide();
-        //Code for setting local storage item from: https://jsfiddle.net/h5q7pe3m/1/
-        //Sets local storage item so user won't be asked again to confirm saving an image
-
-        // if (!localStorage.hideAlert2 || localStorage == null) {
-        if (!sessionStorage.hideAlert2 && avail) {
-            $(function () {
-                myp5.noLoop();
-                $(".no").on("click", function () {
-                    // localStorage.setItem('hideAlert2', true);
-                    sessionStorage.setItem('hideAlert2', true);
-                });
-                //Dialog opens to confirm the user wants to save a picture
-                //if yes it calls the myp5 function capture()
-                //If no closes dialog box
-                $("#dialog-confirm").dialog({
-                    autoOpen: true,
-                    resizable: false,
-                    height: "auto",
-                    width: 300,
-                    closeOnEscape: true,
-                    //?why doesn't modal:true freeze sketch
-                    modal: true,
-                    buttons: {
-                        "Save": function () {
-                            myp5.capture();
-                            $(this).dialog("close");
-                            myp5.loop();
-                        },
-                        Cancel: function () {
-                            $(this).dialog("close");
-                            myp5.loop();
-                        }
-                    },
-                    //position: "center" 
-                });
-            });
-        } else {
-            //  {
+        
             myp5.capture();
-        }
+        
     });
 
     //More information button
@@ -301,7 +255,7 @@ window.onload = function () {
 //No. of movers
     let numMovers = document.getElementById("number-of-movers");
     numMovers.oninput = function () {
-        myp5.numberOfMovers= this.value;
+        myp5.numberOfMovers= Math.floor(numMovers.value);
     }
 
 }
