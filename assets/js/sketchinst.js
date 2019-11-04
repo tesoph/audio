@@ -122,7 +122,11 @@ let sketch = function (p) {
         //creating the sketch canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
         p.initializeVariables();
+        //Array initialised with max (100) number of movers
+        p.numberOfMovers = 100;
         p.initializeMovers();
+        //Number of movers then changed to match slider input value
+        p.numberOfMovers = $('#number-of-movers').val();
         p.background(p.backgroundColor);
         p.backgroundColor.setAlpha(5);
         //Get the mic and attach an fft object to analyse the audio from it
@@ -182,8 +186,7 @@ let sketch = function (p) {
         p.lines = $('#linesCheckbox').is(":checked");
         p.shapeMode = $('#shapeCheckbox').is(":checked");
         p.topspeed2= $('#topspeed-slider').val();
-        
-        p.numberOfMovers = 40;
+
         p.moversLowMid = [];
         p.moversHighMid = [];
 

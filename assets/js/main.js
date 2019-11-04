@@ -298,6 +298,11 @@ window.onload = function () {
     topspeedSlider.oninput = function () {
         myp5.topspeed2 = Math.floor(topspeedSlider.value);
     }
+//No. of movers
+    let numMovers = document.getElementById("number-of-movers");
+    numMovers.oninput = function () {
+        myp5.numberOfMovers= this.value;
+    }
 
 }
 
