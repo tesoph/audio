@@ -128,7 +128,6 @@ let sketch = function (p) {
         //Get the mic and attach an fft object to analyse the audio from it
         p.getAudioInput();
         p.displayHighMid = false;
-
     };
 
     p.draw = function () {
@@ -141,18 +140,15 @@ let sketch = function (p) {
           //  p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
            p.attractMovers(p.moversLowMid);
            p.repelMovers(p.moversLowMid, p.threshold,p.lowMid);
-
             if (p.displayHighMid) {
                 p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
             }
-            //? If replace moveMovers with atrract and repel as below it doesn't work
-            // p.attractMovers(p.moversLowMid);
-            // p.repelMovers(p.moversLowMid,p.threshold,p.lowMid);
             for (let i = 0; i < p.numberOfMovers; i++) {
               //  p.attractMovers(p.moversLowMid, i);
                // p.repelMovers(p.moversLowMid, i, p.threshold, p.lowMid);
               // p.moveMovers(p.moversLowMid, i, p.threshold, p.lowMid);
                 p.fill(p.myColor);
+                //run() contains update, checkedges,and display functions
                 p.moversLowMid[i].run();
                 if (p.displayHighMid) {
                     p.fill(p.highMidColor);
@@ -176,6 +172,7 @@ let sketch = function (p) {
         let i = i_;
         p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
     }
+
     p.initializeVariables = function () {
         p.numberOfMovers = 40;
         p.moversLowMid = [];
@@ -217,9 +214,7 @@ let sketch = function (p) {
         p.peakDetect.update(p.fft);
         //    p.peakDetect.onPeak(p.triggerBeat);
     }
-    p.triggerBeat = function () {
 
-    }
     p.getAudioInput2 = function () {
         //Audio input comes from the microphone
         // p.mic;
@@ -231,6 +226,7 @@ let sketch = function (p) {
         p.mySound.play();
         p.playingAudioFile = true;
     }
+
     p.changeBackgroundColor = function (bgCol_) {
         if (bgCol_ === "white") {
             p.backgroundColor = p.color(255, 255, 255, 5);
@@ -279,7 +275,7 @@ let sketch = function (p) {
         for (let i = 0; i < p.numberOfMovers; i++) {
             p.t = p.a.attract(movers[i]);
             p.t.normalize();
-            p.t.mult(0.9);
+            p.t.mult(1);
             movers[i].applyForce(p.t);
         }
     }
@@ -294,36 +290,10 @@ let sketch = function (p) {
             if (frequencyRange > threshold) {
                 p.t = p.a.repel(movers[i]);
                 p.t.normalize();
-                p.t.mult(1.1);
+                p.t.mult(1.15);
                 movers[i].applyForce(p.t);
             }
         }
-    }
-
-    p.attractMovers2 = function (movers_, i_) {
-        let movers = movers_;
-        let i = i_;
-        p.t = p.a.attract(movers[i]);
-        p.t.normalize();
-        p.t.mult(0.9);
-        movers[i].applyForce(p.t);
-
-    }
-
-    p.repelMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
-        //Loop through the array of movers
-        let movers = movers_;
-        let i = i_;
-        let threshold = threshold_
-        let frequencyRange = frequencyRange_;
-
-        if (frequencyRange > threshold) {
-            p.t = p.a.repel(movers[i]);
-            p.t.normalize();
-            p.t.mult(1.1);
-            movers[i].applyForce(p.t);
-        }
-
     }
 
     p.moveMovers = function (movers_, threshold_, frequencyRange_) {
@@ -332,16 +302,6 @@ let sketch = function (p) {
         let frequencyRange = frequencyRange_;
         p.attractMovers(movers);
         p.repelMovers(movers, threshold, frequencyRange);
-    }
-
-    p.moveMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
-        let i = i_;
-        let t= threshold_
-        let m= movers_;
-       let fr = frequencyRange_;
-        //Loop through the array of movers
-        p.attractMovers2(p.moversLowMid, i);
-        p.repelMovers2(p.moversLowMid, i, t,fr);
     }
 
     p.togglePlaying = function () {
@@ -369,9 +329,11 @@ let sketch = function (p) {
     }
 
     p.capture = function () {
+        let r = Math.random().toString(36).substring(7);
+        let filename = "Audio"+r+".jpg";
         //?Which is better
-        // p.saveCanvas(p.cnv, 'myCanvas.jpg');
-        p.save('myCanvas.jpg');
+         p.saveCanvas(p.cnv, filename);
+       // p.save('myCanvas.jpg');
     }
 
     p.windowResized = function (w_, h_) {
@@ -406,3 +368,43 @@ let sketch = function (p) {
         // end of function
     };
 };
+
+
+/*
+
+    p.attractMovers2 = function (movers_, i_) {
+        let movers = movers_;
+        let i = i_;
+        p.t = p.a.attract(movers[i]);
+        p.t.normalize();
+        p.t.mult(0.9);
+        movers[i].applyForce(p.t);
+
+    }
+
+    p.repelMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
+        //Loop through the array of movers
+        let movers = movers_;
+        let i = i_;
+        let threshold = threshold_
+        let frequencyRange = frequencyRange_;
+
+        if (frequencyRange > threshold) {
+            p.t = p.a.repel(movers[i]);
+            p.t.normalize();
+            p.t.mult(1.1);
+            movers[i].applyForce(p.t);
+        }
+
+    }
+
+     p.moveMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
+        let i = i_;
+        let t= threshold_
+        let m= movers_;
+       let fr = frequencyRange_;
+        //Loop through the array of movers
+        p.attractMovers2(p.moversLowMid, i);
+        p.repelMovers2(p.moversLowMid, i, t,fr);
+    }
+*/
