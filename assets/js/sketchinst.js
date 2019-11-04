@@ -329,8 +329,9 @@ let sketch = function (p) {
     }
 
     p.capture = function () {
+        //https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
         let r = Math.random().toString(36).substring(7);
-        let filename = "Audio"+r+".jpg";
+        let filename = `Audio-${r}.jpg`;
         //?Which is better
          p.saveCanvas(p.cnv, filename);
        // p.save('myCanvas.jpg');
