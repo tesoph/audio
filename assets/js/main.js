@@ -20,7 +20,7 @@ $( document ).ready(function() {
 
 //autoOpen:false stops the confirmation dialog from appearing on page load
 //$("#dialog-confirm").dialog({
-  //  autoOpen: false,
+//  autoOpen: false,
 //});
 
 //Get the height and width of the container so to set the canvas width and height 
@@ -82,10 +82,10 @@ window.onload = function () {
     }
 
     //Set sketch variables according to ui menu settings on load
-   // myp5.myColor = $('#lowMidColor').val();
+    // myp5.myColor = $('#lowMidColor').val();
     //myp5.highMidColor = $('#highMidColorPicker').val();
-   // myp5.strokeWidth = $("#stroke-weight-picker").val();
-   // myp5.sensitivity = $('#sensitivity-slider').val();
+    // myp5.strokeWidth = $("#stroke-weight-picker").val();
+    // myp5.sensitivity = $('#sensitivity-slider').val();
 
     /////////Action buttons/////////
     //Settings button (Opens settings menu)
@@ -94,13 +94,13 @@ window.onload = function () {
     });
 
     //Make settings menu draggable
-   // $("#gui").draggable();
+    // $("#gui").draggable();
 
     //Camera button
     $("#camera").on("click", function () {
-        
-            myp5.capture();
-        
+
+        myp5.capture();
+
     });
 
     //More information button
@@ -252,10 +252,10 @@ window.onload = function () {
     topspeedSlider.oninput = function () {
         myp5.topspeed2 = Math.floor(topspeedSlider.value);
     }
-//No. of movers
+    //No. of movers
     let numMovers = document.getElementById("number-of-movers");
     numMovers.oninput = function () {
-        myp5.numberOfMovers= Math.floor(numMovers.value);
+        myp5.numberOfMovers = Math.floor(numMovers.value);
     }
 
 }
