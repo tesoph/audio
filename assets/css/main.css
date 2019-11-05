@@ -183,7 +183,7 @@ button{
 }
 
 /*----------Settings Menu--------*/
-
+/*
 #close-settings {
     color: white;
     padding: 5px;
@@ -191,10 +191,10 @@ button{
     border: none;
     background-color: transparent;
     outline: none;
-}
+}*/
 
 .close {
-   
+
 }
 
 .icon {
@@ -301,4 +301,27 @@ input[type=range]::-webkit-slider-runnable-track {
   #toggler {
         width: 30vw;
     }
+}
+
+/*more information modal*/
+#custom-modal{
+    background-color: rgba(10, 10, 10); 
+    color:white;
+}
+
+.custom-close{
+    color:White;
+    /*padding: 1rem 1rem;*/
+   /* margin: -1rem -1rem -1rem auto;*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 1px 0 #fff;
+    border: none;
+    background-color: transparent;
+    outline: none;
 }
