@@ -302,7 +302,7 @@ let sketch = function (p) {
             if (frequencyRange > threshold) {
                 p.t = p.a.repel(movers[i]);
                 p.t.normalize();
-                p.t.mult(1.15);
+                p.t.mult(1.05);
                 movers[i].applyForce(p.t);
             }
         }

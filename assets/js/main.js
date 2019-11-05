@@ -90,7 +90,8 @@ window.onload = function () {
     /////////Action buttons/////////
     //Settings button (Opens settings menu)
     $("#settings").on("click", function () {
-        $("#toggler").toggle("slide", {}, 100);
+     //   $("#toggler").toggle("slide", {}, 100);
+     $("#toggler").toggle("slow");
     });
 
     //Make settings menu draggable
