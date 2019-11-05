@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /*more information modal*/
 #custom-modal{
-    background-color: rgba(10, 10, 10) !important; 
+    background-color: black !important; 
     color:white;
 }
 
