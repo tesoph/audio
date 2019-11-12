@@ -12,18 +12,20 @@ This project is an interactive audio visualiser. The audio visualiser was writte
 * [Demo](#Demo)
 * [Gallery](#Gallery)
 * [Features](#Features)
+* [Technologies Used](#technologies-used)
+* [Credits](#credits)
+
 
 ## Demo
 A live demo can be found [here](https://tesoph.github.io/audio/).
 
 
 ## Gallery
-
 <p align="center">
-  <img src="assets/img/drawings/Audio-eeqsmy.jpg" height="455" padding="5px">
-  <img src="assets/img/drawings/Audio-i0gym.jpg" height="455">
-  <img src="assets/img/drawings/Audio-9nsjg.jpg"  height="455">
-  <img src="assets/img/drawings/myCanvas-6.jpg"  height="455">
+  <img src="assets/img/drawings/Audio-eeqsmy.jpg" height="350">
+  <img src="assets/img/drawings/Audio-i0gym.jpg" height="350">
+  <img src="assets/img/drawings/Audio-9nsjg.jpg"  height="350">
+  <img src="assets/img/drawings/myCanvas-6.jpg"  height="350">
 </p>
 
 
@@ -33,3 +35,19 @@ A live demo can be found [here](https://tesoph.github.io/audio/).
 * save the current frame as a .jpg file
 * fullscreen
 * more information modal
+
+
+## Technologies Used
+* Visual Studio Code
+* HTML
+* CSS
+* Javascript
+* P5.js 
+* jQuery
+* Bootstrap 
+* [Google fonts](https://fonts.google.com/)
+
+
+## Credits
+### Acknowledgements
+* The code for the attractor and movers was taken from the book "The Nature of Code" by Daniel Shiffman.
