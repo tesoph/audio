@@ -30,16 +30,19 @@
         $.widget.bridge('uitooltip', $.ui.tooltip);
     </script>-->
     <script src="libraries/bootstrap.js"></script>
-
+<link href="/open-iconic/font/css/open-iconic.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+        <link href="assets/img/open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+        <link href="assets/img/open-iconic-master/font/css/open-iconic.css" rel="stylesheet">
     <script>
         window.onpageshow = function (event) {
             if (event.persisted) {
                 window.location.reload();
             }
         };</script>
+        
     <!--https://github.com/GoogleWebComponents/model-viewer/issues/543-->
     <!--<script src="https://unpkg.com/fullscreen-polyfill@1.0.2/dist/fullscreen.polyfill.js"></script>-->
 
@@ -65,23 +68,18 @@
     </header>
 
     <main>
-        <div id="wrapper">
             <!--Action buttons menu -->
             <div id="ui-container" class="ui-container">
                 <div class="row justify-content-center">
                     <!--Open settings menu-->
-                    <button id="settings" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/controls.png" alt="More information"></button>
+                    <button id="settingsButton" class="uiButton"><span class="oi" data-glyph="menu"></span></button>
                     <!--Save a picture-->
-                    <button id="camera" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/photo.png" alt="More information"></button>
+                    <button id="cameraButton" class="uiButton"><span class="oi actionIcon" data-glyph="aperture"></span></button>
                     <!--More information-->
                     <button id="informationButton" class="uiButton" data-toggle="modal"
-                        data-target="#information-modal"><img class="control-button img-fluid" src="assets/img/info.png"
-                            alt="More information"></button>
+                        data-target="#information-modal"><span class="oi" data-glyph="info"></span></button>
                     <!--Full screen-->
-                    <button id="fullScreenButton" class="uiButton"><img class="control-button img-fluid"
-                            src="assets/img/fullscreen.png" alt="More information"></button>
+                    <button id="fullScreenButton" class="uiButton"><span class="oi" data-glyph="fullscreen-enter"></span></button>
                 </div>
             </div>
             <!--End action buttons menu-->
@@ -186,8 +184,7 @@
                 <div class="col-xs-12">
                     Low mid tones
                     <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                        data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><img
-                            class="icon" src="assets/img/information.png" alt="More information"></a>:
+                        data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><span class="oi" data-glyph="question-mark"></span></a>:
                             <label for="lowMidColor">Color </label>
                     <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
                     <label for="lowMidCheckbox">Display</label>
@@ -198,8 +195,7 @@
                 <div class="col-xs-12">
                    High mid tones
                     <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                        data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><img
-                            class="icon" src="assets/img/information.png" alt="More information"></a>:
+                        data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><span class="oi" data-glyph="question-mark"></span></a>:
                             <label for="highMidColorPicker">Color</label>
                     <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
                     <label for="highMidCheckbox">Display</label>
@@ -219,7 +215,7 @@
             </div>
 
         </div>
-        </div>
+      
     </main>
     <script src="assets/js/sketchinst.js"></script>
     <script src="assets/js/main.js"></script>
