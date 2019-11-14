@@ -6,221 +6,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Audio Visualizer</title>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-    <script src="libraries/popper.min.js"></script>
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.dom.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-
-    <!-- /*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">*/-->
-
-
-
-    <!--<script src="libraries/jquery-ui.js"></script>-->
-    <script src="libraries/range-touch.min.js"></script>
-    <!--<script>
-        /*** Handle jQuery plugin naming conflict between jQuery UI and Bootstrap ***/
-
-        $.widget.bridge('uibutton', $.ui.button);
-        $.widget.bridge('uitooltip', $.ui.tooltip);
-    </script>-->
-    <script src="libraries/bootstrap.js"></script>
-<link href="/open-iconic/font/css/open-iconic.css" rel="stylesheet">
+    <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <link href="assets/img/open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet">
-        <link href="assets/img/open-iconic-master/font/css/open-iconic.css" rel="stylesheet">
-    <script>
-        window.onpageshow = function (event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        };</script>
-        
-    <!--https://github.com/GoogleWebComponents/model-viewer/issues/543-->
-    <!--<script src="https://unpkg.com/fullscreen-polyfill@1.0.2/dist/fullscreen.polyfill.js"></script>-->
-
+    <!--OpenIconic CSS-->
+    <link href="assets/img/open-iconic-master/font/css/open-iconic.css" rel="stylesheet">
+    <!--Favicon-->
     <link
         href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA+/8AAPv/AAD77wAA6u8AAOrvAADqqwAAqqoAAKqqAADqqwAA6u8AAOrvAAD77wAA+/8AAPv/AAD//wAA"
         rel="icon" type="image/x-icon" />
+    <!--Custom CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 </head>
 
 <body>
     <header>
-        <!--
-        <nav class="navbar navbar-dark ">
-            <a class="navbar-brand" href="">Logo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            </div>
-        </nav>
-        -->
     </header>
 
     <main>
-            <!--Action buttons menu -->
-            <div id="ui-container" class="ui-container">
-                <div class="row justify-content-center">
-                    <!--Open settings menu-->
-                    <button id="settingsButton" class="uiButton"><span class="oi" data-glyph="menu"></span></button>
-                    <!--Save a picture-->
-                    <button id="cameraButton" class="uiButton"><span class="oi actionIcon" data-glyph="aperture"></span></button>
-                    <!--More information-->
-                    <button id="informationButton" class="uiButton" data-toggle="modal"
-                        data-target="#information-modal"><span class="oi" data-glyph="info"></span></button>
-                    <!--Full screen-->
-                    <button id="fullScreenButton" class="uiButton"><span class="oi" data-glyph="fullscreen-enter"></span></button>
-                </div>
-            </div>
-            <!--End action buttons menu-->
 
-            <!--On camera button click #dialog-confirm is displayed to confirm the user would like to save an image-->
-            <div id="dialog-confirm" title="Save image?">
-                <p><span class="ui-icon ui-icon-alert"></span>Save the
-                    current frame as an image?</p>
-                <input type="checkbox" name="no" class="no">Don't show this message again.
-                <p>(If checked, pressing the camera button will automatically save the image without further
-                    confirmation)
-                </p>
+        <!--Action buttons menu -->
+        <div id="ui-container" class="ui-container">
+            <div class="row justify-content-center">
+                <!--Settings menu-->
+                <button id="settingsButton" class="uiButton"><span class="oi" data-glyph="menu"></span></button>
+                <!--Save an image-->
+                <button id="cameraButton" class="uiButton"><span class="oi actionIcon"
+                        data-glyph="aperture"></span></button>
+                <!--More information-->
+                <button id="informationButton" class="uiButton" data-toggle="modal"
+                    data-target="#information-modal"><span class="oi" data-glyph="info"></span></button>
+                <!--Full screen-->
+                <button id="fullScreenButton" class="uiButton"><span class="oi"
+                        data-glyph="fullscreen-enter"></span></button>
             </div>
+        </div>
+        <!--End action buttons menu-->
 
-            <!-- More information Modal -->
-            <div class="modal fade" id="information-modal" tabindex="-1" role="dialog"
-                aria-labelledby="informationModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content" id="custom-modal">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">More Information</h5>
-                            <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci non ex porta
-                                gravida vel nec risus. Integer dictum semper lectus, et egestas est tempus vitae. Duis
-                                sed dolor ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean
-                                est quam, faucibus vitae dolor quis, mattis lobortis ex. Nunc non auctor sem. Aliquam
-                                venenatis interdum pellentesque. Donec accumsan interdum lorem, vitae finibus mauris
-                                commodo semper. Integer metus lorem, malesuada tempus facilisis in, sagittis id massa.
-                                Aenean vel diam at lacus dignissim dignissim. Quisque vel quam quis mi porta bibendum.
-                                Nulla sed vestibulum lectus, ut auctor neque. Vivamus pellentesque eu metus non
-                                ultrices. Integer sed sollicitudin ipsum, lobortis eleifend arcu.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+        <!-- More information Modal -->
+        <div class="modal fade" id="information-modal" tabindex="-1" role="dialog" aria-labelledby="informationModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" id="custom-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">More Information</h5>
+                        <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci non ex porta
+                            gravida vel nec risus. Integer dictum semper lectus, et egestas est tempus vitae. Duis
+                            sed dolor ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean
+                            est quam, faucibus vitae dolor quis, mattis lobortis ex. Nunc non auctor sem. Aliquam
+                            venenatis interdum pellentesque. Donec accumsan interdum lorem, vitae finibus mauris
+                            commodo semper. Integer metus lorem, malesuada tempus facilisis in, sagittis id massa.
+                            Aenean vel diam at lacus dignissim dignissim. Quisque vel quam quis mi porta bibendum.
+                            Nulla sed vestibulum lectus, ut auctor neque. Vivamus pellentesque eu metus non
+                            ultrices. Integer sed sollicitudin ipsum, lobortis eleifend arcu.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- End More information Modal -->
 
-
-       
-<!--SEttings menu-->
-<div id="toggler">
-    <div id="gui">
-        <div class="container">
-                <div class="close">
+        <!--Settings menu-->
+        <div id="toggler">
+            <div id="gui">
+                <div class="container">
+                    <div class="close">
                         <button id="close-settings" class="custom-close">X</button>
                     </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    Theme:
-                    <input type="radio" name="backgroundColorRadio" value="black" checked>
-                    <label for="backgroundColorRadio">Dark</label>
-                    <input type="radio" name="backgroundColorRadio" value="white">
-                    <label for="backgroundColorRadio">Light</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="sensitivity-slider">Sensitivity to noise</label>
-                    <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
-                        value="90" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="number-of-movers">Number of movers</label>
-                    <input type="range" name="number-of-movers" id="number-of-movers" min="1" max="100" step="1"
-                        value="50" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="topspeed-slider">Speed</label>
-                    <input type="range" name="topspeed-slider" id="topspeed-slider" min="2" max="6" step="1"
-                        value="5" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="stroke-weight-picker">Stroke weight</label>
-                    <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10" value="1" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="linesCheckbox">Display lines</label>
-                    <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <label for="shapeCheckbox">Shape mode</label>
-                    <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    Low mid tones
-                    <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                        data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><span class="oi" data-glyph="question-mark"></span></a>:
+                    <div class="row">
+                        <div class="col-xs-12">
+                            Theme:
+                            <input type="radio" name="backgroundColorRadio" value="black" checked>
+                            <label for="backgroundColorRadio">Dark</label>
+                            <input type="radio" name="backgroundColorRadio" value="white">
+                            <label for="backgroundColorRadio">Light</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="sensitivity-slider">Sensitivity to noise</label>
+                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
+                                value="90" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="number-of-movers">Number of movers</label>
+                            <input type="range" name="number-of-movers" id="number-of-movers" min="1" max="100" step="1"
+                                value="50" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="topspeed-slider">Speed</label>
+                            <input type="range" name="topspeed-slider" id="topspeed-slider" min="2" max="6" step="1"
+                                value="5" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="stroke-weight-picker">Stroke weight</label>
+                            <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
+                                value="1" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="linesCheckbox">Display lines</label>
+                            <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="shapeCheckbox">Shape mode</label>
+                            <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            Low mid tones
+                            <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
+                                data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><span
+                                    class="oi" data-glyph="question-mark"></span></a>:
                             <label for="lowMidColor">Color </label>
-                    <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
-                    <label for="lowMidCheckbox">Display</label>
-                    <input type="checkbox" id="lowMidCheckbox" name="lowMidCheckbox" disabled>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                   High mid tones
-                    <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                        data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><span class="oi" data-glyph="question-mark"></span></a>:
+                            <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
+                            <label for="lowMidCheckbox">Display</label>
+                            <input type="checkbox" id="lowMidCheckbox" name="lowMidCheckbox" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            High mid tones
+                            <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
+                                data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><span
+                                    class="oi" data-glyph="question-mark"></span></a>:
                             <label for="highMidColorPicker">Color</label>
-                    <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
-                    <label for="highMidCheckbox">Display</label>
-                    <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
+                            <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
+                            <label for="highMidCheckbox">Display</label>
+                            <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
-<!--End Settings Menu -->
+        <!--End Settings Menu -->
 
         <!--the sketch is attached to #sketch-container-->
         <div id="sketch-container">
             <div id="play">
                 <img src="assets/img/play.png" alt="play button">
             </div>
-
         </div>
-      
+        <!--End Sketch container-->
+
     </main>
+
+    <!--Javascript libraries-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.dom.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <script src="libraries/range-touch.min.js"></script>
+    <script src="libraries/popper.min.js"></script>
+    <script src="libraries/bootstrap.js"></script>
+    <!--Custom Javascript-->
     <script src="assets/js/sketchinst.js"></script>
     <script src="assets/js/main.js"></script>
-
-
 
 </body>
 
