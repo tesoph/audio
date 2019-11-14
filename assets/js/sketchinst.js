@@ -1,5 +1,7 @@
 let sketch = function (p) {
 
+    //The following code for the Attractor and Mover classes is taken from chapter 2 of the book "The Nature of Code" by Daniel Shiffman. (https://natureofcode.com/book/chapter-2-forces/)
+
     class Attractor {
         //Our Attractor is a simple object that doesn’t move. We just need a mass and a location.
         constructor(p_) {
@@ -28,7 +30,6 @@ let sketch = function (p) {
             //What’s the force’s magnitude?
             var strength = (this.g * this.mass * m.mass) / (distance * distance);
             force.mult(strength);
-
             //Return the force so that it can be applied!
             return force;
         }
@@ -41,11 +42,9 @@ let sketch = function (p) {
             //What’s the force’s magnitude?
             var strength = (this.g * this.mass * m.mass) / (distance * distance);
             force.mult(strength);
-
             //Return the force so that it can be applied!
             return force;
         }
-
     }
 
     class Mover {
@@ -59,13 +58,14 @@ let sketch = function (p) {
             this.mass = m_;
             this.radius = this.mass * 10;
         }
+
         run() {
             this.update();
             this.display();
             this.checkEdges();
         }
+
         update() {
-            //  p.print(p.topseed2);
             this.velocity.add(this.acceleration);
             this.velocity.limit(p.topspeed2);
             this.location.add(this.velocity);
@@ -73,21 +73,16 @@ let sketch = function (p) {
         }
 
         display() {
-
-            //  p.stroke(255);
             p.strokeWeight(p.strokeWidth);
-            //fill(this.color);
-            //p.fill(p.c);
             if (p.shapeMode == false) {
                 p.ellipse(this.location.x, this.location.y, this.radius, this.radius);
             }
             if (p.lines) {
                 p.line(p.w / 2, p.h / 2, this.location.x, this.location.y);
             }
-
-
             p.fill(255);
         }
+
         applyForce(force) {
             var f = p5.Vector.div(force, this.mass);
             this.acceleration.add(f);
@@ -106,55 +101,44 @@ let sketch = function (p) {
                 this.velocity.y *= -1;
             }
         }
-    }
-    p.moversList = [];
-    p.w = containerWidth;
-    p.h = containerHeight;
-    /*
-        p.preload = function () {
-            p.mySound = p.loadSound("assets/audio/aiwdily.mp3");
-        }*/
+    }//End of Attractor and Mover classes
 
+    // The setup function executes once when the program begins
     p.setup = function () {
+        p.w = containerWidth;
+        p.h = containerHeight;
         //Initial value set to false to stop sketch from playing until a user gesture on the page
         p.playing = false;
-        p.playingAudioFile = false;
         //creating the sketch canvas with width and height from the parent container
         p.cnv = p.createCanvas(p.w, p.h);
-
+        //drawing a plain black background to the canvas 
+        p.background(p.color(0));
+        //Initializing the variables
         p.initializeVariables();
-        //Array initialised with max (100) number of movers
-        //p.numberOfMovers = 100;
-        p.initializeMovers();
+        //Array of movers initialised with max (100) number of movers
+        p.initializeMovers(p.w, p.h);
         //Number of movers then changed to match slider input value
-
-
-        p.background(p.backgroundColor);
-        p.backgroundColor.setAlpha(5);
         //Get the mic and attach an fft object to analyse the audio from it
         p.getAudioInput();
-        p.displayHighMid = false;
     };
 
+    // The statements in draw() are executed until the program is stopped. Each statement is executed in sequence and after the last line is read, the first line is executed again.
     p.draw = function () {
         //Create a gradual fade effect on the background
         p.fadeBackground();
         p.stroke(p.strokeColor);
+        //If the sketch is not paused
         if (p.playing) {
             p.analyzeAudio();
             p.drawBass();
-            //  p.moveMovers(p.moversLowMid, p.threshold, p.lowMid);
             p.attractMovers(p.moversLowMid);
             p.repelMovers(p.moversLowMid, p.threshold, p.lowMid);
             if (p.displayHighMid) {
                 p.moveMovers(p.moversHighMid, p.threshold, p.highMid);
             }
             for (let i = 0; i < p.numberOfMovers; i++) {
-                //  p.attractMovers(p.moversLowMid, i);
-                // p.repelMovers(p.moversLowMid, i, p.threshold, p.lowMid);
-                // p.moveMovers(p.moversLowMid, i, p.threshold, p.lowMid);
                 p.fill(p.myColor);
-                //run() contains update, checkedges,and display functions
+                //run() contains update, checkedges,and display methods of the mover class
                 p.moversLowMid[i].run();
                 if (p.displayHighMid) {
                     p.fill(p.highMidColor);
@@ -173,33 +157,46 @@ let sketch = function (p) {
         }
     };
 
+    //Functions
     p.makeShapeMode = function (i_) {
-        //? needs to be in draw()
         let i = i_;
         p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
     }
 
     p.initializeVariables = function () {
+        /*
+                p.sensitivity = $('#sensitivity-slider').val();
+                p.myColor = $('#lowMidColor').val();
+                p.strokeWidth = $("#stroke-weight-picker").val();
+                p.highMidColor = $('#highMidColorPicker').val();
+                p.lines = $('#linesCheckbox').is(":checked");
+                p.shapeMode = $('#shapeCheckbox').is(":checked");
+                p.topspeed2 = $('#topspeed-slider').val();
+                p.numberOfMovers = $('#number-of-movers').val();
+                p.moversLowMid = [];
+                p.moversHighMid = [];*/
 
-        p.sensitivity = $('#sensitivity-slider').val();
-        p.myColor = $('#lowMidColor').val();
-        p.strokeWidth = $("#stroke-weight-picker").val();
-        p.highMidColor = $('#highMidColorPicker').val();
-        p.lines = $('#linesCheckbox').is(":checked");
-        p.shapeMode = $('#shapeCheckbox').is(":checked");
-        p.topspeed2 = $('#topspeed-slider').val();
-        p.numberOfMovers = $('#number-of-movers').val();
+        //Giving the variables hardcoded values so that the sketch can run independantly of the DOM input values
+        p.displayHighMid = false;
+        p.sensitivity = 100
+        p.myColor = p.color(0, 0, 0);
+        p.strokeWidth = 1
+        p.highMidColor = p.color(5, 5, 5);
+        p.lines = true;
+        p.shapeMode = true;
+        p.topspeed2 = 5;
+        p.numberOfMovers = 50;
         p.moversLowMid = [];
         p.moversHighMid = [];
-
-        let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
-        myp5.changeBackgroundColor(bgCol);
-
+        p.strokeColor = p.color(5, 5, 5);
+        setBackgroundColor();
+        p.print("setting up variables");
     }
 
-    p.initializeMovers = function () {
+    p.initializeMovers = function (width_, height_) {
         //? Array of array of movers(?)
-
+        p.w = width_;
+        p.h = height_;
         //Use list and weight to bias the size of the movers (more small movers than large one)
         let list = [1, 2, 3, 4, 5];
         let weight = [0.3, 0.4, 0.1, 0.1, 0.1];
@@ -225,28 +222,6 @@ let sketch = function (p) {
         p.peakDetect = new p5.PeakDetect();
         p.peakDetect.update(p.fft);
         //    p.peakDetect.onPeak(p.triggerBeat);
-    }
-
-    p.getAudioInput2 = function () {
-        //Audio input comes from the microphone
-        // p.mic;
-        //p.mic = new p5.AudioIn()
-        // p.mic.start();
-        //FFT object analyzes the audio input
-        p.fft = new p5.FFT();
-        p.fft.setInput(p.mySound);
-        p.mySound.play();
-        p.playingAudioFile = true;
-    }
-
-    p.changeBackgroundColor = function (bgCol_) {
-        if (bgCol_ === "white") {
-            p.backgroundColor = p.color(255, 255, 255, 5);
-            p.strokeColor = p.color(0, 0, 0);
-        } else if (bgCol_ === "black") {
-            p.backgroundColor = p.color(0, 0, 0, 5);
-            p.strokeColor = p.color(255, 255, 255);
-        }
     }
 
     p.fadeBackground = function () {
@@ -316,48 +291,7 @@ let sketch = function (p) {
         p.repelMovers(movers, threshold, frequencyRange);
     }
 
-    p.togglePlaying = function () {
-        //Start Audio context on user gesture
-        if (p.getAudioContext().state !== 'running') {
-            p.userStartAudio();
-        }
-        if (p.playing == true) {
-            p.playing = false;
-            p.noLoop();
-        } else {
-            p.playing = true;
-            p.loop();
-        }
-    }
-
-    p.toggleLines = function () {
-        if (this.checked()) {
-            console.log('Checking!');
-            p.lines = true;
-        } else {
-            p.lines = false;
-            console.log('Unchecking!');
-        }
-    }
-
-    p.capture = function () {
-        //https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-        let r = Math.random().toString(36).substring(7);
-        let filename = `Audio-${r}.jpg`;
-        //?Which is better
-        p.saveCanvas(p.cnv, filename);
-        // p.save('myCanvas.jpg');
-    }
-
-    p.windowResized = function (w_, h_) {
-        p.w = w_;
-        p.h = h_;
-        p.resizeCanvas(p.w, p.h);
-        p.initializeMovers();
-    }
-
-
-    // https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
+    // Following code for weighted random number generation from https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
     let rand = function (min, max) {
         return Math.random() * (max - min) + min;
     };
@@ -378,46 +312,7 @@ let sketch = function (p) {
                 return list[i];
             }
         }
-        // end of function
+        // end of weighted random number generation
+
     };
 };
-
-
-/*
-
-    p.attractMovers2 = function (movers_, i_) {
-        let movers = movers_;
-        let i = i_;
-        p.t = p.a.attract(movers[i]);
-        p.t.normalize();
-        p.t.mult(0.9);
-        movers[i].applyForce(p.t);
-
-    }
-
-    p.repelMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
-        //Loop through the array of movers
-        let movers = movers_;
-        let i = i_;
-        let threshold = threshold_
-        let frequencyRange = frequencyRange_;
-
-        if (frequencyRange > threshold) {
-            p.t = p.a.repel(movers[i]);
-            p.t.normalize();
-            p.t.mult(1.1);
-            movers[i].applyForce(p.t);
-        }
-
-    }
-
-     p.moveMovers2 = function (movers_, i_, threshold_, frequencyRange_) {
-        let i = i_;
-        let t= threshold_
-        let m= movers_;
-       let fr = frequencyRange_;
-        //Loop through the array of movers
-        p.attractMovers2(p.moversLowMid, i);
-        p.repelMovers2(p.moversLowMid, i, t,fr);
-    }
-*/
