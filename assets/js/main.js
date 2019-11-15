@@ -4,7 +4,7 @@ let containerHeight = positionInfo.height;
 let containerWidth = positionInfo.width;
 
 //Create a sketch instance and attach it to the container
-var myp5 = new p5(sketch, document.getElementById("sketch-container"));
+var audioVisualizer = new p5(sketch, document.getElementById("sketch-container"));
 
 window.addEventListener('load', function () {
     //Set sketch variables according to the settings input values
@@ -13,14 +13,14 @@ window.addEventListener('load', function () {
 
 function setVariables() {
     //Uncommenting topspeed and sensitivity causes issues
-    // myp5.sensitivity = $('#sensitivity-slider').val();
-    myp5.myColor = $('#lowMidColor').val();
-    myp5.strokeWidth = $("#stroke-weight-picker").val();
-    myp5.highMidColor = $('#highMidColorPicker').val();
-    myp5.lines = $('#linesCheckbox').is(":checked");
-    myp5.shapeMode = $('#shapeCheckbox').is(":checked");
-    // myp5.topspeed2 = $('#topspeed-slider').val();
-    myp5.numberOfMovers = $('#number-of-movers').val();
+    // audioVisualizer.sensitivity = $('#sensitivity-slider').val();
+    audioVisualizer.myColor = $('#lowMidColor').val();
+    audioVisualizer.strokeWidth = $("#stroke-weight-picker").val();
+    audioVisualizer.highMidColor = $('#highMidColorPicker').val();
+    audioVisualizer.lines = $('#linesCheckbox').is(":checked");
+    audioVisualizer.shapeMode = $('#shapeCheckbox').is(":checked");
+    // audioVisualizer.topspeed2 = $('#topspeed-slider').val();
+    audioVisualizer.numberOfMovers = $('#number-of-movers').val();
     console.log("a");
 }
 
@@ -28,18 +28,18 @@ sketchContainer.addEventListener('click', play);
 
 function play() {
     let playButton = document.getElementById("play");
-    if (myp5.playing) {
+    if (audioVisualizer.playing) {
         playButton.style.display = "inline";
-        myp5.playing = false;
-        myp5.noLoop();
+        audioVisualizer.playing = false;
+        audioVisualizer.noLoop();
     } else {
         playButton.style.display = "none";
         //Audio context must be started by a user gesture on the page
-        if (myp5.getAudioContext().state !== 'running') {
-            myp5.userStartAudio();
+        if (audioVisualizer.getAudioContext().state !== 'running') {
+            audioVisualizer.userStartAudio();
         }
-        myp5.playing = true;
-        myp5.loop();
+        audioVisualizer.playing = true;
+        audioVisualizer.loop();
     }
 }
 
@@ -51,8 +51,8 @@ function resizeCanvas() {
     let positionInfo = sketchContainer.getBoundingClientRect();
     let containerHeight = positionInfo.height;
     let containerWidth = positionInfo.width;
-    myp5.resizeCanvas(containerWidth, containerHeight);
-    myp5.initializeMovers(containerWidth, containerHeight);
+    audioVisualizer.resizeCanvas(containerWidth, containerHeight);
+    audioVisualizer.initializeMovers(containerWidth, containerHeight);
 }
 
 //https://webrtchacks.com/guide-to-safari-webrtc/
@@ -64,14 +64,14 @@ $(window).focus(function (e) {
 
 function getAudioInput() {
     //Audio input comes from the microphone
-    myp5.mic;
-    myp5.mic = new p5.AudioIn()
-    myp5.mic.start();
+    audioVisualizer.mic;
+    audioVisualizer.mic = new p5.AudioIn()
+    audioVisualizer.mic.start();
     //FFT object analyzes the audio input
-    myp5.fft = new p5.FFT();
-    myp5.fft.setInput(myp5.mic);
-    myp5.peakDetect = new p5.PeakDetect();
-    myp5.peakDetect.update(myp5.fft);
+    audioVisualizer.fft = new p5.FFT();
+    audioVisualizer.fft.setInput(audioVisualizer.mic);
+    audioVisualizer.peakDetect = new p5.PeakDetect();
+    audioVisualizer.peakDetect.update(audioVisualizer.fft);
 }
 
 /////////Action buttons/////////
@@ -86,7 +86,7 @@ $("#cameraButton").on("click", function () {
     //https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     let r = Math.random().toString(36).substring(7);
     let filename = `Audio-${r}.jpg`;
-    myp5.saveCanvas(myp5.cnv, filename);
+    audioVisualizer.saveCanvas(audioVisualizer.cnv, filename);
 });
 
 //More information button
@@ -98,7 +98,7 @@ $('#informationButton').on('click', function () {
         $('#information-modal').modal('show');
     }
     //Pause sketch while modal is showing.
-    myp5.noLoop();
+    audioVisualizer.noLoop();
     //If settings menu was open when the information button was clicked, hide it
     if (vis) {
         $("#toggler").hide();
@@ -111,7 +111,7 @@ $('#informationButton').on('click', function () {
         //reset vis to false on close
         vis = false;
         //Play sketch when modal is closed.
-        myp5.loop();
+        audioVisualizer.loop();
     });
 });
 
@@ -155,11 +155,11 @@ $('input[type="radio"]').on('click change', setBackgroundColor);
 function setBackgroundColor() {
     let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
     if (bgCol === "white") {
-        myp5.backgroundColor = myp5.color(255, 255, 255, 5);
-        myp5.strokeColor = myp5.color(0, 0, 0);
+        audioVisualizer.backgroundColor = audioVisualizer.color(255, 255, 255, 5);
+        audioVisualizer.strokeColor = audioVisualizer.color(0, 0, 0);
     } else if (bgCol === "black") {
-        myp5.backgroundColor = myp5.color(0, 0, 0, 5);
-        myp5.strokeColor = myp5.color(255, 255, 255);
+        audioVisualizer.backgroundColor = audioVisualizer.color(0, 0, 0, 5);
+        audioVisualizer.strokeColor = audioVisualizer.color(255, 255, 255);
     }
 }
 
@@ -172,9 +172,9 @@ linesCheckbox.onchange = function () {
 
 function displayLines() {
     if ($('#linesCheckbox').is(":checked")) {
-        myp5.lines = true;
+        audioVisualizer.lines = true;
     } else {
-        myp5.lines = false;
+        audioVisualizer.lines = false;
     }
 }
 
@@ -182,9 +182,9 @@ function displayLines() {
 //Display lines checkbox
 document.getElementById("linesCheckbox").onchange = function () {
     if (this.checked) {
-        myp5.lines = true;
+        audioVisualizer.lines = true;
     } else {
-        myp5.lines = false;
+        audioVisualizer.lines = false;
     }
 }
 */
@@ -192,9 +192,9 @@ document.getElementById("linesCheckbox").onchange = function () {
 //Shape mode checkbox
 document.getElementById("shapeCheckbox").onchange = function () {
     if (this.checked) {
-        myp5.shapeMode = true;
+        audioVisualizer.shapeMode = true;
     } else {
-        myp5.shapeMode = false;
+        audioVisualizer.shapeMode = false;
     }
 }
 
@@ -205,14 +205,14 @@ sensitivitySlider.onchange = function () {
 }
 
 function changeSensitivity() {
-    myp5.sensitivity = sensitivitySlider.value;
+    audioVisualizer.sensitivity = sensitivitySlider.value;
 }
 
 //RandomizedSensitivity to replicate moving the sensitivty slider which seemed to help if a mover got stuck 
 setInterval(randomizeSensitivity, 5000);
 
 function randomizeSensitivity() {
-    let sens = myp5.sensitivity;
+    let sens = audioVisualizer.sensitivity;
     sens += getRandomNumber() / 2;
     console.log("new sensitivity:" + sens);
 }
@@ -232,40 +232,40 @@ function getRandomNumber() {
 let SWslider = document.getElementById("stroke-weight-picker");
 SWslider.oninput = changeStrokeWeight;
 function changeStrokeWeight(event) {
-    myp5.strokeWidth = event.target.value;
+    audioVisualizer.strokeWidth = event.target.value;
 }
 
 //Low mid movers color picker
 let lowMidColor = document.getElementById("lowMidColor");
 lowMidColor.oninput = function () {
-    myp5.myColor = this.value;
+    audioVisualizer.myColor = this.value;
 }
 
 //High mid movers color picker
 let highMidColorPicker = document.getElementById("highMidColorPicker");
 highMidColorPicker.oninput = function () {
-    myp5.highMidColor = this.value;
+    audioVisualizer.highMidColor = this.value;
 }
 
 //Display high mid movers checkbox
 document.getElementById("highMidCheckbox").onchange = function () {
     if (this.checked == true) {
-        myp5.displayHighMid = true;
+        audioVisualizer.displayHighMid = true;
     } else {
-        myp5.displayHighMid = false;
+        audioVisualizer.displayHighMid = false;
     }
 }
 
 //Topspeed slider
 let topspeedSlider = document.getElementById("topspeed-slider");
 topspeedSlider.oninput = function () {
-    myp5.topspeed2 = Math.floor(topspeedSlider.value);
+    audioVisualizer.topspeed2 = Math.floor(topspeedSlider.value);
 }
 
 //No. of movers
 let numMovers = document.getElementById("number-of-movers");
 numMovers.oninput = function () {
-    myp5.numberOfMovers = Math.floor(numMovers.value);
+    audioVisualizer.numberOfMovers = Math.floor(numMovers.value);
 }
 
 

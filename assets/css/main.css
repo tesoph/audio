@@ -103,10 +103,11 @@ canvas {
 }
 
 /*----------Toolbar--------*/
+/*new: nowrap on toolbar container row */
 
 .toolbar-container {
     position: absolute;
-    width: 99%;
+    width: auto;
     /*fix gap on right hand side*/
     bottom: 2vh;
     padding: 1px;
@@ -125,6 +126,7 @@ canvas {
 
 .toolbar-container .row {
     margin: 0;
+    flex-wrap:nowrap;
 }
 
 .toolbar-button {
@@ -136,7 +138,7 @@ canvas {
 
 .toolbar-button .oi {
     color: White;
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-align: center;
     box-sizing: content-box;
     transition: all 0.15s;
@@ -144,8 +146,8 @@ canvas {
 
 .toolbar-button .oi:hover {
     color: grey;
-    font-size: 3rem;
-    font-weight: 900;
+    font-size: 3.5rem;
+    
     text-align: center;
     box-sizing: content-box;
 }
@@ -186,14 +188,14 @@ canvas {
 }
 
 #settings-menu .oi {
-    color: black;
-    font-size: 1em;
+    color:white;
+    font-size: 1.5em;
     text-align: center;
     box-sizing: content-box;
-    background-color: lightgray;
+ 
     border-radius: 99px;
     padding: 3px;
-    transition: all 0.15s;
+    transition: all 0.2s;
 }
 
 p {
@@ -201,7 +203,7 @@ p {
 }
 
 #settings-menu .oi:hover {
-    background-color: darkgray;
+   color:red;
     font-weight: 900;
     outline: none;
     border-color: red 3px solid;
@@ -347,4 +349,8 @@ input[type=range]::-webkit-slider-runnable-track {
     border: none;
     background-color: transparent;
     outline: none;
+}
+
+.modal-body p{
+    display:block;
 }

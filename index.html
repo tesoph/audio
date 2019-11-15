@@ -16,7 +16,9 @@
 
     <!--Custom CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-
+    <link
+        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+        rel="stylesheet">
     <!--Favicon-->
     <link href="assets/img/favicon/favicon.ico" rel="icon" type="image/x-icon" />
 </head>
@@ -29,17 +31,23 @@
         <!--Toolbar menu -->
         <div id="toolbar-container" class="toolbar-container">
             <div class="row justify-content-center">
-                <!--Settings menu-->
-                <button id="settingsButton" class="toolbar-button"><span class="oi" data-glyph="menu"></span></button>
-                <!--Save an image-->
-                <button id="cameraButton" class="toolbar-button"><span class="oi actionIcon"
-                        data-glyph="aperture"></span></button>
                 <!--More information-->
                 <button id="informationButton" class="toolbar-button" data-toggle="modal"
-                    data-target="#information-modal"><span class="oi" data-glyph="info"></span></button>
+                    data-target="#information-modal"><i class="material-icons-outlined oi">
+                        info
+                    </i></button>
+                <!--Settings menu-->
+                <button id="settingsButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        settings_applications
+                    </i></button>
+                <!--Save an image-->
+                <button id="cameraButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        camera_alt
+                    </i></button>
                 <!--Full screen-->
-                <button id="fullScreenButton" class="toolbar-button"><span class="oi"
-                        data-glyph="fullscreen-enter"></span></button>
+                <button id="fullScreenButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        all_out
+                    </i></button>
             </div>
         </div>
         <!--End action buttons menu-->
@@ -103,10 +111,13 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                           <p>Low mid tones</p>
+                            <p>Low mid tones</p>
                             <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><span
-                                    class="oi" data-glyph="question-mark"></span></a><p>:</p>
+                                data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><i
+                                    class="material-icons oi">
+                                    help_outline
+                                </i></a>
+                            <p>:</p>
                             <label for="lowMidColor">Color </label>
                             <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
                             <label for="lowMidCheckbox">Display</label>
@@ -117,8 +128,11 @@
                         <div class="col-xs-12">
                             <p>High mid tones</p>
                             <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><span
-                                    class="oi" data-glyph="question-mark"></span></a><p>:</p>
+                                data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><i
+                                    class="material-icons oi">
+                                    help_outline
+                                </i></a>
+                            <p>:</p>
                             <label for="highMidColorPicker">Color</label>
                             <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
                             <label for="highMidCheckbox">Display</label>
@@ -137,21 +151,27 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" id="custom-modal">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">More Information</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">About</h5>
                         <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci non ex porta
-                            gravida vel nec risus. Integer dictum semper lectus, et egestas est tempus vitae. Duis
-                            sed dolor ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean
-                            est quam, faucibus vitae dolor quis, mattis lobortis ex. Nunc non auctor sem. Aliquam
-                            venenatis interdum pellentesque. Donec accumsan interdum lorem, vitae finibus mauris
-                            commodo semper. Integer metus lorem, malesuada tempus facilisis in, sagittis id massa.
-                            Aenean vel diam at lacus dignissim dignissim. Quisque vel quam quis mi porta bibendum.
-                            Nulla sed vestibulum lectus, ut auctor neque. Vivamus pellentesque eu metus non
-                            ultrices. Integer sed sollicitudin ipsum, lobortis eleifend arcu.</p>
+                        <p>The circles are "movers" continuously attracted to the center of the canvas. When the volume
+                            of the sound in a certain frequency range exceeds a threshold, the movers are repelled from
+                            the center.
+                        </p>
+                        <p>
+                            <i class="material-icons-outlined oi">
+                                settings_applications
+                            </i>Use the settings menu to make the audio visualizer look how you want.
+                        </p>
+                        <p><i class="material-icons-outlined oi">
+                                camera_alt
+                            </i> Save an image of the current frame to your download folder </p>
+                        <p><i class="material-icons-outlined oi">
+                                all_out
+                            </i>Launch fullscreen</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -180,9 +200,17 @@
     <script src="libraries/popper.min.js"></script>
     <script src="libraries/bootstrap.js"></script>
     <!--Custom Javascript-->
+    <!--<script src="assets/js/sketch2.js"></script>-->
+    <!--   <script src="assets/js/attractor.js"></script>
+    <script src="assets/js/mover.js"></script>
+    <script src="assets/js/main2.js"></script>-->
+    <!--<script src="assets/js/sketchinst.js"></script>
+    <script src="assets/js/main.js"></script>-->
+    <!--<script src="assets/js/attractor.js"></script>
+    <script src="assets/js/mover.js"></script>
+    <script src="assets/js/main2.js"></script>-->
     <script src="assets/js/sketchinst.js"></script>
     <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>
