@@ -206,7 +206,7 @@ button {}
     max-height: 85vh;
 }
 
-#gui {
+#settings-menu {
     position: absolute;
     color: white;
     background-color: rgba(0, 0, 0, 0.75);
@@ -224,7 +224,7 @@ button {}
     z-index: 1;
 }
 
-#gui .oi {
+#settings-menu .oi {
     color: black;
     font-size: 1em;
     text-align: center;
@@ -234,8 +234,10 @@ button {}
     padding: 3px;
     transition: all 0.15s;
 }
-
-#gui .oi:hover {
+p{
+    display:inline;
+}
+#settings-menu .oi:hover {
     background-color: darkgray;
     font-weight: 900;
     outline: none;
@@ -352,7 +354,7 @@ input[type=range]::-webkit-slider-runnable-track {
         margin-top: 10px;
         margin-right: 10px;
     }
-    #gui {
+    #settings-menu {
         padding: 10px;
         top: 0;
         right: 0;
@@ -361,7 +363,7 @@ input[type=range]::-webkit-slider-runnable-track {
         height: auto;
     }
     /*
-    #gui {
+    #settings-menu {
         position: absolute;
         color: white;
         background-color: rgba(0, 0, 0, 0.5);

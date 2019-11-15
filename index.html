@@ -44,39 +44,10 @@
         </div>
         <!--End action buttons menu-->
 
-        <!-- More information Modal -->
-        <div class="modal fade" id="information-modal" tabindex="-1" role="dialog" aria-labelledby="informationModal"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" id="custom-modal">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">More Information</h5>
-                        <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci non ex porta
-                            gravida vel nec risus. Integer dictum semper lectus, et egestas est tempus vitae. Duis
-                            sed dolor ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean
-                            est quam, faucibus vitae dolor quis, mattis lobortis ex. Nunc non auctor sem. Aliquam
-                            venenatis interdum pellentesque. Donec accumsan interdum lorem, vitae finibus mauris
-                            commodo semper. Integer metus lorem, malesuada tempus facilisis in, sagittis id massa.
-                            Aenean vel diam at lacus dignissim dignissim. Quisque vel quam quis mi porta bibendum.
-                            Nulla sed vestibulum lectus, ut auctor neque. Vivamus pellentesque eu metus non
-                            ultrices. Integer sed sollicitudin ipsum, lobortis eleifend arcu.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End More information Modal -->
 
         <!--Settings menu-->
         <div id="toggler">
-            <div id="gui">
+            <div id="settings-menu">
                 <div class="container">
                     <div class="close">
                         <button id="close-settings" class="custom-close">X</button>
@@ -132,10 +103,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            Low mid tones
+                           <p>Low mid tones</p>
                             <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
                                 data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><span
-                                    class="oi" data-glyph="question-mark"></span></a>:
+                                    class="oi" data-glyph="question-mark"></span></a><p>:</p>
                             <label for="lowMidColor">Color </label>
                             <input type="color" id="lowMidColor" name="lowMidColor" value="#808080">
                             <label for="lowMidCheckbox">Display</label>
@@ -144,10 +115,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            High mid tones
+                            <p>High mid tones</p>
                             <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
                                 data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><span
-                                    class="oi" data-glyph="question-mark"></span></a>:
+                                    class="oi" data-glyph="question-mark"></span></a><p>:</p>
                             <label for="highMidColorPicker">Color</label>
                             <input type="color" id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
                             <label for="highMidCheckbox">Display</label>
@@ -160,6 +131,36 @@
         </div>
         <!--End Settings Menu -->
 
+        <!-- More information Modal -->
+        <div class="modal fade" id="information-modal" tabindex="-1" role="dialog" aria-labelledby="informationModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" id="custom-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">More Information</h5>
+                        <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci non ex porta
+                            gravida vel nec risus. Integer dictum semper lectus, et egestas est tempus vitae. Duis
+                            sed dolor ligula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean
+                            est quam, faucibus vitae dolor quis, mattis lobortis ex. Nunc non auctor sem. Aliquam
+                            venenatis interdum pellentesque. Donec accumsan interdum lorem, vitae finibus mauris
+                            commodo semper. Integer metus lorem, malesuada tempus facilisis in, sagittis id massa.
+                            Aenean vel diam at lacus dignissim dignissim. Quisque vel quam quis mi porta bibendum.
+                            Nulla sed vestibulum lectus, ut auctor neque. Vivamus pellentesque eu metus non
+                            ultrices. Integer sed sollicitudin ipsum, lobortis eleifend arcu.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End More information Modal -->
+
         <!--the sketch is attached to #sketch-container-->
         <div id="sketch-container">
             <div id="play">
@@ -167,7 +168,6 @@
             </div>
         </div>
         <!--End Sketch container-->
-
     </main>
 
     <!--Javascript libraries-->
@@ -184,4 +184,5 @@
     <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
