@@ -2,22 +2,10 @@
  * CONTENTS
  * (Media queries at the end of each relevant section)
  *
- * COMPONENTS
- * Fonts
  * Html, Body
- * Headings
- * Wrappers
- * Buttons
- * Navbar
- * Footer
- *
  * Sketch Canvas and parent container
- *
- * ABOUT
- *
- * SHOP
- *
- * CONTACT
+ * Toolbar
+ * Settings Menu
  *
  * Debugging
  */
@@ -114,19 +102,15 @@ canvas {
     }
 }
 
-/*----------Action Buttons--------*/
+/*----------Toolbar--------*/
 
-.ui-container {
-    background-color: rgba(10, 10, 10, 0.5);
-}
-
-#ui-container {
-    /*   background-color: rgba(10, 10, 10, 0.5);*/
+.toolbar-container {
     position: absolute;
     width: 99%;
     /*fix gap on right hand side*/
     bottom: 2vh;
     padding: 1px;
+    background-color: rgba(10, 10, 10, 0.5);
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -138,7 +122,19 @@ canvas {
     /*so that it appears on top of sketch when not in fullscreen*/
 }
 
-.uiButton .oi {
+
+.toolbar-container .row {
+    margin: 0;
+}
+
+.toolbar-button {
+    border: none;
+    background: none;
+    width: auto;
+    padding: 0.4rem;
+}
+
+.toolbar-button .oi {
     color: White;
     font-size: 3rem;
     text-align: center;
@@ -146,51 +142,16 @@ canvas {
     transition: all 0.15s;
 }
 
-.uiButton .oi:hover {
+.toolbar-button .oi:hover {
     color: grey;
     font-size: 3rem;
     font-weight: 900;
     text-align: center;
     box-sizing: content-box;
 }
-.ui-container .row {
-    margin: 0;
-}
-
-.uiButton {
-    border: none;
-    background: none;
-    width: auto;
-    padding: 0.4rem;
-}
-
-.uiButton img {
-    max-width: 70px;
-    max-height: 70px;
-}
-
-.controlsImg {
-    height: 50px;
-    width: 50px;
-}
-
-#dialog-confirm {
-    background-color: white;
-    display: none;
-    z-index: 999;
-}
-
-.ui-dialog {
-    z-index: 1000 !important;
-    /*appear on top on android chrome fix?*/
-    background-color: white;
-    border: 2px solid grey;
-}
-
-button {}
 
 @media (min-width: 768px) {
-    #ui-container {
+    .toolbar-container {
         padding: 10px;
         bottom: 5vh;
         width: auto;
@@ -234,9 +195,11 @@ button {}
     padding: 3px;
     transition: all 0.15s;
 }
-p{
+
+p {
     display:inline;
 }
+
 #settings-menu .oi:hover {
     background-color: darkgray;
     font-weight: 900;
@@ -257,7 +220,6 @@ p{
 
 .row {
     justify-content: center;
-    /* flex-wrap: nowrap;*/
 }
 
 .btn {
@@ -269,16 +231,9 @@ p{
     max-width: 20px;
 }
 
-
-#backgroundColorRadio {
-    /*display:flex;
-    flex-direction:row;*/
-}
-
+/*
 .form-group {
     margin-bottom: 0.6rem;
-    /*background-color: rgba(50, 50, 50, 0.5);*/
-    /*border-bottom:1px white solid;*/
 }
 
 #form-row-container {
@@ -310,6 +265,7 @@ form {
 .col-sm-1 {
     text-align: left;
 }
+*/
 
 input[type=range] {
     -webkit-appearance: none;
@@ -332,7 +288,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 /*
-#gui2 {
+#gtoolbar-2 {
     width: 75%;
     display: flex;
     align-items: center;
@@ -343,8 +299,6 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 */
 
-@media (min-width: 576px) {}
-
 @media (min-width: 768px) {
     #toggler {
         position: absolute;
@@ -354,6 +308,7 @@ input[type=range]::-webkit-slider-runnable-track {
         margin-top: 10px;
         margin-right: 10px;
     }
+
     #settings-menu {
         padding: 10px;
         top: 0;
@@ -362,28 +317,15 @@ input[type=range]::-webkit-slider-runnable-track {
         text-align: center;
         height: auto;
     }
-    /*
-    #settings-menu {
-        position: absolute;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5);
-        margin: 2.5% 2.5% 0 2.5%;
-        padding: 2.5%;
-        width: 90%;
-        border: 1px solid white;
-        text-align: center;
-        height: auto;
-    }*/
 }
 
 @media (min-width: 992px) {
-    /*don't get rid*/
     #toggler {
         width: 30vw;
     }
 }
 
-/*more information modal*/
+/*----------More information modal--------*/
 
 #custom-modal {
     background-color: black !important;
