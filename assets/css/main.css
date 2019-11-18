@@ -23,7 +23,6 @@
 
 /*----------Html, Body---------*/
 
-
 html, body {
     width: 100%;
     height: 100%;
@@ -44,6 +43,7 @@ html, body {
 /*----------Sketch Canvas and parent container--------*/
 
 /*Main page container*/
+
 main {
     height: 100vh;
     width: 100vw;
@@ -52,6 +52,7 @@ main {
 }
 
 /*The canvas created by the sketch object*/
+
 canvas {
     z-index: 0;
     width: 100% !important;
@@ -59,6 +60,7 @@ canvas {
 }
 
 /*The container for the canvas*/
+
 #sketch-container {
     /*w and h fixed ipad bug*/
     position: relative;
@@ -73,6 +75,7 @@ canvas {
 }
 
 /*Play button displayed over canvas*/
+
 #play {
     position: absolute;
     left: 0;
@@ -96,14 +99,22 @@ canvas {
     #play img {
         max-width: 500px;
     }
-   #sketch-container{
+    #sketch-container {
         padding: 20px;
-        background-color: rgb(30, 30, 30);
+        background-color: rgb(10, 10, 10);
     }
 }
 
 /*----------Toolbar--------*/
+
 /*new: nowrap on toolbar container row */
+
+/*https://stackoverflow.com/questions/20340138/remove-blue-border-from-css-custom-styled-button-in-chrome*/
+/*border for accessibility
+button:focus {
+    outline: 0;
+}*/
+
 
 .toolbar-container {
     position: absolute;
@@ -123,10 +134,9 @@ canvas {
     /*so that it appears on top of sketch when not in fullscreen*/
 }
 
-
 .toolbar-container .row {
     margin: 0;
-    flex-wrap:nowrap;
+    flex-wrap: nowrap;
 }
 
 .toolbar-button {
@@ -147,7 +157,6 @@ canvas {
 .toolbar-button .oi:hover {
     color: grey;
     font-size: 3.5rem;
-    
     text-align: center;
     box-sizing: content-box;
 }
@@ -183,27 +192,26 @@ canvas {
     border: 0.25rem solid white;
     border-radius: 0;
     text-align: center;
-    width: 100%;
+    width: auto;
     z-index: 1;
 }
 
 #settings-menu .oi {
-    color:white;
+    color: white;
     font-size: 1.5em;
     text-align: center;
     box-sizing: content-box;
- 
     border-radius: 99px;
     padding: 3px;
     transition: all 0.2s;
 }
 
 p {
-    display:inline;
+    display: inline;
 }
 
 #settings-menu .oi:hover {
-   color:red;
+    color: red;
     font-weight: 900;
     outline: none;
     border-color: red 3px solid;
@@ -211,9 +219,9 @@ p {
 }
 
 #close-settings {
-    position: absolute;
+    /*position: absolute;
     right: 0;
-    top: 0;
+    top: 0;*/
 }
 
 .col-xs-12 {
@@ -310,14 +318,14 @@ input[type=range]::-webkit-slider-runnable-track {
         margin-top: 10px;
         margin-right: 10px;
     }
-
     #settings-menu {
         padding: 10px;
         top: 0;
         right: 0;
         border: 1px solid white;
-        text-align: center;
+        text-align: left;
         height: auto;
+        width: auto;
     }
 }
 
@@ -338,19 +346,21 @@ input[type=range]::-webkit-slider-runnable-track {
     color: White;
     /*padding: 1rem 1rem;*/
     /* margin: -1rem -1rem -1rem auto;*/
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+ /*-webkit-appearance: none;
+-moz-appearance: none;
+ appearance: none;*/
     float: right;
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1;
     text-shadow: 0 1px 0 #fff;
+    background-color:transparent;
     border: none;
+    /*border: none;
     background-color: transparent;
-    outline: none;
+   outline: none;*/
 }
 
-.modal-body p{
-    display:block;
+.modal-body p {
+    display: block;
 }
