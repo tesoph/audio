@@ -471,14 +471,14 @@ $("#close-settings").on("click", function () {
 });
 
 //Background Color radio
-$('input[type="radio"]').on('click change', setBackgroundColor);
+$('input:radio[name ="backgroundColorRadio"]').on('click change', setBackgroundColor);
 
 function setBackgroundColor() {
     let bgCol = document.querySelector('input[name="backgroundColorRadio"]:checked').value;
-    if (bgCol === "white") {
+    if (bgCol === "light") {
         audioVisualizer.backgroundColor = audioVisualizer.color(255, 255, 255, 5);
         audioVisualizer.strokeColor = audioVisualizer.color(0, 0, 0);
-    } else if (bgCol === "black") {
+    } else if (bgCol === "dark") {
         audioVisualizer.backgroundColor = audioVisualizer.color(0, 0, 0, 5);
         audioVisualizer.strokeColor = audioVisualizer.color(255, 255, 255);
     }
@@ -539,6 +539,7 @@ function getRandomNumber() {
     return randomNo;
 }
 */
+
 //Stroke Weight Slider
 let SWslider = document.getElementById("stroke-weight-picker");
 SWslider.oninput = changeStrokeWeight;
@@ -560,6 +561,7 @@ highMidColorPicker.oninput = function () {
 
 //Display high mid movers checkbox
 document.getElementById("highMidCheckbox").onchange = function () {
+    console.log("checked");
     if (this.checked == true) {
         audioVisualizer.displayHighMid = true;
     } else {
