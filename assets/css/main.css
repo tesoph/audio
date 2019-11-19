@@ -44,6 +44,7 @@ html, body {
 /*----------Sketch Canvas and parent container--------*/
 
 /*Main page container*/
+
 main {
     height: 100vh;
     width: 100vw;
@@ -52,8 +53,9 @@ main {
 }
 
 /*The container for the canvas*/
+
 #sketch-container {
-    /*w and h fixed ipad bug*/
+    /*set w and h fixed ipad bug*/
     position: relative;
     display: block;
     height: 100vh;
@@ -66,6 +68,7 @@ main {
 }
 
 /*The canvas created by the sketch object*/
+
 canvas {
     z-index: 0;
     width: 100% !important;
@@ -73,6 +76,7 @@ canvas {
 }
 
 /*Play button displayed over canvas*/
+
 #play {
     position: absolute;
     left: 0;
@@ -89,6 +93,8 @@ canvas {
     top: 50%;
     left: 50%;
     margin-right: -50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%)
 }
 
@@ -109,9 +115,7 @@ canvas {
 /*https://stackoverflow.com/questions/20340138/remove-blue-border-from-css-custom-styled-button-in-chrome*/
 
 /*border for accessibility
-button:focus {
-    outline: 0;
-}*/
+*/
 
 .toolbar-container {
     position: absolute;
@@ -122,6 +126,7 @@ button:focus {
     background-color: rgba(10, 10, 10, 0.5);
     left: 50%;
     -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     z-index: 1;
     margin-right: auto;
@@ -133,6 +138,7 @@ button:focus {
 
 .toolbar-container .row {
     margin: 0;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
 
@@ -147,7 +153,10 @@ button:focus {
     color: White;
     font-size: 3.5rem;
     text-align: center;
+    -webkit-box-sizing: content-box;
     box-sizing: content-box;
+    -webkit-transition: all 0.15s;
+    -o-transition: all 0.15s;
     transition: all 0.15s;
 }
 
@@ -155,6 +164,7 @@ button:focus {
     color: grey;
     font-size: 3.5rem;
     text-align: center;
+    -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
 
@@ -207,9 +217,12 @@ button:focus {
     color: white;
     font-size: 1.5em;
     text-align: center;
+    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     border-radius: 99px;
     padding: 3px;
+    -webkit-transition: all 0.2s;
+    -o-transition: all 0.2s;
     transition: all 0.2s;
 }
 
@@ -221,7 +234,8 @@ p {
     color: red;
     font-weight: 900;
     outline: none;
-    border-color: red 3px solid;
+    border: red 3px solid;
+    -webkit-box-shadow: 0 0 0 2px red;
     box-shadow: 0 0 0 2px red;
 }
 
@@ -230,6 +244,8 @@ p {
 }
 
 .row {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
@@ -287,6 +303,22 @@ input[type=range]::-webkit-slider-runnable-track {
     #settings-menu {
         right: 2rem;
         top: 2rem;
+    }
+}
+
+@media (max-height: 400px) {
+    #settings-menu {
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 5px;
+        max-height: 80vh;
+        overflow-y: auto;
+        border: 0.25rem solid white;
+        border-radius: 0;
+        text-align: left;
+        width: auto;
+        z-index: 1;
     }
 }
 
