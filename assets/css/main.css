@@ -2,6 +2,7 @@
  * CONTENTS
  * (Media queries at the end of each relevant section)
  *
+ * Fonts
  * Html, Body
  * Sketch Canvas and parent container
  * Toolbar
@@ -43,7 +44,6 @@ html, body {
 /*----------Sketch Canvas and parent container--------*/
 
 /*Main page container*/
-
 main {
     height: 100vh;
     width: 100vw;
@@ -51,16 +51,7 @@ main {
     background-color: black;
 }
 
-/*The canvas created by the sketch object*/
-
-canvas {
-    z-index: 0;
-    width: 100% !important;
-    height: 100% !important;
-}
-
 /*The container for the canvas*/
-
 #sketch-container {
     /*w and h fixed ipad bug*/
     position: relative;
@@ -74,8 +65,14 @@ canvas {
     z-index: 0;
 }
 
-/*Play button displayed over canvas*/
+/*The canvas created by the sketch object*/
+canvas {
+    z-index: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
 
+/*Play button displayed over canvas*/
 #play {
     position: absolute;
     left: 0;
@@ -110,11 +107,11 @@ canvas {
 /*new: nowrap on toolbar container row */
 
 /*https://stackoverflow.com/questions/20340138/remove-blue-border-from-css-custom-styled-button-in-chrome*/
+
 /*border for accessibility
 button:focus {
     outline: 0;
 }*/
-
 
 .toolbar-container {
     position: absolute;
@@ -183,17 +180,27 @@ button:focus {
     color: white;
     background-color: rgba(0, 0, 0, 0.75);
     top: 0.25rem;
-    left: 0;
-    right: 0;
-    padding: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     margin: 0;
     max-height: 85vh;
     overflow-y: auto;
     border: 0.25rem solid white;
     border-radius: 0;
-    text-align: center;
-    width: auto;
+    text-align: left;
+    width: 100%;
     z-index: 1;
+}
+
+.settings-header {
+    border-bottom: white 1px solid;
+    margin-bottom: 1rem;
+}
+
+.settings-icon {
+    font-size: 2.5rem;
 }
 
 #settings-menu .oi {
@@ -218,12 +225,6 @@ p {
     box-shadow: 0 0 0 2px red;
 }
 
-#close-settings {
-    /*position: absolute;
-    right: 0;
-    top: 0;*/
-}
-
 .col-xs-12 {
     min-width: 100%;
 }
@@ -240,42 +241,6 @@ p {
     max-height: 20px;
     max-width: 20px;
 }
-
-/*
-.form-group {
-    margin-bottom: 0.6rem;
-}
-
-#form-row-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.form-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-}
-
-.form-check {}
-
-form {
-    padding: 0.5rem;
-}
-
-.col-sm-6 {
-    text-align: left;
-}
-
-.col-sm-5 {
-    text-align: left;
-}
-
-.col-sm-1 {
-    text-align: left;
-}
-*/
 
 input[type=range] {
     -webkit-appearance: none;
@@ -297,43 +262,40 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #ddd;
 }
 
-/*
-#gtoolbar-2 {
-    width: 75%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 25px;
+@media (min-width: 576px) {
+    #settings-menu {
+        right: 1rem;
+        top: 1rem;
+        width: auto;
+        margin-top: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        border: 1px solid white;
+        height: auto;
+    }
 }
-*/
 
 @media (min-width: 768px) {
-    #toggler {
+    /*#toggler {
         position: absolute;
         right: 2rem;
         top: 2rem;
         width: 50vw;
         margin-top: 10px;
         margin-right: 10px;
-    }
+    }*/
     #settings-menu {
-        padding: 10px;
-        top: 0;
-        right: 0;
-        border: 1px solid white;
-        text-align: left;
-        height: auto;
-        width: auto;
+        right: 2rem;
+        top: 2rem;
     }
 }
 
+/*
 @media (min-width: 992px) {
     #toggler {
-        width: 30vw;
+   
     }
-}
+}*/
 
 /*----------More information modal--------*/
 
@@ -342,29 +304,31 @@ input[type=range]::-webkit-slider-runnable-track {
     color: white;
 }
 
-.custom-close {
-    color: White;
-    /*padding: 1rem 1rem;*/
-    /* margin: -1rem -1rem -1rem auto;*/
- /*-webkit-appearance: none;
--moz-appearance: none;
- appearance: none;*/
-    float: right;
- 
+.modal-title {
     font-size: 1.5rem;
     font-weight: 700;
-   /* line-height: 1;*/
-   right:0;
+    left: 0;
+}
+
+.custom-close {
+    color: White;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    right: 0;
     text-shadow: 0 1px 0 #fff;
-    background-color:transparent;
-    border: none;
-    /*border: none;
     background-color: transparent;
-   outline: none;*/
+    border: none;
 }
-.close-icon{
-    font-size:2.5rem;
+
+.close-icon {
+    font-size: 2.5rem;
 }
+
 .modal-body p {
     display: block;
+}
+
+.modal-footer button {
+    padding: 5px;
 }
