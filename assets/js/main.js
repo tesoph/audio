@@ -328,6 +328,23 @@ let sketch = function (p) {
 //Variable to track if the device is a mobile phone (to apply relative sizing to the movers)
 let isMobile = window.matchMedia("only screen and (max-width: 576px)").matches;
 
+//media input
+let constraints = {audio: true, video:false};
+//ar promise = navigator.mediaDevices.getUserMedia(constraints);
+
+navigator.mediaDevices.getUserMedia(constraints)
+.then(function(stream) {
+  /* do something amazing with the stream */
+  audioContext.createMediaStreamSource(stream);
+
+})
+.catch(function(err) {
+  /*
+    handle what happens if user doesn't
+    grant permission or there's another error.
+  */
+});
+
 //The audio visualiser sketch is created in instance mode and attached to the DOM element #sketch-container
 let audioVisualizer = new p5(sketch, document.getElementById("sketch-container"));
 
@@ -384,6 +401,7 @@ $(window).focus(function (e) {
 });
 
 function getAudioInput() {
+
     //Audio input comes from the microphone
     audioVisualizer.mic;
     audioVisualizer.mic = new p5.AudioIn()
