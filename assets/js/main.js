@@ -1,3 +1,24 @@
+
+
+//https://stackoverflow.com/questions/32738187/getusermedia-alert-if-not-supported-on-mobile-browser
+var onSuccess = function(stream) {
+    //alert('Success!');
+  //  audioContext.createMediaStreamSource(stream);
+}
+
+var onError = function(error) {
+    alert('Sorry, your browser does not support microphone input analysis so the audio visualizer will not respond to sound');
+}
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
+navigator.msGetUserMedia;
+
+if (navigator.getUserMedia) {
+    navigator.getUserMedia({ video: false, audio: true }, onSuccess, onError);
+} else {
+    onError();
+}
+
 //Get width and height of parent container to size the sketch canvas with
 function getCanvasSize() {
     let sketchContainer = document.getElementById('sketch-container');
@@ -158,7 +179,7 @@ let sketch = function (p) {
         p.initializeMovers(p.w, p.h);
         //Number of movers then changed to match slider input value
         //Get the mic and attach an fft object to analyse the audio from it
-        p.getAudioInput();
+        //p.getAudioInput();
     };
 
     // The statements in draw() are executed until the program is stopped. Each statement is executed in sequence and after the last line is read, the first line is executed again.
@@ -258,7 +279,7 @@ let sketch = function (p) {
             }
         }
     };// end of weighted random number generation
-
+/*
     p.getAudioInput = function () {
         //Audio input comes from the microphone
         p.mic;
@@ -267,11 +288,11 @@ let sketch = function (p) {
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
-        p.peakDetect = new p5.PeakDetect();
-        p.peakDetect.update(p.fft);
+       // p.peakDetect = new p5.PeakDetect();
+       // p.peakDetect.update(p.fft);
         //    p.peakDetect.onPeak(p.triggerBeat);
     }
-
+*/
     p.fadeBackground = function () {
         //Creating a gradual fade effect on the background by drawing a 100% width and height slightly transparent rectangle on top of the sketch each time draw is called
         p.noStroke();
@@ -328,29 +349,38 @@ let sketch = function (p) {
 //Variable to track if the device is a mobile phone (to apply relative sizing to the movers)
 let isMobile = window.matchMedia("only screen and (max-width: 576px)").matches;
 
+/*
 //media input
 let constraints = {audio: true, video:false};
 //ar promise = navigator.mediaDevices.getUserMedia(constraints);
-
 navigator.mediaDevices.getUserMedia(constraints)
 .then(function(stream) {
-  /* do something amazing with the stream */
+//do something amazing with the stream 
   audioContext.createMediaStreamSource(stream);
-
 })
 .catch(function(err) {
-  /*
-    handle what happens if user doesn't
-    grant permission or there's another error.
-  */
-});
+ //handle what happens if user doesn't grant permission or there's another error.
+});*/
+
 
 //The audio visualiser sketch is created in instance mode and attached to the DOM element #sketch-container
 let audioVisualizer = new p5(sketch, document.getElementById("sketch-container"));
 
+function getAudioInput(){
+    //Audio input comes from the microphone
+    //audioVisualizer.mic;
+    audioVisualizer.mic = new p5.AudioIn()
+    audioVisualizer.mic.start();
+    //FFT object analyzes the audio input
+    audioVisualizer.fft = new p5.FFT();
+    audioVisualizer.fft.setInput(audioVisualizer.mic);
+}
+
 //On load the sketch variables are set according to the DOM input values
 window.addEventListener('load', function () {
     setVariables();
+    getAudioInput();
+
 })
 function setVariables() {
     //Uncommenting topspeed and sensitivity causes issues
@@ -399,7 +429,7 @@ $(window).focus(function (e) {
     console.log("focused");
     getAudioInput();
 });
-
+/*
 function getAudioInput() {
 
     //Audio input comes from the microphone
@@ -411,7 +441,7 @@ function getAudioInput() {
     audioVisualizer.fft.setInput(audioVisualizer.mic);
   //  audioVisualizer.peakDetect = new p5.PeakDetect();
     audioVisualizer.peakDetect.update(audioVisualizer.fft);
-}
+}*/
 
 /////////Toolbar/////////
 //Settings button (Opens settings menu)
