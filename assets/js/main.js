@@ -1,17 +1,16 @@
 
-
-//https://stackoverflow.com/questions/32738187/getusermedia-alert-if-not-supported-on-mobile-browser
-var onSuccess = function(stream) {
+//stackoverflow.com/questions/32738187/getusermedia-alert-if-not-supported-on-mobile-browser
+var onSuccess = function (stream) {
     //alert('Success!');
-  //  audioContext.createMediaStreamSource(stream);
+    //  audioContext.createMediaStreamSource(stream);
 };
 
-var onError = function(error) {
+var onError = function (error) {
     alert('Sorry, your browser does not support microphone input analysis so the audio visualizer will not respond to sound');
 };
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
-navigator.msGetUserMedia;
+    navigator.msGetUserMedia;
 
 if (navigator.getUserMedia) {
     navigator.getUserMedia({ video: false, audio: true }, onSuccess, onError);
@@ -279,20 +278,20 @@ let sketch = function (p) {
             }
         }
     };// end of weighted random number generation
-/*
-    p.getAudioInput = function () {
-        //Audio input comes from the microphone
-        p.mic;
-        p.mic = new p5.AudioIn()
-        p.mic.start();
-        //FFT object analyzes the audio input
-        p.fft = new p5.FFT();
-        p.fft.setInput(p.mic);
-       // p.peakDetect = new p5.PeakDetect();
-       // p.peakDetect.update(p.fft);
-        //    p.peakDetect.onPeak(p.triggerBeat);
-    }
-*/
+    /*
+        p.getAudioInput = function () {
+            //Audio input comes from the microphone
+            p.mic;
+            p.mic = new p5.AudioIn()
+            p.mic.start();
+            //FFT object analyzes the audio input
+            p.fft = new p5.FFT();
+            p.fft.setInput(p.mic);
+           // p.peakDetect = new p5.PeakDetect();
+           // p.peakDetect.update(p.fft);
+            //    p.peakDetect.onPeak(p.triggerBeat);
+        }
+    */
     p.fadeBackground = function () {
         //Creating a gradual fade effect on the background by drawing a 100% width and height slightly transparent rectangle on top of the sketch each time draw is called
         p.noStroke();
@@ -366,7 +365,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 //The audio visualiser sketch is created in instance mode and attached to the DOM element #sketch-container
 let audioVisualizer = new p5(sketch, document.getElementById("sketch-container"));
 
-function getAudioInput(){
+function getAudioInput() {
     //Audio input comes from the microphone
     //audioVisualizer.mic;
     audioVisualizer.mic = new p5.AudioIn();
@@ -419,7 +418,7 @@ function play() {
 window.addEventListener('resize', resizeCanvas);
 window.addEventListener('orientationchange', resizeCanvas);
 function resizeCanvas() {
-    let canvasSize =getCanvasSize();
+    let canvasSize = getCanvasSize();
     audioVisualizer.resizeCanvas(canvasSize.x, canvasSize.y);
     audioVisualizer.initializeMovers(canvasSize.x, canvasSize.y);
 }
@@ -596,11 +595,48 @@ function changeStrokeWeight(event) {
     audioVisualizer.strokeWidth = event.target.value;
 }
 
+//Color input type polyfill https://bgrins.github.io/spectrum/
+//ERROR [Intervention] Unable to preventDefault inside passive event listener due to target being treated as passive. See <URL>
+$("#lowMidColor").spectrum({
+    move: function (tinycolor) {
+        let c = tinycolor;
+        let alph = c.getAlpha();
+        c.setAlpha(alph);
+        console.log(c.toRgbString());
+        audioVisualizer.myColor = c.toRgbString();
+    }, 
+    showAlpha: true
+});
+$("#highMidColorPicker").spectrum({
+    move: function (tinycolor) {
+        let c = tinycolor;
+        let alph = c.getAlpha();
+        c.setAlpha(alph);
+        console.log(c.toRgbString());
+        audioVisualizer.highMidColor = c.toRgbString();
+    }, 
+    showAlpha: true
+});
+
+//Unused Color picker
+/*
+$(".basic").spectrum({
+    showAlpha: true
+});
+$("#lowMidColor").click(function () {
+    // let f = $("$lowMidColor").spectrum("get");
+    // console.log(f);
+    // audioVisualizer.myColor = f;
+    //  $("#triggerSet").spectrum("set", $("#enterAColor").val());
+});
+*/ 
+//Old code
 //Low mid movers color picker
+/*
 let lowMidColor = document.getElementById("lowMidColor");
 lowMidColor.oninput = function () {
     audioVisualizer.myColor = this.value;
-};
+};*/
 
 //High mid movers color picker
 let highMidColorPicker = document.getElementById("highMidColorPicker");
