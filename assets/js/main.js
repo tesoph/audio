@@ -4,11 +4,11 @@
 var onSuccess = function(stream) {
     //alert('Success!');
   //  audioContext.createMediaStreamSource(stream);
-}
+};
 
 var onError = function(error) {
     alert('Sorry, your browser does not support microphone input analysis so the audio visualizer will not respond to sound');
-}
+};
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
 navigator.msGetUserMedia;
@@ -227,14 +227,14 @@ let sketch = function (p) {
     p.makeShapeMode = function (i_) {
         let i = i_;
         p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
-    }
+    };
 
     p.initializeVariables = function () {
         //Giving the variables hardcoded values so that the sketch can run independantly of the DOM input values (?)
         p.displayHighMid = false;
-        p.sensitivity = 100
+        p.sensitivity = 100;
         p.myColor = p.color(0, 0, 0);
-        p.strokeWidth = 1
+        p.strokeWidth = 1;
         p.highMidColor = p.color(5, 5, 5);
         p.lines = true;
         p.shapeMode = true;
@@ -245,7 +245,7 @@ let sketch = function (p) {
         p.strokeColor = p.color(5, 5, 5);
         setBackgroundColor();
         p.print("setting up variables");
-    }
+    };
 
     p.initializeMovers = function (width_, height_) {
         p.w = width_;
@@ -259,7 +259,7 @@ let sketch = function (p) {
             p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.myColor);
             p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
-    }
+    };
 
     // Following code for weighted random number generation from https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
     let rand = function (min, max) {
@@ -298,7 +298,7 @@ let sketch = function (p) {
         p.noStroke();
         p.fill(p.backgroundColor);
         p.rect(0, 0, p.w, p.h);
-    }
+    };
 
     p.analyzeAudio = function () {
         p.spectrum = p.fft.analyze();
@@ -309,7 +309,7 @@ let sketch = function (p) {
         // var mid = fft.getEnergy("mid");
         //Sensitivity value from slider mapped backwards to threshold so that the amplitude can be > threshold
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
-    }
+    };
 
     p.attractMovers = function (movers_) {
         let movers = movers_;
@@ -319,12 +319,12 @@ let sketch = function (p) {
             p.t.mult(1);
             movers[i].applyForce(p.t);
         }
-    }
+    };
 
     p.repelMovers = function (movers_, threshold_, frequencyRange_) {
         //Loop through the array of movers
         let movers = movers_;
-        let threshold = threshold_
+        let threshold = threshold_;
         let frequencyRange = frequencyRange_;
         for (let i = 0; i < p.numberOfMovers; i++) {
             if (frequencyRange > threshold) {
@@ -334,7 +334,7 @@ let sketch = function (p) {
                 movers[i].applyForce(p.t);
             }
         }
-    }
+    };
 
     p.moveMovers = function (movers_, threshold_, frequencyRange_) {
         let threshold = threshold_;
@@ -342,7 +342,7 @@ let sketch = function (p) {
         let frequencyRange = frequencyRange_;
         p.attractMovers(movers);
         p.repelMovers(movers, threshold, frequencyRange);
-    }
+    };
 };
 //End of audiovisualizer sketch
 
@@ -369,7 +369,7 @@ let audioVisualizer = new p5(sketch, document.getElementById("sketch-container")
 function getAudioInput(){
     //Audio input comes from the microphone
     //audioVisualizer.mic;
-    audioVisualizer.mic = new p5.AudioIn()
+    audioVisualizer.mic = new p5.AudioIn();
     audioVisualizer.mic.start();
     //FFT object analyzes the audio input
     audioVisualizer.fft = new p5.FFT();
@@ -381,7 +381,8 @@ window.addEventListener('load', function () {
     setVariables();
     getAudioInput();
 
-})
+});
+
 function setVariables() {
     //Uncommenting topspeed and sensitivity causes issues
     // audioVisualizer.sensitivity = $('#sensitivity-slider').val();
@@ -505,13 +506,13 @@ $("#fullScreenButton").on("click", function () {
 
 //Enable popovers everywhere
 $(function () {
-    $('[data-toggle="popover"]').popover()
-})
+    $('[data-toggle="popover"]').popover();
+});
 
 //Enable popover dismiss on next click:
 $('.popover-dismiss').popover({
     trigger: 'focus'
-})
+});
 
 //Close the settings menu
 $("#close-settings").on("click", function () {
@@ -537,7 +538,7 @@ let linesCheckbox = document.getElementById("linesCheckbox");
 
 linesCheckbox.onchange = function () {
     displayLines();
-}
+};
 
 function displayLines() {
     if ($('#linesCheckbox').is(":checked")) {
@@ -554,13 +555,13 @@ document.getElementById("shapeCheckbox").onchange = function () {
     } else {
         audioVisualizer.shapeMode = false;
     }
-}
+};
 
 let sensitivitySlider = document.getElementById("sensitivity-slider");
 
 sensitivitySlider.onchange = function () {
     changeSensitivity();
-}
+};
 
 function changeSensitivity() {
     audioVisualizer.sensitivity = sensitivitySlider.value;
@@ -599,13 +600,13 @@ function changeStrokeWeight(event) {
 let lowMidColor = document.getElementById("lowMidColor");
 lowMidColor.oninput = function () {
     audioVisualizer.myColor = this.value;
-}
+};
 
 //High mid movers color picker
 let highMidColorPicker = document.getElementById("highMidColorPicker");
 highMidColorPicker.oninput = function () {
     audioVisualizer.highMidColor = this.value;
-}
+};
 
 //Display high mid movers checkbox
 document.getElementById("highMidCheckbox").onchange = function () {
@@ -615,16 +616,16 @@ document.getElementById("highMidCheckbox").onchange = function () {
     } else {
         audioVisualizer.displayHighMid = false;
     }
-}
+};
 
 //Topspeed slider
 let topspeedSlider = document.getElementById("topspeed-slider");
 topspeedSlider.oninput = function () {
     audioVisualizer.topspeed2 = Math.floor(topspeedSlider.value);
-}
+};
 
 //No. of movers
 let numMovers = document.getElementById("number-of-movers");
 numMovers.oninput = function () {
     audioVisualizer.numberOfMovers = Math.floor(numMovers.value);
-}
+};
