@@ -53,6 +53,11 @@ main {
     background-color: black;
 }
 
+#wrapper {
+    width:100%;
+    height:100%;
+  }
+  
 /*The container for the canvas*/
 
 #sketch-container {
