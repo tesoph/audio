@@ -1,17 +1,16 @@
-//Variables
+//Audio Visualizer
 
-//The audio visualiser sketch is created in instance mode and attached to the DOM element #sketch-container
+//The audio visualizer sketch is created in instance mode and attached to the DOM element #sketch-container
 let audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
 
 //Toolbar
-
-toolbar.toggleSettings();
-toolbar.toggleMoreInformation();
-toolbar.savePicture();
-toolbar.toggleFullscreen();
+let myToolbar = new toolbar();
+myToolbar.toggleSettings();
+myToolbar.toggleMoreInformation();
+myToolbar.savePicture();
+myToolbar.toggleFullscreen();
 
 //Settings Menu
-
 settingsMenu.popovers();
 settingsMenu.closeMenu();
 settingsMenu.setTheme();

@@ -1,10 +1,10 @@
-let toolbar = {
-    toggleSettings: function () {
+function toolbar() {
+    this.toggleSettings= function () {
         $("#settingsButton").on("click", function () {
             $("#settings-menu").fadeToggle(250);
         });
     },
-    toggleMoreInformation: function () {
+    this.toggleMoreInformation= function () {
         $('#informationButton').on('click', function () {
             // let vis = record if settings menu was open when more information button was clicked.
             let vis = $("#settings-menu").is(":visible");
@@ -30,7 +30,7 @@ let toolbar = {
             });
         });
     },
-    savePicture: function () {
+    this.savePicture= function () {
         $("#cameraButton").on("click", function () {
             //Generate unique filename for each image saved so that a previous image is not overwritten from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
             let r = Math.random().toString(36).substring(7);
@@ -38,7 +38,7 @@ let toolbar = {
             audioVisualizer.saveCanvas(audioVisualizer.cnv, filename);
         });
     },
-    toggleFullscreen: function () {
+    this.toggleFullscreen= function () {
         $("#fullScreenButton").on("click", function () {
             launchIntoFullscreen(sketchContainer);
             //https://davidwalsh.name/fullscreen
