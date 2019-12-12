@@ -5,13 +5,11 @@ let audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("ske
 
 //Toolbar
 let myToolbar = new toolbar();
-myToolbar.toggleSettings();
-myToolbar.toggleMoreInformation();
-myToolbar.savePicture();
-myToolbar.toggleFullscreen();
 
 //Settings Menu
-settingsMenu.popovers();
+let mySettingsMenu = new settingsMenu();
+
+/*ettingsMenu.popovers();
 settingsMenu.closeMenu();
 settingsMenu.setTheme();
 settingsMenu.displayLines();
@@ -21,7 +19,7 @@ settingsMenu.setStrokeWeight();
 settingsMenu.setMoverColor();
 settingsMenu.displayHighMidMovers();
 settingsMenu.setSpeed();
-settingsMenu.setNumberOfMovers();
+settingsMenu.setNumberOfMovers();*/
 
 //Events
 
