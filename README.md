@@ -66,7 +66,7 @@ A live demo can be found [here](https://tesoph.github.io/audio/).
 * [Autoprefixer](https://autoprefixer.github.io/
 * [jShint](https://jshint.com/)
 
-###p5.sound Classes Used
+### p5.sound Classes Used
 * p5.AudioIn - microphone
 * p5.Amplitude - Analyze volume (amplitude)
 * p5.FFT - Analyze amplitude over time / frequency.
@@ -106,11 +106,7 @@ git clone https://github.com/USERNAME/REPOSITORY
 
 
 ## Testing
-### Bugs found in the testing phase
-* [GetUserMedia/ Stream API is not supported in all browsers](https://caniuse.com/#feat=stream).
-* [The color input type in the settings menu is not supported in all browsers](https://caniuse.com/#search=color%20input)
-    * Fix: used [Spectrum Colorpicker](https://briangrinstead.com/blog/input-type-color-polyfill/). "A polyfill for the input[type=color] HTML5 control. This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs."
-* Popovers in the settings menu weren't dismissable on next click due to a naming conflict between bootstrap and jQuery UI. jQuery UI was removed from the project due to large file size while not being necessary.
+Testing information can be found in separate [testing.md](testing.md) file
 
 ## Credits
 ### Acknowledgements
