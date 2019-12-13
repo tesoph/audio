@@ -9,15 +9,23 @@ This project is an interactive live audio visualizer. It is based on a sketch I 
 
 
 ## Table of contents
-* [Demo](#Demo)
-* [Gallery](#Gallery)
-* [Features](#Features)
-* [Technologies Used](#technologies-used)
-* [Testing](#testing)
-* [Deployment](#deployment)
-  * How this project was deployed to GitHub Pages
-  * How to run this project locally
-* [Credits](#credits)
+- [Stream Two Project: Interactive Frontend Development - Code Institute](#stream-two-project-interactive-frontend-development---code-institute)
+- [Table of contents](#table-of-contents)
+- [Demo](#demo)
+- [Gallery](#gallery)
+- [UX](#ux)
+  - [User Stories](#user-stories)
+- [Features](#features)
+  - [Existing Features](#existing-features)
+  - [Features Left to Implement](#features-left-to-implement)
+- [Technologies Used](#technologies-used)
+  - [p5.sound Classes Used](#p5sound-classes-used)
+- [Deployment](#deployment)
+  - [How this project was deployed to GitHub Pages](#how-this-project-was-deployed-to-github-pages)
+  - [How to run this project locally](#how-to-run-this-project-locally)
+- [Testing](#testing)
+- [Credits](#credits)
+  - [Acknowledgements](#acknowledgements)
 
 
 ## Demo
@@ -33,12 +41,50 @@ A live demo can be found [here](https://tesoph.github.io/audio/).
 </p>
 
 
+## UX
+### User Stories
+The following user stories were used to focus on the features the site should have.
+
+As a user:
+* I would like to have fun using the site.
+* I would like to create an image using sound.
+* I would like to save images I have created.
+* I would like to be able to view in fullscreen.
+* I would like the user interface to be intuitive to use.
+
+
 ## Features
 ### Existing Features
-* A settings menu to control the variables of the audio visualiser
-* Save the current frame as a .jpg file
-* Fullscreen mode
-* More information modal
+**Toolbar**
+   * The toolbar contains four action buttons: more information, settings, camera, and fullscreen.
+   * Each button is labelled with an icon that clearly expresses its purpose.
+   * Each button is outlined when focused so that it is navigable with a screen reader.
+  
+**More information modal**
+   * Displays information about how the audio visualizer works.
+   * Explains what each button in the toolbar does.
+   * Toggles the settings menu visibility so that they are not both shown at the same time. This is to improve readability. 
+  
+**Settings Menu**
+   * The settings menu controls the variables of the audio visualiser through DOM input elements.
+   * It is displayed on page load so that the user is immediately aware that they can interact with the settings.
+   * It is transparent so that the visual results of any change in settings are visible in real time.
+   * Each input is outlined when focused so that it is navigable with a screen reader.
+  
+**Camera**
+   * The camera button saves the current frame of the audio visualiser as a .jpg image.
+   * The filename of the image is randomised so that saving multiple images does not overwrite a previous image.
+  
+**Fullscreen**
+   * Opens the canvas element in fullscreen.
+
+
+### Features Left to Implement
+* Mp3 mode
+  * Ability to upload an mp3 file and analyse this file as audio input instead of microphone input
+* Ability to save video with sound
+* User submitted image gallery
+  * User has the option to upload their image to a gallery page and view other user-submitted images
 
 
 ## Technologies Used
@@ -63,7 +109,7 @@ A live demo can be found [here](https://tesoph.github.io/audio/).
   * Polyfill for color input
 * [Google fonts](https://fonts.google.com/)
 * [Material Icon font](https://material.io/resources/icons/?style=baseline)
-* [Autoprefixer](https://autoprefixer.github.io/
+* [Autoprefixer](https://autoprefixer.github.io/)
 * [jShint](https://jshint.com/)
 
 ### p5.sound Classes Used
@@ -83,7 +129,7 @@ This site is hosted using GitHub pages, deployed directly from the master branch
 4. Navigate to the GitHub Pages secction
 5. Set Source to the Master Branch. This automatically refreshes the page and deploys the website.
 
-### How to run this project locally:
+### How to run this project locally
 1. Install Git following [these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 2. Go to the [repository](https://github.com/tesoph/audio)
 3. Click "clone or download"
