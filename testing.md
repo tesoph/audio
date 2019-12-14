@@ -1,14 +1,17 @@
-# Testing
+## Testing
 [Main README.md file](README.md)
+
 [View website in GitHub Pages](https://tesoph.github.io/audio/)
 
 ## Table of Contents
-* [Automated Testing](#Automated-Testing)
-    * [Validation Services](#Validation-services)
-    * [Jasmine](#Jasmine)
-* [User Stories Testing](#user-stores-testing)
-* [Manual Testing](#manual-testing)
-* [Bugs found during testing](#Bugs-found-during-testing)
+- [Testing](#testing)
+- [Table of Contents](#table-of-contents)
+- [Automated Testing](#automated-testing)
+  - [Validation Services](#validation-services)
+  - [Jasmine](#jasmine)
+- [User Stories Testing](#user-stories-testing)
+- [Manual Testing](#manual-testing)
+- [Bugs found during testing](#bugs-found-during-testing)
 
 ## Automated Testing
 ### Validation Services
@@ -60,7 +63,50 @@ The website has been manually tested to ensure it passes the following test case
 	* Following displayed instructions exits the fullscreen and calls the resizeCanvas() function
 
 ## Bugs found during testing
-* [GetUserMedia/ Stream API is not supported in all browsers](https://caniuse.com/#feat=stream).
-* [The color input type in the settings menu is not supported in all browsers](https://caniuse.com/#search=color%20input)
+1. **GetUserMedia/ Stream API is not supported in all browsers**. 
+* [Caniuse.com support table](https://caniuse.com/#feat=stream).
+* The following code [from MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) was put into the setup() function which is called once when the audio visualizer object is created.
+```js
+let constraints = { audio: true, video: false };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                p.getAudioInput();
+            })
+            .catch(function (error) {
+                if (error.name === 'PermissionDeniedError' || 'NotAllowedError') {
+                    alert('Permissions have not been granted to use your microphone, you need to allow the page access to your microphone in order for the audio visualizer to work.');
+                }
+                else {
+                    alert('Sorry, your browser does not support microphone input streaming so the audio visualizer will not respond to sound');
+                }
+                console.log('getUserMedia error: ' + error.name, error);
+            });
+```
+* This code checks if matching media is available. If it is not found or permission to use it is denied, it alerts the user to the respective problem.
+  
+2. **```<input type="color">``` in the settings menu is not supported in all browsers.** 
+    * ([Caniuse.com support table](https://caniuse.com/#search=color%20input))
     * Fix: used [Spectrum Colorpicker](https://briangrinstead.com/blog/input-type-color-polyfill/). "A polyfill for the input[type=color] HTML5 control. This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs."
-* Popovers in the settings menu weren't dismissable on next click due to a naming conflict between bootstrap and jQuery UI. jQuery UI was removed from the project due to large file size while not being necessary.
+    * 
+3. **Popovers in the settings menu not dismissable on next click** 
+   * This was found to be due to a naming conflict between bootstrap and jQuery UI. 
+   * Fix: jQuery UI was removed from the project. While researching this bug, I realised that jQuery has a very large file size while not being necessary for this project.
+   * 
+4. **```The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.```**
+    * Fix: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
+    * ```if (p.getAudioContext().state !== 'running') { p.userStartAudio();``` was inserted into the play() method of the audio visualizer so that when any location on the canvas is clicked the audio context is started. It is suggested to the user that they need to take this action by the play button displayed over the canvas.
+```js
+//When any location on the canvas is clicked, audioVisualizer.play() is called which toggles the sketch between pause and play
+sketchContainer.addEventListener('click', audioVisualizer.play);
+
+audioVisualizer.play = function () {
+       if (p.getAudioContext().state !== 'running') {
+                p.userStartAudio();
+            }
+    };
+```
+
+5. **Sliders in the settings menu were not displaying while testing**
+   - Reason: [Chrome disables input=range styling in responsive mode](https://bugs.chromium.org/p/chromium/issues/detail?id=807625)
+   - Fix: [Custom CSS rules for inputs](https://stackoverflow.com/questions/41170867/html5-sliders-disappear-under-chromes-device-mode). 
+   - This also prompted me to write custom css rules for inputs for different browsers so the visual remains consistent across them.
