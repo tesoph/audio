@@ -3,17 +3,34 @@
 /**
 * Audio Visualizer sketch namespace
 * @namespace audioVisualizerSketch
-**/
+*/
 let audioVisualizerSketch = function (p) {
+    /**
+    * Checks if the device is mobile to apply relative sizing to the movers 
+    * @type {boolean}
+    */
     let isMobile = window.matchMedia("only screen and (max-width: 576px)").matches;
-    // The setup function executes once when the sketch begins
+
+    /**
+    * The setup function executes once when the sketch begins
+    * @function setup
+    * @memberof audioVisualizerSketch
+    */
     p.setup = function () {
         //Get the width and height of the canvas from the parent container
         p.w = p.getCanvasSize().x;
         p.h = p.getCanvasSize().y;
-        //Initial value set to false to stop sketch from playing until a user gesture on the page
+        /**
+        * @name playing
+        * @desc Boolean to control play/pause. Initial value set to false to stop sketch from playing until a user gesture on the page
+        * @type {boolean}
+        */
         p.playing = false;
-        //creating the sketch canvas with width and height from the parent container
+         /**
+        * @name createCanvas
+        * @desc variable to store the sketch canvas
+        * @type {object}
+        */
         p.cnv = p.createCanvas(p.w, p.h);
         //drawing a plain black background to the canvas 
         p.background(p.color(0));
@@ -41,7 +58,11 @@ let audioVisualizerSketch = function (p) {
             });
     };
 
-    // The statements in draw() are executed until the program is stopped. Each statement is executed in sequence and after the last line is read, the first line is executed again.
+    /**
+    * The statements in draw() are executed until the program is stopped. Each statement is executed in sequence and after the last line is read, the first line is executed again.
+    * @memberof audioVisualizerSketch
+    * @function draw
+    */
     p.draw = function () {
         //Create a gradual fade effect on the background
         p.fadeBackground();
@@ -86,6 +107,7 @@ let audioVisualizerSketch = function (p) {
     class Attractor {
         /**
         * Attractor object
+        * @class Attractor
         * @memberof audioVisualizerSketch
         * @constructor
         * @param {object} p_ - This sketch instance 
@@ -100,9 +122,10 @@ let audioVisualizerSketch = function (p) {
             this.topspeed = 3;
         }
         /**
-        * @method display
         * displays the attractor
         * radius and stroke weight relative to volume of bass frequency
+        * @method display
+        * @memberof audioVisualizerSketch.Attractor
         **/
         display() {
             p.stroke(0);
@@ -114,20 +137,9 @@ let audioVisualizerSketch = function (p) {
             p.ellipse(this.location.x, this.location.y, p.bassMap, p.bassMap);
         }
         /**
-        * @method update
-        * updates position of 
-        * remove
-        **/
-        update() {
-            this.acceleration = p5.Vector.random2D();
-            this.velocity.add(this.acceleration);
-            this.velocity.limit(this.topspeed);
-            this.location.add(this.velocity);
-            this.acceleration.mult(0);
-        }
-        /**
         * @method attract
         * @param m - The mover that is being attracted to the attractor
+        * @memberof audioVisualizerSketch.Attractor
         **/
         attract(m) {
             let force = p5.Vector.sub(this.location, m.location);
@@ -143,6 +155,7 @@ let audioVisualizerSketch = function (p) {
         /**
         * @method repel
         * @param m - The mover that is being repelled by the attractor
+        * @memberof audioVisualizerSketch.Attractor
         **/
         repel(m) {
             let force = p5.Vector.sub(m.location, this.location);
@@ -159,6 +172,7 @@ let audioVisualizerSketch = function (p) {
         /**
         * Mover class
         * @constructor
+        * @memberof audioVisualizerSketch
         * @param {object} p_ - This sketch instance 
         * @param {number} m_ - The mass of the mover
         * @param {number} x_ - The x location of the mover
@@ -180,18 +194,20 @@ let audioVisualizerSketch = function (p) {
             }
         }
         /**
+        *Calls the update, display and checkEdges methods
         * @method run
-        * Calls the update, display and checkEdges methods
-        **/
+        * @memberof audioVisualizerSketch.Mover
+        */
         run() {
             this.update();
             this.display();
             this.checkEdges();
         }
         /**
-        * @method update
         * Updates the mover velocity, location, acceleration
-        **/
+        * @method update
+        * @memberof audioVisualizerSketch.Mover
+        */
         update() {
             this.velocity.add(this.acceleration);
             this.velocity.limit(p.topspeed2);
@@ -199,9 +215,10 @@ let audioVisualizerSketch = function (p) {
             this.acceleration.mult(0);
         }
         /**
-        * @method display
         * Displays the mover object
-        **/
+        * @method display
+        * @memberof audioVisualizerSketch.Mover
+        */
         display() {
             p.strokeWeight(p.strokeWidth);
             if (p.shapeMode == false) {
@@ -215,16 +232,17 @@ let audioVisualizerSketch = function (p) {
         /**
         * @method applyForce
         * @param force - The force to apply
-        **/
+        * @memberof audioVisualizerSketch.Mover
+        */
         applyForce(force) {
             var f = p5.Vector.div(force, this.mass);
             this.acceleration.add(f);
         }
-
         /**
-         * @method checkEdges
-         * Reverses direction of the mover if it reaches this.radius distance from the edge of the sketch canvas
-         **/
+        * Reverses direction of the mover if it reaches this.radius distance from the edge of the sketch canvas
+        * @method checkEdges
+        * @memberof audioVisualizerSketch.Mover
+        */
         checkEdges() {
             if (this.location.x > p.w - this.radius) {
                 this.velocity.x *= -1;
@@ -248,6 +266,7 @@ let audioVisualizerSketch = function (p) {
     * @returns {object}
     * object.x - the width of the container
     * object.y - the height of the container
+    * @memberof audioVisualizerSketch
     */
     p.getCanvasSize = function () {
         let sketchContainer = document.getElementById('sketch-container');
@@ -260,20 +279,21 @@ let audioVisualizerSketch = function (p) {
         };
     }
     /**
+    * 
     * @method makeShapeMode
     * @param i_ - The index of the mover array
-    * /?
-    **/
+    * @memberof audioVisualizerSketch
+    */
     p.makeShapeMode = function (i_) {
         let i = i_;
         p.vertex(p.moversLowMid[i].location.x, p.moversLowMid[i].location.y);
     };
 
     /**
-     * @method initializeVariables
-    * Giving the variables hardcoded values so that the sketch can run independantly of the DOM input values (/?)
-    * For testing /?
-    **/
+    * Gives the variables hardcoded values so that the sketch can run independantly of the DOM input values and can be tested using Jasmine
+    * @method initializeVariables 
+    * @memberof audioVisualizerSketch
+    */
     p.initializeVariables = function () {
         p.displayHighMid = false;
         p.sensitivity = 90;
@@ -292,13 +312,12 @@ let audioVisualizerSketch = function (p) {
     };
 
     /**
-     * @method initializeMovers
-     * @param width_ - The width of the sketch canvas
-     * @param height_ - The height of the sketch canvas
-     * Create 2 arrays
-     * 1 array of mover class which responds to low mid tones
-     * 1 array of mover class which responds to high mid tones
-     **/
+    * @method initializeMovers
+    * @param width_ - The width of the sketch canvas
+    * @param height_ - The height of the sketch canvas
+    * @desc Creates 2 arrays: 1 array of mover class which responds to low mid tones and 1 array of mover class which responds to high mid tones
+    * @memberof audioVisualizerSketch
+    */
     p.initializeMovers = function (width_, height_) {
         p.w = width_;
         p.h = height_;
@@ -308,20 +327,35 @@ let audioVisualizerSketch = function (p) {
         //Make new attractor and movers orientated to canvas center
         p.a = new Attractor(p);
         for (let i = 0; i < 100; i++) {
-            p.moversLowMid[i] = new Mover(this, getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.myColor);
+            p.moversLowMid[i] = new Mover(this, p.getRandomItem(list, weight), p.w / 2 + p.random(-10, 10), p.h / 2, p.myColor);
             p.moversHighMid[i] = new Mover(this, 2, p.w / 2 + p.random(-10, 10), p.h / 2, p.highMidColor);
         }
     };
 
-    // Following code for weighted random number generation from https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability// Weighted random number generation
-    let rand = function (min, max) {
+    /**
+    * @method rand
+    * @desc returns a random number
+    * @param min - The minimum number
+    * @param max - The maximum number
+    * @author https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability
+    * @memberof audioVisualizerSketch
+    */
+    p.rand = function (min, max) {
         return Math.random() * (max - min) + min;
     };
-    let getRandomItem = function (list, weight) {
+    /**
+    * @method getRandomItem
+    * @desc returns a random number
+    * @param list - array containing the numbers to choose from
+    * @param weight - array of the numbers to weight the list array by
+    * @author https://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability
+    * @memberof audioVisualizerSketch
+    */
+    p.getRandomItem = function (list, weight) {
         let total_weight = weight.reduce(function (prev, cur, i, arr) {
             return prev + cur;
         });
-        let random_num = rand(0, total_weight);
+        let random_num = p.rand(0, total_weight);
         let weight_sum = 0;
         for (let i = 0; i < list.length; i++) {
             weight_sum += weight[i];
@@ -334,11 +368,9 @@ let audioVisualizerSketch = function (p) {
 
     /**
     * @method getAudioInput
-    * Creates p5.sound object AudioIn
-    * AudioIn streams audio input from the microphone
-    * Creates p5.sound object FFT
-    * FFT analyzes the audio stream
-    **/
+    * @desc Creates p5.sound object AudioIn: AudioIn streams audio input from the microphone. Creates p5.sound object FFT: FFT analyzes the audio stream
+    * @memberof audioVisualizerSketch
+    */
     p.getAudioInput = function () {
         //Audio input comes from the microphone
         p.mic = new p5.AudioIn();
@@ -353,7 +385,8 @@ let audioVisualizerSketch = function (p) {
 
     /**
     * @method fadeBackground
-    * Creates a gradual fade effect on the background by drawing a 100% width and height slightly transparent rectangle on top of the sketch each time draw is called
+    * @desc Creates a gradual fade effect on the background by drawing a 100% width and height slightly transparent rectangle on top of the sketch each time draw is called
+    * @memberof audioVisualizerSketch
     */
     p.fadeBackground = function () {
         p.noStroke();
@@ -363,7 +396,8 @@ let audioVisualizerSketch = function (p) {
 
     /**
     * @method analyzeAudio
-    * Calls analyze method on fft object
+    * @desc Calls analyze method on fft object
+    * @memberof audioVisualizerSketch
     */
     p.analyzeAudio = function () {
         //???p.spectrum whats it doing
@@ -387,6 +421,12 @@ let audioVisualizerSketch = function (p) {
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
     };
 
+    /**
+    * @method repelMovers
+    * @desc attracts the movers to the attractor object
+    * @param movers_ - The array of movers to be moved
+    * @memberof audioVisualizerSketch
+    */
     p.attractMovers = function (movers_) {
         let movers = movers_;
         for (let i = 0; i < p.numberOfMovers; i++) {
@@ -396,7 +436,14 @@ let audioVisualizerSketch = function (p) {
             movers[i].applyForce(p.t);
         }
     };
-
+    /**
+    * @method repelMovers
+    * @desc repels the movers from the attractor if the amplitude of the frequency range is above a certain threshold
+    * @param movers_ - The array of movers to be moved
+    * @param threshold - The amplitude over which the movers are repelled from the attactor
+    * @param frequencyRange_ - The frequency range the movers will be influenced by
+    * @memberof audioVisualizerSketch
+    */
     p.repelMovers = function (movers_, threshold_, frequencyRange_) {
         //Loop through the array of movers
         let movers = movers_;
@@ -411,7 +458,14 @@ let audioVisualizerSketch = function (p) {
             }
         }
     };
-
+    /**
+    * @method moveMovers
+    * @desc Calls both attractMovers and repelMovers
+    * @param movers_ - The array of movers to be moved
+    * @param threshold - The amplitude over which the movers are repelled from the attactor
+    * @param frequencyRange_ - The frequency range the movers will be influenced by
+    * @memberof audioVisualizerSketch
+    */
     p.moveMovers = function (movers_, threshold_, frequencyRange_) {
         let threshold = threshold_;
         let movers = movers_;
@@ -422,8 +476,8 @@ let audioVisualizerSketch = function (p) {
 
     /**
     * @method play
-    * Displays play button and pauses sketch if sketch is playing when the canvas is clicked
-    * Hides play button and resumes sketch if sketch is paused when the canvas is clicked
+    * @desc Displays play button and pauses sketch if sketch is playing when the canvas is clicked. Hides play button and resumes sketch if sketch is paused when the canvas is clicked
+    * @memberof audioVisualizerSketch
     */
     p.play = function () {
         let playButton = document.getElementById("play");
