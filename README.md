@@ -1,4 +1,4 @@
-<div><img src="assets/img/logo/logo.jpg" alt="logo">
+<div><img src="assets/img/logo/logo2.jpg" alt="logo">
 <h1>Audio Visualizer</h1>
 </div>
 
@@ -186,5 +186,7 @@ Testing information can be found in separate [testing.md](testing.md) file
 * This README was created following the format of and has taken inspiration from Code Institute student [AJGreaves's README](https://github.com/AJGreaves/picflip/blob/master/README.md).
   
 * Thanks to my mentor Brian Macharia for support and advice.
+
+
 
 **This is for educational use.**
