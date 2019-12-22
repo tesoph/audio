@@ -8,7 +8,7 @@
 This project is an interactive live audio visualizer. It is based on a sketch I had previously written in Processing, [mover_audio](https://github.com/tesoph/mover_audio). This sketch's inspiration was [chapter 2 of the book "The Nature of Code" by Daniel Shiffman](https://natureofcode.com/book/chapter-2-forces/) which explains how to use forces to make objects move around the screen. For this project I rewrote the sketch in Javascript using the library p5.js and added several features to make it interactive. It requires audio input from the microphone to run. The appearance of the audio visualizer can be controlled by the user via the settings menu.
 
 ### How it works
-In this sketch, an array of "mover" objects is created which is continously attracted to an attractor object in the center of the canvas. When the volume of sound in a specific frequency range exceeds a user-selected threshold, the movers are repelled from the attractor.
+In this sketch, an array of "mover" objects is created which are continously attracted to an attractor object in the center of the canvas. When the volume of sound in a specific frequency range exceeds a user-selected threshold, the movers are repelled from the attractor.
 
 ## Table of contents
 - [Stream Two Project: Interactive Frontend Development - Code Institute](#stream-two-project-interactive-frontend-development---code-institute)
@@ -187,8 +187,6 @@ Testing information can be found in separate [testing.md](testing.md) file
    * Styling cross-browser compatible range inputs with CSS from [css-tricks.com](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/).
   
 ### Acknowledgements
-* [This Processing forum thread](https://forum.processing.org/two/discussion/14153/p5-updating-variables-from-outside-sketch-instance) was a useful starting point for getting the DOM inputs to control the sketch variables.
-  
 * This README was created following the format of and has taken inspiration from Code Institute student [AJGreaves's README](https://github.com/AJGreaves/picflip/blob/master/README.md).
   
 * Thanks to my mentor Brian Macharia for support and advice.
