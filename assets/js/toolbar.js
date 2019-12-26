@@ -1,5 +1,8 @@
 let toolbar = function () {
 
+    /*Jasmine throwing errors..
+    Uncaught TypeError: Cannot read property 'addEventListener' of null
+    at new toolbar*/
     //More information modal button 
     let infoBtn = document.getElementById("informationButton");
     infoBtn.addEventListener("click", () => {
