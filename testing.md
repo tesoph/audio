@@ -13,7 +13,7 @@
 - [User Stories Testing](#user-stories-testing)
 - [Manual Testing](#manual-testing)
 - [Solved bugs found during testing](#solved-bugs-found-during-testing)
-- [Unsolved bugs found during testing](#unsolved-bugs-found-during-testing)
+- [Unsolved bugs during testing](#unsolved-bugs-during-testing)
 
 ## Automated Testing
 ### Validation Services
@@ -174,8 +174,8 @@ audioVisualizer.play = function () {
    - This also prompted me to write custom css rules for inputs for different browsers so the visual remains consistent across them.
 
 6. **Some mobile browsers would place the bottom of the canvas to be off the screen**
-   - Reason: Some mobile browsers do not include address bar height in viewport height so the sketch-container CSS style height:100vh would
+   - Reason: Some mobile browsers do not include address bar height in viewport height so the sketch-container CSS style height:100vh would render the bottom of the sketch-container div off the screen
+   - Fix: https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
-
-## Unsolved bugs found during testing
-1. Some mobile browsers do not include the height of the address bar in the vh. 
+## Unsolved bugs during testing
+ - Mic input doesn't work on latest version of Android firefox.
