@@ -141,7 +141,7 @@ These wireframes were created using [Procreate](https://procreate.art/).
 ## Deployment 
 This project was developed using the code editor Visual Studio Code, committed to git and pushed to GitHub using the terminal. 
 
-This site is hosted using GitHub pages, deployed directly from the master branch. The deployed site will update automatically upon new commits to the master branch. In order for the site to deploy correctly on GitHub pages, the landing page must be named `index.html`.
+This site is hosted using GitHub pages, deployed directly from the master branch. The deployed site will update automatically upon new commits to the master branch. In order for the site to deploy correctly on GitHub pages, the landing page must be named `index.html`.a
 
 ### How this project was deployed to GitHub Pages
 1. Log into GitHub
@@ -150,14 +150,11 @@ This site is hosted using GitHub pages, deployed directly from the master branch
 
 ### How to run this project locally
 1. Install Git following [these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-2. Go to the [repository](https://github.com/tesoph/audio)
-3. Click "clone or download"
-4. Copy the clone URL 
-5. Open command line interface
-6. Create a directory by entering `mkdir repo` into the terminal
-7. Change the current working directory to the directory from the previous step by entering 'cd repo' into the terminal
-8. Clone the repository to this directory by entering `git clone https://github.com/tesoph/audio.git`
-9.  To cut ties with this GitHub repository, navigate to the directory it is in and type `git remote rm origin` into the command line.
+2. Open a terminal
+3. Create a directory by entering `mkdir repo` into the terminal
+4. Change the current working directory to the directory from the previous step by entering 'cd repo' into the terminal
+5. Clone the repository to this directory by entering `git clone https://github.com/tesoph/audio.git`
+6.  To cut ties with this GitHub repository, navigate to the directory it is in and type `git remote rm origin` into the command line.
 
 
 ## Testing
