@@ -1,4 +1,4 @@
-function settingsMenu() {
+let settingsMenu = function() {
     //Enable popovers everywhere
     $(function () {
         $('[data-toggle="popover"]').popover();
@@ -51,10 +51,10 @@ function settingsMenu() {
 
     //Sensitivity to noise slider
     let sensitivitySlider = document.getElementById("sensitivity-slider");
-    sensitivitySlider.onchange = function () {
-        changeSensitivity();
-    };
-    function changeSensitivity() {
+    sensitivitySlider.addEventListener("change", () => {
+        this.changeSensitivity();
+    });
+    this.changeSensitivity = function() {
         audioVisualizer.sensitivity = sensitivitySlider.value;
     }
 
@@ -68,7 +68,6 @@ function settingsMenu() {
     //Movers color picker
     //Color input type polyfill https://bgrins.github.io/spectrum/
     //BUG FIX: defaults to text input for browsers that don't support input type color
-    //ERROR [Intervention] Unable to preventDefault inside passive event listener due to target being treated as passive. See <URL>
     $("#lowMidColor").spectrum({
         move: function (tinycolor) {
             let c = tinycolor;

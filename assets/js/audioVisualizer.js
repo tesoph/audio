@@ -40,8 +40,6 @@ let audioVisualizerSketch = function (p) {
         p.initializeMovers(p.w, p.h);
         p.getAudioInput();
 
-        //Uncomment if(!window.jasmine) to run Jasmine tests without the script throwing an error
-        //if (!window.jasmine) {
         //Check if the browser supports media stream API and check if given permission
         //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
         let constraints = { audio: true, video: false };
@@ -59,7 +57,6 @@ let audioVisualizerSketch = function (p) {
                 }
                 console.log('getUserMedia error: ' + error.name, error);
             });
-        // }
     };
 
     /**
@@ -115,7 +112,7 @@ let audioVisualizerSketch = function (p) {
         * @memberof audioVisualizerSketch
         * @constructor
         * @param {object} p_ - This sketch instance 
-        **/
+        */
         constructor(p_) {
             this.p = p_;
             this.location = p.createVector(p.w / 2, p.h / 2);
@@ -376,9 +373,22 @@ let audioVisualizerSketch = function (p) {
     * @memberof audioVisualizerSketch
     */
     p.getAudioInput = function () {
-        //Audio input comes from the microphone
+        /**
+        * p5.AudioIn class -get audio from an input
+        * @class AudioIn
+        * @memberof audioVisualizerSketch
+        * @constructor
+        * @see {@link https://p5js.org/reference/#/p5.AudioIn}
+        */
         p.mic = new p5.AudioIn();
         p.mic.start();
+         /**
+        * p5FFT class -get audio from an input
+        * @class FFT
+        * @memberof audioVisualizerSketch
+        * @constructor
+        * @see {@link https://p5js.org/reference/#/p5.FFT}
+        */
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
