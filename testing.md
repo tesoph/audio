@@ -9,6 +9,7 @@
 - [Automated Testing](#automated-testing)
   - [Validation Services](#validation-services)
   - [Jasmine](#jasmine)
+    - [Difference between audioVisualizer.js and audioVisualizerJasminejs](#difference-between-audiovisualizerjs-and-audiovisualizerjasminejs)
 - [User Stories Testing](#user-stories-testing)
 - [Manual Testing](#manual-testing)
 - [Bugs found during testing](#bugs-found-during-testing)
@@ -31,15 +32,35 @@ During the automated testing phase, it was discovered that it is difficult to te
 The files for jasmine testing can be found here:
 * HTML page to run jasmine tests from: [test.html](assets/jasmine-testing/test.html)
 * JavaScript specifications (tests): [fileSpec.js](assets/jasmine-testing/spec/fileSpec.js)
-
+* Alternative version of audioVisualizer.js for Jasmine testing
+  
 The live results of the Jasmine tests can be viewed in the browser [here](https://tesoph.github.io/audio/assets/jasmine-testing/test.html).
+
+#### Difference between audioVisualizer.js and audioVisualizerJasminejs
+* The following code block in audioVisualizer.js causes Jasmine to throw errors. 
+```js
+let constraints = { audio: true, video: false };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                p.getAudioInput();
+            })
+            .catch(function (error) {
+                if (error.name === 'PermissionDeniedError' || 'NotAllowedError') {
+                    alert('Permissions have not been granted to use your microphone, you need to allow the page access to your microphone in order for the audio visualizer to work.');
+                }
+                else {
+                    alert('Sorry, your browser does not support microphone input streaming so the audio visualizer will not respond to sound');
+                }
+                console.log('getUserMedia error: ' + error.name, error);
+            });
+```
+* This can be resolved if the previous code block is wrapped with `if (!window.jasmine){}` but this solution is not included in the deployed version of the audioVisualizer.js,
+* Instead, for jasmine testing a seperate js file was created with the only difference to the deployed audioVisualizer.js file being the inclusion of `if(!window.jasmine){}` wrapping the above code block at [line 43](https://github.com/tesoph/audio/tree/master/assets/jasmine-testing/src/audioVisualizerJasmine.js#L43).
 
 ## User Stories Testing
 
 As a user:
 
-* I would like to have fun using the site.
-    * Subjective.
 * I would like to create an image using sound.
     * Audio input is taken from the microphone, allowing the user to use any sound/noise of their choice.
     * The settings menu allows the user to choose how they would like the sound to be visualized.
@@ -56,8 +77,9 @@ As a user:
 * Chrome DevTools was used to test each page across all media query breakpoints to ensure the responsive design works as expected and there is no screen width at which there is overflow or misplaced elements.
 
 The following manual testing was undertaken on:
-* Desktop on the latest versions of Chrome, Firefox and Safari browsers.
-* Mobile on the latest version of Chrome browser.
+* Desktop: macOS Mojave on the latest versions of Chrome (version 79), Firefox (version 71) and Safari (version 12.1.1) browsers.
+* Tablet: ipadOS 13.3 on the latest version of Safari browser.
+* Mobile: Android version 8 on the latest versions of Chrome and Firefox browsers.
   
 The website has been manually tested to ensure it passes the following test cases:
 
@@ -121,8 +143,8 @@ let constraints = { audio: true, video: false };
                 console.log('getUserMedia error: ' + error.name, error);
             });
 ```
-* This code checks if matching media is available. If it is not found or permission to use it is denied, it alerts the user to the respective problem.
-  
+* This code checks if matching media is available. If it is not found or permission to use it is denied, it alerts the user to the respective situation.
+   
 2. **```<input type="color">``` in the settings menu is not supported in all browsers.** 
     * [Caniuse.com support table](https://caniuse.com/#search=color%20input)
     * Fix: used [Spectrum Colorpicker](https://briangrinstead.com/blog/input-type-color-polyfill/). "A polyfill for the input[type=color] HTML5 control. This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs."

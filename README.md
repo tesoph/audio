@@ -135,9 +135,8 @@ These wireframes were created using [Procreate](https://procreate.art/).
 * [jShint](https://jshint.com/)
 
 ### p5.sound Classes Used
-* p5.AudioIn - microphone
-* p5.Amplitude - Analyze volume (amplitude)
-* p5.FFT - Analyze amplitude over time / frequency.
+* [p5.AudioIn](https://p5js.org/reference/#/p5.fft) - Get audio from an input, i.e. your computer's microphone.
+* [p5.FFT](https://p5js.org/reference/#/p5.fft) - Analyze amplitude over time / frequency.
 
 ## Deployment 
 This project was developed using the code editor Visual Studio Code, committed to git and pushed to GitHub using the terminal. 
@@ -146,10 +145,8 @@ This site is hosted using GitHub pages, deployed directly from the master branch
 
 ### How this project was deployed to GitHub Pages
 1. Log into GitHub
-2. Select the repository
-3. Select the repository settings
-4. Navigate to the GitHub Pages secction
-5. Set Source to the Master Branch. This automatically refreshes the page and deploys the website.
+2. Navigate to the GitHub Pages section of the repository settings
+3. Set Source to the Master Branch. This automatically refreshes the page and deploys the website.
 
 ### How to run this project locally
 1. Install Git following [these instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -157,20 +154,10 @@ This site is hosted using GitHub pages, deployed directly from the master branch
 3. Click "clone or download"
 4. Copy the clone URL 
 5. Open command line interface
-6. Create a directory
-```console
-mkdir repo
-```
-7. Change the current working directory to the directory from the previous step
-```console
-cd repo
-```
-8. Clone the repository to this directory 
-```console
-git clone https://github.com/USERNAME/REPOSITORY
-```
-9. Press enter
-10. To cut ties with this GitHub repository, navigate to the directory it is in and type `git remote rm origin` into the command line.
+6. Create a directory by entering `mkdir repo` into the terminal
+7. Change the current working directory to the directory from the previous step by entering 'cd repo' into the terminal
+8. Clone the repository to this directory by entering `git clone https://github.com/tesoph/audio.git`
+9.  To cut ties with this GitHub repository, navigate to the directory it is in and type `git remote rm origin` into the command line.
 
 
 ## Testing
