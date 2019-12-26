@@ -139,8 +139,8 @@ describe('Testing permission errors', () => {
 /*Testing the Toolbar */
 describe('Toolbar button click events', function () {
     var audioVisualizer;
+    // var toolbarTest = new toolbar();
     var t;
- 
     beforeEach(function () {
         setFixtures(` <button id="cameraButton" class="toolbar-button"></button>
                       <div id="toolbar-container" class="toolbar-container">
@@ -171,12 +171,11 @@ describe('Toolbar button click events', function () {
         audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
         // t= new toolbar();
         //  toolbarTest= new toolbar();
-        t = new toolbar();
     });
 
     it("Clicking the settings button should toggle the settings menu visibility", function () {
 
-      /*  $("#settingsButton").on("click", function () {
+        $("#settingsButton").on("click", function () {
             //fadeToggle changed to toggle for testing,
             //fadeToggle fails the test (because style display:none isn't immediately set?) 
             $("#settings-menu").toggle();
@@ -189,12 +188,7 @@ describe('Toolbar button click events', function () {
 
         expect('click').toHaveBeenTriggeredOn('#settingsButton');
         expect(spyEvent).toHaveBeenTriggered();
-        expect(menu).toBeHidden();*/
-    });
-    it("Clicking the settings button should toggle the settings menu visibility", function () {
-        let menu = document.getElementById("settings-menu");
-    t.toggleInfo();
-    expect(menu).toBeHidden();
+        expect(menu).toBeHidden();
     });
 
     /*  it("Clicking the settings button should toggle the settings menu visibility", function () {
@@ -224,19 +218,19 @@ describe('Toolbar button click events', function () {
             let filename = `Audio-${r}.jpg`;
             audioVisualizer.saveCanvas(audioVisualizer.cnv, filename);
         });
-       // spyEvent = spyOnEvent('#cameraButton', 'click');
-        //$('#cameraButton').trigger("click");
+        spyEvent = spyOnEvent('#cameraButton', 'click');
+        $('#cameraButton').trigger("click");
 
-       // expect('click').toHaveBeenTriggeredOn('#cameraButton');
-      //  expect(spyEvent).toHaveBeenTriggered();
-       // expect(audioVisualizer.saveCanvas).toHaveBeenCalled();
+        expect('click').toHaveBeenTriggeredOn('#cameraButton');
+        expect(spyEvent).toHaveBeenTriggered();
+        expect(audioVisualizer.saveCanvas).toHaveBeenCalled();
     });
 });
 
 /*Testing the settings menu */
 describe('Settings menu input change events', function () {
     var audioVisualizer;
-    var sm;
+    let sm;
     beforeEach(function () {
         wrapper = setFixtures(`
             <div id="sketch-container"></div>
@@ -264,7 +258,7 @@ describe('Settings menu input change events', function () {
                     <div class="col-xs-12">
                         <label for="sensitivity-slider">Sensitivity to noise</label>
                         <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
-                            value="80" />
+                            value="90" />
                     </div>
                 </div>
                 <div class="row">
@@ -331,7 +325,7 @@ describe('Settings menu input change events', function () {
         </div>
         `)
         audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
-        sm = new settingsMenu();
+        //sm = new settingsMenu();
     });
 
     it("checking the shape mode checkbox results in audiovisualizer.shapeMode being set to true", function () {
@@ -357,18 +351,8 @@ describe('Settings menu input change events', function () {
     });
 
     it("changing the sensitivty slider value changes the value of the audiovisualizer sensitivty variable to match", function () {
-
-
-        
         let sensitivitySlider = document.getElementById("sensitivity-slider");
-    //    sensitivitySlider.value = 10;
-        $('#sensitivity-slider').val('10');
-        sm.changeSensitivity();
-        expect(audioVisualizer.sensitivity).toBe(10);
-
-
-
-       /* sensitivitySlider.onchange = function () {
+        sensitivitySlider.onchange = function () {
             changeSensitivity();
         };
         function changeSensitivity() {
@@ -379,8 +363,7 @@ describe('Settings menu input change events', function () {
         $('#sensitivity-slider').click();
 
         expect('click').toHaveBeenTriggeredOn('#sensitivity-slider');
-        expect(audioVisualizer.sensitivity).toBe(10);*/
-
+        expect(audioVisualizer.sensitivity).toBe(10);
     });
 });
 

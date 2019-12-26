@@ -26,168 +26,162 @@
     </header>
     <!--Main-->
     <main>
-        <div id="wrapper">
-            <!--Toolbar menu-->
-            <div id="toolbar-container" class="toolbar-container">
-                <div class="row justify-content-center">
-                    <!--More information-->
-                    <button id="informationButton" class="toolbar-button" data-toggle="modal"
-                        data-target="#information-modal"><i class="material-icons-outlined oi">
-                            info
-                        </i></button>
-                    <!--Settings menu-->
-                    <button id="settingsButton" class="toolbar-button"><i class="material-icons-outlined oi">
+            <div id="wrapper">
+        <!--Toolbar menu-->
+        <div id="toolbar-container" class="toolbar-container">
+            <div class="row justify-content-center">
+                <!--More information-->
+                <button id="informationButton" class="toolbar-button" data-toggle="modal"
+                    data-target="#information-modal"><i class="material-icons-outlined oi">
+                        info
+                    </i></button>
+                <!--Settings menu-->
+                <button id="settingsButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        settings_applications
+                    </i></button>
+                <!--Save an image-->
+                <button id="cameraButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        camera_alt
+                    </i></button>
+                <!--Full screen-->
+                <button id="fullScreenButton" class="toolbar-button"><i class="material-icons-outlined oi">
+                        all_out
+                    </i></button>
+            </div>
+        </div>
+        <!--End Toolbar-->
+
+        <!--Settings menu-->
+        <div id="settings-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 settings-header">
+                        <i class="material-icons-outlined settings-icon">
                             settings_applications
-                        </i></button>
-                    <!--Save an image-->
-                    <button id="cameraButton" class="toolbar-button"><i class="material-icons-outlined oi">
-                            camera_alt
-                        </i></button>
-                    <!--Full screen-->
-                    <button id="fullScreenButton" class="toolbar-button"><i class="material-icons-outlined oi">
-                            all_out
-                        </i></button>
+                        </i>
+                        <button id="close-settings" class="custom-close">X</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        Theme:
+                        <input type="radio" id="backgroundColorRadioDark" value="dark" name="backgroundColorRadio"
+                            checked>
+                        <label for="backgroundColorRadioDark">Dark</label>
+                        <input type="radio" id="backgroundColorRadioLight" value="light" name="backgroundColorRadio">
+                        <label for="backgroundColorRadioLight">Light</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="sensitivity-slider">Sensitivity to noise</label>
+                        <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
+                            value="90" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="number-of-movers">Number of movers</label>
+                        <input type="range" name="number-of-movers" id="number-of-movers" min="1" max="75" step="1"
+                            value="50" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="topspeed-slider">Speed</label>
+                        <input type="range" name="topspeed-slider" id="topspeed-slider" min="2" max="6" step="1"
+                            value="4" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="stroke-weight-picker">Stroke weight</label>
+                        <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10" value="1" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="linesCheckbox">Display lines</label>
+                        <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="shapeCheckbox">Shape mode</label>
+                        <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>Low mid tones</p>
+                        <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
+                            data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><i
+                                class="material-icons-outlined oi">
+                                help_outline
+                            </i></a>
+                        <label for="lowMidColor">Color </label>
+                        <input type="color" class='basic'id="lowMidColor" name="lowMidColor" value="#808080">
+                        <label for="lowMidCheckbox">Display</label>
+                        <input type="checkbox" id="lowMidCheckbox" name="lowMidCheckbox" checked disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>High mid tones</p>
+                        <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
+                            data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><i
+                                class="material-icons-outlined oi">
+                                help_outline
+                            </i></a>
+                        <label for="highMidColorPicker">Color</label>
+                        <input type="color" class='basic' id="highMidColorPicker" name="highMidColorPicker" value="#85a7e5">
+                        <label for="highMidCheckbox">Display</label>
+                        <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
+                    </div>
                 </div>
             </div>
-            <!--End Toolbar-->
+        </div>
+        <!--End Settings Menu -->
 
-            <!--Settings menu-->
-            <div id="settings-menu">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 settings-header">
-                            <i class="material-icons-outlined settings-icon">
+        <!-- More information Modal -->
+        <div class="modal fade" id="information-modal" tabindex="-1" role="dialog" aria-labelledby="information-modal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" id="custom-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">About</h5>
+                        <button type="button" class="custom-close" data-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>The circles are "movers" continuously attracted to the center of the canvas. When the volume
+                            of the sound in a certain frequency range exceeds a user-selected threshold, the movers are
+                            repelled from
+                            the center.
+                        </p>
+                        <p>
+                            <i class="material-icons-outlined oi">
                                 settings_applications
-                            </i>
-                            <button id="close-settings" class="custom-close">X</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            Theme:
-                            <input type="radio" id="backgroundColorRadioDark" value="dark" name="backgroundColorRadio"
-                                checked>
-                            <label for="backgroundColorRadioDark">Dark</label>
-                            <input type="radio" id="backgroundColorRadioLight" value="light"
-                                name="backgroundColorRadio">
-                            <label for="backgroundColorRadioLight">Light</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="sensitivity-slider">Sensitivity to noise</label>
-                            <input type="range" name="sensitivity-slider" id="sensitivity-slider" min="30" max="170"
-                                value="90" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="number-of-movers">Number of movers</label>
-                            <input type="range" name="number-of-movers" id="number-of-movers" min="1" max="75" step="1"
-                                value="50" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="topspeed-slider">Speed</label>
-                            <input type="range" name="topspeed-slider" id="topspeed-slider" min="2" max="6" step="1"
-                                value="4" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="stroke-weight-picker">Stroke weight</label>
-                            <input type="range" name="stroke-weight" id="stroke-weight-picker" min="1" max="10"
-                                value="1" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="linesCheckbox">Display lines</label>
-                            <input type="checkbox" id="linesCheckbox" name="linesCheckbox">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label for="shapeCheckbox">Shape mode</label>
-                            <input type="checkbox" id="shapeCheckbox" name="shapeCheckbox">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>Low mid tones</p>
-                            <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                data-content="These circles react to sound in the low mid tones, frequency range: 140-400Hz"><i
-                                    class="material-icons-outlined oi">
-                                    help_outline
-                                </i></a>
-                            <label for="lowMidColor">Color </label>
-                            <input type="color" class='basic' id="lowMidColor" name="lowMidColor" value="#808080">
-                            <label for="lowMidCheckbox">Display</label>
-                            <input type="checkbox" id="lowMidCheckbox" name="lowMidCheckbox" checked disabled>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>High mid tones</p>
-                            <a tabindex="0" class="btn" role="button" data-toggle="popover" data-trigger="focus"
-                                data-content="These circles react to sound in the high mid tones, frequency range: 2600-5200Hz."><i
-                                    class="material-icons-outlined oi">
-                                    help_outline
-                                </i></a>
-                            <label for="highMidColorPicker">Color</label>
-                            <input type="color" class='basic' id="highMidColorPicker" name="highMidColorPicker"
-                                value="#85a7e5">
-                            <label for="highMidCheckbox">Display</label>
-                            <input type="checkbox" id="highMidCheckbox" name="highMidCheckbox">
-                        </div>
+                            </i>Use the settings menu to make the audio visualizer look how you want.
+                        </p>
+                        <p><i class="material-icons-outlined oi">
+                                camera_alt
+                            </i> Save an image of the current frame to your download folder </p>
+                        <p><i class="material-icons-outlined oi">
+                                all_out
+                            </i>Launch fullscreen</p>
                     </div>
                 </div>
             </div>
-            <!--End Settings Menu -->
+        </div>
+        <!-- End More information Modal -->
 
-            <!-- More information Modal -->
-            <div class="modal fade" id="information-modal" tabindex="-1" role="dialog"
-                aria-labelledby="information-modal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content" id="custom-modal">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">About</h5>
-                            <button type="button" class="custom-close" data-dismiss="modal"
-                                aria-label="Close">X</button>
-                        </div>
-                        <div class="modal-body">
-                            <p>The circles are "movers" continuously attracted to the center of the canvas. When the
-                                volume
-                                of the sound in a certain frequency range exceeds a user-selected threshold, the movers
-                                are
-                                repelled from
-                                the center.
-                            </p>
-                            <p>
-                                <i class="material-icons-outlined oi">
-                                    settings_applications
-                                </i>Use the settings menu to make the audio visualizer look how you want.
-                            </p>
-                            <p><i class="material-icons-outlined oi">
-                                    camera_alt
-                                </i> Save an image of the current frame to your download folder </p>
-                            <p><i class="material-icons-outlined oi">
-                                    all_out
-                                </i>Launch fullscreen</p>
-                        </div>
-                    </div>
-                </div>
+        <!--The sketch canvas is attached to #sketch-container-->
+        <div id="sketch-container">
+            <div id="play">
+                <img src="assets/img/play.png" alt="play button">
             </div>
-            <!-- End More information Modal -->
-
-            <!--The sketch canvas is attached to #sketch-container-->
-            <div id="sketch-container">
-                <div id="play">
-                    <img src="assets/img/play.png" alt="play button">
-                </div>
-            </div>
-            <!--End #sketch-container-->
+        </div>
+        <!--End #sketch-container-->
         </div>
     </main>
     <!--End main-->
@@ -204,11 +198,11 @@
     <script src='libraries/spectrum/spectrum.js'></script>
 
     <!--Custom Javascript-->
-    <!-- <script src="assets/js/main2.js"></script>-->
-    <script src="assets/js/audioVisualizer.js"></script>
-    <script src="assets/js/toolbar.js"></script>
-    <script src="assets/js/settingsMenu.js"></script>
-    <script src="assets/js/main.js"></script>
+   <!-- <script src="assets/js/main2.js"></script>-->
+   <script src="assets/js/audioVisualizer.js"></script>
+   <script src="assets/js/toolbar.js"></script>
+   <script src="assets/js/settingsMenu.js"></script>
+   <script src="assets/js/main.js"></script>
 </body>
 
 </html>
