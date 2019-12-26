@@ -31,6 +31,7 @@ In this sketch, an array of "mover" objects is created which are continously att
 - [Testing](#testing)
 - [Credits](#credits)
   - [Code](#code)
+  - [Media](#media)
   - [Acknowledgements](#acknowledgements)
 
 
@@ -58,11 +59,19 @@ As a user:
 * I would like the user interface to be easy to use.
 
 ### Design choices
+* [Lato](https://fonts.google.com/specimen/Lato) was chosen as the font as it is a humanist sans serif typeface designed to convey a minimal and modern feel.
+* The radius of the movers is randomized to create a more organic feel which goes with the simulation of natural movement through the use of forces.
+* The icons were chosen for their universal meaning.
+
+A number of design choices were made to improve the user experience on mobile devices:
+* If the devicesscreen size is under 576px, the movers are initialized with a radius 5 times smaller than if the device is above that size.
+* The sketch canvas element is fullscreen on mobile and has a 20px border on devices above 768px width.
 
 ### Wireframes
 These wireframes were created using [Procreate](https://procreate.art/).
 
-* [Index.html](https://i.ibb.co/41ztsSd/img-3.jpg)
+* [Index.html](https://i.ibb.co/mGJCYfb/Untitled-Artwork.jpg)
+* [Sketch canvas](https://i.ibb.co/CmgMBnM/Untitled-Artwork-3.jpg)
 * [Toolbar](https://i.ibb.co/XSHxJ7z/img-4.jpg)
 * [Settings menu](https://i.ibb.co/Ykp7TRf/img.jpg)
 
@@ -81,7 +90,7 @@ These wireframes were created using [Procreate](https://procreate.art/).
 **Settings Menu**
    * The settings menu controls the variables of the audio visualiser through DOM input elements.
    * It is displayed on page load so that the user is immediately aware that they can interact with the settings.
-   * It is diplayed on top of the sketch canvas and is transparent so that the results of any change in settings are immediately visible.
+   * It is displayed on top of the sketch canvas and is transparent so that the results of any change in settings are immediately visible.
    * Each input is outlined when focused so that it is navigable with a screen reader.
   
 **Camera**
@@ -89,7 +98,7 @@ These wireframes were created using [Procreate](https://procreate.art/).
    * The filename of the image is randomised so that saving multiple images does not overwrite a previous image.
   
 **Fullscreen**
-   * The fullscreen button opens the canvas element in fullscreen.
+   * The fullscreen button opens the canvas element in fullscreen using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
 
 
 ### Features Left to Implement
@@ -185,6 +194,9 @@ Testing information can be found in separate [testing.md](testing.md) file
   
 * main.css
    * Styling cross-browser compatible range inputs with CSS from [css-tricks.com](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/).
+
+### Media
+* The icons labelling the toolbar buttons and the popovers in the settings menu are from [Material icons](https://material.io/resources/icons/?style=baseline).
   
 ### Acknowledgements
 * This README was created following the format of and has taken inspiration from Code Institute student [AJGreaves's README](https://github.com/AJGreaves/picflip/blob/master/README.md).
