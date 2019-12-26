@@ -12,7 +12,8 @@
     - [Difference between audioVisualizer.js and audioVisualizerJasminejs](#difference-between-audiovisualizerjs-and-audiovisualizerjasminejs)
 - [User Stories Testing](#user-stories-testing)
 - [Manual Testing](#manual-testing)
-- [Bugs found during testing](#bugs-found-during-testing)
+- [Solved bugs found during testing](#solved-bugs-found-during-testing)
+- [Unsolved bugs found during testing](#unsolved-bugs-found-during-testing)
 
 ## Automated Testing
 ### Validation Services
@@ -32,7 +33,7 @@ During the automated testing phase, it was discovered that it is difficult to te
 The files for jasmine testing can be found here:
 * HTML page to run jasmine tests from: [test.html](assets/jasmine-testing/test.html)
 * JavaScript specifications (tests): [fileSpec.js](assets/jasmine-testing/spec/fileSpec.js)
-* Alternative version of audioVisualizer.js for Jasmine testing
+* Alternative version of audioVisualizer.js for Jasmine testing: [audioVisualizer.js](https://github.com/tesoph/audio/tree/master/assets/jasmine-testing/src/audioVisualizerJasmine.js)
   
 The live results of the Jasmine tests can be viewed in the browser [here](https://tesoph.github.io/audio/assets/jasmine-testing/test.html).
 
@@ -55,7 +56,7 @@ let constraints = { audio: true, video: false };
             });
 ```
 * This can be resolved if the previous code block is wrapped with `if (!window.jasmine){}` but this solution is not included in the deployed version of the audioVisualizer.js,
-* Instead, for jasmine testing a seperate js file was created with the only difference to the deployed audioVisualizer.js file being the inclusion of `if(!window.jasmine){}` wrapping the above code block at [line 43](https://github.com/tesoph/audio/tree/master/assets/jasmine-testing/src/audioVisualizerJasmine.js#L43).
+* Instead, for jasmine testing a [seperate js file](https://github.com/tesoph/audio/tree/master/assets/jasmine-testing/src/audioVisualizerJasmine.js) was created with the only difference to the deployed audioVisualizer.js file being the inclusion of `if(!window.jasmine){}` wrapping the above code block at [line 43](https://github.com/tesoph/audio/tree/master/assets/jasmine-testing/src/audioVisualizerJasmine.js#L43).
 
 ## User Stories Testing
 
@@ -123,7 +124,7 @@ The website has been manually tested to ensure it passes the following test case
     * The attractor is displayed at the center of the new canvas.
     * The movers are related to the new attractor position.
 
-## Bugs found during testing
+## Solved bugs found during testing
 1. **GetUserMedia/ Stream API is not supported in all browsers**. 
 * [Caniuse.com support table](https://caniuse.com/#feat=stream).
 * The following code [from MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) was put into the setup() function which is called once when the audio visualizer object is created.
@@ -171,3 +172,10 @@ audioVisualizer.play = function () {
    - Reason: [Chrome disables input=range styling in responsive mode](https://bugs.chromium.org/p/chromium/issues/detail?id=807625)
    - Fix: [Custom CSS rules for inputs](https://stackoverflow.com/questions/41170867/html5-sliders-disappear-under-chromes-device-mode). 
    - This also prompted me to write custom css rules for inputs for different browsers so the visual remains consistent across them.
+
+6. **Some mobile browsers would place the bottom of the canvas to be off the screen**
+   - Reason: Some mobile browsers do not include address bar height in viewport height so the sketch-container CSS style height:100vh would
+
+
+## Unsolved bugs found during testing
+1. Some mobile browsers do not include the height of the address bar in the vh. 
