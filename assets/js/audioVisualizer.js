@@ -26,11 +26,11 @@ let audioVisualizerSketch = function (p) {
         * @type {boolean}
         */
         p.playing = false;
-         /**
-        * @name createCanvas
-        * @desc variable to store the sketch canvas
-        * @type {object}
-        */
+        /**
+       * @name createCanvas
+       * @desc variable to store the sketch canvas
+       * @type {object}
+       */
         p.cnv = p.createCanvas(p.w, p.h);
         //drawing a plain black background to the canvas 
         p.background(p.color(0));
@@ -38,6 +38,7 @@ let audioVisualizerSketch = function (p) {
         p.initializeVariables();
         //Array of movers initialised with max (100) number of movers
         p.initializeMovers(p.w, p.h);
+        p.getAudioInput();
 
         //Check if the browser supports media stream API and check if given permission
         //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -111,7 +112,7 @@ let audioVisualizerSketch = function (p) {
         * @memberof audioVisualizerSketch
         * @constructor
         * @param {object} p_ - This sketch instance 
-        **/
+        */
         constructor(p_) {
             this.p = p_;
             this.location = p.createVector(p.w / 2, p.h / 2);
@@ -259,7 +260,6 @@ let audioVisualizerSketch = function (p) {
     //End of Attractor and Mover classes
 
     //Methods belonging to the audio visualizer
-
     /**
     * @method getCanvasSize
     * @desc Gets width and height of the sketch canvas parent container
@@ -278,6 +278,7 @@ let audioVisualizerSketch = function (p) {
             y: containerHeight,
         };
     }
+
     /**
     * 
     * @method makeShapeMode
@@ -364,7 +365,7 @@ let audioVisualizerSketch = function (p) {
                 return list[i];
             }
         }
-    };// end of weighted random number generation
+    };
 
     /**
     * @method getAudioInput
@@ -372,15 +373,25 @@ let audioVisualizerSketch = function (p) {
     * @memberof audioVisualizerSketch
     */
     p.getAudioInput = function () {
-        //Audio input comes from the microphone
+        /**
+        * p5.AudioIn class -get audio from an input
+        * @class AudioIn
+        * @memberof audioVisualizerSketch
+        * @constructor
+        * @see {@link https://p5js.org/reference/#/p5.AudioIn}
+        */
         p.mic = new p5.AudioIn();
         p.mic.start();
+         /**
+        * p5FFT class -get audio from an input
+        * @class FFT
+        * @memberof audioVisualizerSketch
+        * @constructor
+        * @see {@link https://p5js.org/reference/#/p5.FFT}
+        */
         //FFT object analyzes the audio input
         p.fft = new p5.FFT();
         p.fft.setInput(p.mic);
-        // p.peakDetect = new p5.PeakDetect();
-        // p.peakDetect.update(p.fft);
-        //    p.peakDetect.onPeak(p.triggerBeat);
     };
 
     /**
@@ -400,23 +411,10 @@ let audioVisualizerSketch = function (p) {
     * @memberof audioVisualizerSketch
     */
     p.analyzeAudio = function () {
-        //???p.spectrum whats it doing
-        // p.spectrum = p.fft.analyze();
-        // p.peakDetect.update(p.ftt);
-        //p.ftt.analyze();
-        // p.peakDetect.update(p.ftt);
-        /*if ( p.peakDetect.isDetected ) {
-            p.print("x");
-          } else {
-          print("234234");
-          }*/
-        // p.peakDetect.update(p.spectrum);
         p.fft.analyze();
         p.highMid = p.fft.getEnergy("highMid");
         p.lowMid = p.fft.getEnergy("lowMid");
-        // p.treble = p.fft.getEnergy("treble");
         p.bass = p.fft.getEnergy("bass");
-        // var mid = fft.getEnergy("mid");
         //Sensitivity value from slider mapped backwards to threshold so that the amplitude can be > threshold
         p.threshold = p.map(p.sensitivity, 30, 170, 170, 30);
     };
@@ -436,6 +434,7 @@ let audioVisualizerSketch = function (p) {
             movers[i].applyForce(p.t);
         }
     };
+
     /**
     * @method repelMovers
     * @desc repels the movers from the attractor if the amplitude of the frequency range is above a certain threshold
@@ -458,6 +457,7 @@ let audioVisualizerSketch = function (p) {
             }
         }
     };
+
     /**
     * @method moveMovers
     * @desc Calls both attractMovers and repelMovers
@@ -481,7 +481,7 @@ let audioVisualizerSketch = function (p) {
     */
     p.play = function () {
         let playButton = document.getElementById("play");
-        if (audioVisualizer.playing) {
+        if (p.playing) {
             playButton.style.display = "inline";
             p.playing = false;
             p.noLoop();
@@ -496,4 +496,3 @@ let audioVisualizerSketch = function (p) {
         }
     };
 };
-//End of audiovisualizer sketch
