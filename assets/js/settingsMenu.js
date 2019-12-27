@@ -112,4 +112,4 @@ function settingsMenu() {
     numMovers.oninput = function () {
         audioVisualizer.numberOfMovers = Math.floor(numMovers.value);
     };
-};
+}

@@ -277,7 +277,7 @@ let audioVisualizerSketch = function (p) {
             x: containerWidth,
             y: containerHeight,
         };
-    }
+    };
 
     /**
     * 
