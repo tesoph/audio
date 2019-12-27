@@ -96,7 +96,18 @@ The website has been manually tested to ensure it passes the following test case
 
 **Settings menu**
 * Clicking the settings button toggles the visibility of the settings menu.
+* Clicking the X in the top right of the settings menu hides the menu.
 * The theme radio button selects between "dark" (sets background color to black and stroke color to white) and "light" (sets background color to white and stroke color to black).
+* The sensitivity to noise slider increases or decreases the movers sensitivity to sound.
+* The number of movers slider increases or decreases the number of movers on the screen.
+* The speed slider increases or decreases the top speed of the movers.
+* The stroke weight slider increases or decreases the stroke weight.
+* The display lines checkbox displays or hides lines between the attractor and the movers when checked or unchecked.
+* The shape mode checkbox displays or hides shape mode when checked or unchecked.
+* When hovered over the popovers icon, the icon is enlarged and color set to red.
+* The low mid tones checkbox cannot be unchecked.
+* The high mid tones display checked box displays the high mid tone movers when checked.
+* The color inputs change the fill color of the movers to the selected color.
 
 **Camera button**
 * Clicking the camera button saves a .jpg image of the current frame to the user's download folder with the filename "Audio-X.jpg", where X is a string of length 6 of random characters.
