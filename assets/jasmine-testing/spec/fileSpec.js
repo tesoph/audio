@@ -11,10 +11,6 @@ describe('Testing the audioVisualizer', () => {
         audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
     });
 
-    afterEach(function () {
-        //https://lostechies.com/derickbailey/2011/10/14/quick-hack-to-work-around-jasmine-jquery-fixture-limitations/
-        delete fixture;
-    });
 
     it('calling the moveMovers method should call attractmovers and repelmovers methods', () => {
         spyOn(audioVisualizer, "attractMovers");
@@ -25,17 +21,14 @@ describe('Testing the audioVisualizer', () => {
     });
 
     it('if the volume of a certain frequency is over a specificed threshold, the attractor should repel the movers', () => {
-
-        //let attractor = audioVisualizer.a;
         spyOn(audioVisualizer.a, "repel");
-       //spyOn(audioVisualizer.a, "repel");
         let movers = audioVisualizer.moversLowMid;
         let threshold = 50;
         let frequencyRange = 60;
-       // console.log(attractor);
-       //can't normalize property t of undefined. the force is undefined?
+        // console.log(attractor);
+        //can't normalize property t of undefined. the force is undefined?
         audioVisualizer.moveMovers(movers, threshold, frequencyRange);
-       expect(audioVisualizer.a.repel).toHaveBeenCalled();
+        expect(audioVisualizer.a.repel).toHaveBeenCalled();
     });
 
     it('the audio visualizer should contain an array of movers of length 100', () => {
@@ -43,12 +36,9 @@ describe('Testing the audioVisualizer', () => {
     });
 
     it('if the sketch is paused, pressing the play button will unpause the sketch', () => {
-        //spyOn(audioVisualizer, "loop");
         audioVisualizer.playing = false;
         audioVisualizer.play();
         expect(audioVisualizer.playing).toBe(true);
-        //Following throws script error (?)
-        // expect(audioVisualizer.loop).toHaveBeenCalled();
     });
 
 
@@ -65,28 +55,6 @@ describe('Testing the audioVisualizer', () => {
     });
 
     it('when the window is resized, the initializeMovers and resizeCanvas methods are called', () => {
-        //  $(window).on'resize',=>resizeCanvas()
-        /* function resizeCanvas() {
-             let canvasSize = audioVisualizer.getCanvasSize();
-             audioVisualizer.resizeCanvas(canvasSize.x, canvasSize.y);
-             audioVisualizer.initializeMovers(canvasSize.x, canvasSize.y);
-         }*/
-        // window.addEventListener('resize', resizeCanvas);
-        /*function dispatchOrientationChangeEvent() {
-            var evt, orientationEventType = 'orientationchange';
-            evt = window.document.createEvent('HTMLEvents');
-            evt.initEvent(orientationEventType, true, true);
-            window.dispatchEvent(evt);
-          }
-          dispatchOrientationChangeEvent();*/
-        /*  function resizeCanvas() {
-            let canvasSize = audioVisualizer.getCanvasSize();
-            audioVisualizer.resizeCanvas(canvasSize.x, canvasSize.y);
-            audioVisualizer.initializeMovers(canvasSize.x, canvasSize.y);
-        }
-         let canvasSize = new Object();
-         canvasSize.x = 200;
-         canvasSize.y = 200;*/
         spyOn(audioVisualizer, "resizeCanvas");
         spyOn(audioVisualizer, "initializeMovers");
 
@@ -99,7 +67,6 @@ describe('Testing the audioVisualizer', () => {
 
         expect(audioVisualizer.resizeCanvas).toHaveBeenCalled();
         expect(audioVisualizer.initializeMovers).toHaveBeenCalled();
-        //expect(audioVisualizer.h).toBe(200);
     });
 
     it('should create the sketch canvas size according to the width and height of the parent container', () => {
@@ -113,34 +80,11 @@ describe('Testing the audioVisualizer', () => {
 
 });
 
-/*
-describe('Testing permission errors', () => {
-    var audioVisualizer;
-    let error;
-
-    beforeEach(function () {
-        setFixtures(`
-            <div id="sketch-container" style="width:1000px;height:1000px;"></div>
-        `)
-        error.name === 'PermissionDeniedError';
-        audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
-        spyOn(window, 'alert');
-        spyOn(audioVisualizer, "attractMovers");
-        spyOn(audioVisualizer, "resizeCanvas");
-        spyOn(audioVisualizer, "initializeMovers");
-    });
-
-    it('If permission is denied the no permission error should show', () => {
-        expect(window.alert).toHaveBeenCalledWith('Permissions have not been granted to use your microphone, you need to allow the page access to your microphone in order for the audio visualizer to work.');
-    })
-})
-*/
-
 /*Testing the Toolbar */
 describe('Toolbar button click events', function () {
     var audioVisualizer;
-    // var toolbarTest = new toolbar();
     var t;
+
     beforeEach(function () {
         setFixtures(` <button id="cameraButton" class="toolbar-button"></button>
                       <div id="toolbar-container" class="toolbar-container">
@@ -169,15 +113,11 @@ describe('Toolbar button click events', function () {
     `)
 
         audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
-        // t= new toolbar();
-        //  toolbarTest= new toolbar();
     });
 
     it("Clicking the settings button should toggle the settings menu visibility", function () {
 
         $("#settingsButton").on("click", function () {
-            //fadeToggle changed to toggle for testing,
-            //fadeToggle fails the test (because style display:none isn't immediately set?) 
             $("#settings-menu").toggle();
         });
         let menu = document.getElementById("settings-menu");
@@ -191,28 +131,11 @@ describe('Toolbar button click events', function () {
         expect(menu).toBeHidden();
     });
 
-    /*  it("Clicking the settings button should toggle the settings menu visibility", function () {
-  
-          $("#settingsButton").on("click", function () {
-              //fadeToggle changed to toggle for testing,
-              //fadeToggle fails the test (because style display:none isn't immediately set?) 
-              $("#settings-menu").toggle();
-          });
-  
-          let btn = document.getElementById('settingsButton');
-          spyEvent = spyOnEvent('#settingsButton', 'click');
-          $('#settingsButton').trigger("click");
-  
-          expect('click').toHaveBeenTriggeredOn('#settingsButton');
-          expect(spyEvent).toHaveBeenTriggered();
-          expect('#settings-menu').toBeHidden();
-      });*/
     it("Clicking the camera button should call the audioVisualizer.saveCanvas method", function () {
         spyOn(audioVisualizer, "saveCanvas");
-        //var t = new toolbar();
-        //t.savePic();
+    
         let btn = document.getElementById('cameraButton');
-        btn.addEventListener('click', event => {
+       btn.addEventListener('click', event => {
             //Generate unique filename for each image saved so that a previous image is not overwritten from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
             let r = Math.random().toString(36).substring(7);
             let filename = `Audio-${r}.jpg`;
@@ -325,7 +248,7 @@ describe('Settings menu input change events', function () {
         </div>
         `)
         audioVisualizer = new p5(audioVisualizerSketch, document.getElementById("sketch-container"));
-        //sm = new settingsMenu();
+        sm = new settingsMenu();
     });
 
     it("checking the shape mode checkbox results in audiovisualizer.shapeMode being set to true", function () {
@@ -351,19 +274,19 @@ describe('Settings menu input change events', function () {
     });
 
     it("changing the sensitivty slider value changes the value of the audiovisualizer sensitivty variable to match", function () {
-        let sensitivitySlider = document.getElementById("sensitivity-slider");
-        sensitivitySlider.onchange = function () {
-            changeSensitivity();
-        };
-        function changeSensitivity() {
-            audioVisualizer.sensitivity = sensitivitySlider.value;
+       let sensitivitySlider = document.getElementById("sensitivity-slider");
+     
+       function changeSensitivity() {
+           audioVisualizer.sensitivity = sensitivitySlider.value;
         }
-        sensitivitySlider.value = "10";
+        sensitivitySlider.value = 30;
+       
+        changeSensitivity();
         spyOnEvent('#sensitivity-slider', 'click');
         $('#sensitivity-slider').click();
 
         expect('click').toHaveBeenTriggeredOn('#sensitivity-slider');
-        expect(audioVisualizer.sensitivity).toBe(10);
+        expect(audioVisualizer.sensitivity).toBe('30');
     });
 });
 
@@ -391,74 +314,4 @@ describe("Button Click Event Tests", function () {
         expect(spyEvent).toHaveBeenTriggered();
         expect(audioVisualizer.play).toHaveBeenCalled();
     });
-
 });
-
-/*
-    it('should change the background color', () => {
-        let sketchContainer = document.getElementById('sketch-container');
-        myp5 = new p5(sketch, document.getElementById("sketch-container"));
-
-        //   let color = "white";
-        // expect(myp5.changeBackgroundColor(color)).toBeDefined();
-        // color = "green";
-        // expect(myp5.changeBackgroundColor(color)).toThrow("InvalidColor");
-    })
-    */
-/*
-    it('should create the sketch canvas size according to the width and height of the parent container', () => {
-        myp5.windowResized(100, 100);
-         expect(myp5.w).toBe(100);
-         expect(myp5.a.location.x).toBe(50);
-         myp5.windowResized("1z", "d");
-         expect(myp5.w).toBe(200);
-         expect(myp5.a.location.x).toBe(100);
-         let sketchContainer = document.getElementById('sketch-container');
-        myp5 = new p5(sketch, document.getElementById("sketch-container"));
-        let positionInfo = sketchContainer.getBoundingClientRect();
-        let containerHeight = positionInfo.height;
-        let containerWidth = positionInfo.width;
-        myp5 = new p5(sketch, document.getElementById("sketch-container"));
-        expect(myp5.w).toBe(600);
-    })*/
-/*
-    it('should change the stroke weight when the stroke-weight-slider value is changed', () => {
-        //let SWslider = $('<input id="stroke-weight-picker" type="range" value="6"/>');
-        //  let swslider= document.getElementById("stroke-weight-picker");
-        //  SWslider.oninput = changeStrokeWeight;
-        // expect($(SWslider)).toHaveValue(3);
-        // expect(swslider.changeStrokeWeight(3)).toBeDefined();
-        expect($('<input type="range" value="6"/>').on("input", "3")).toHaveValue(3);
-
-    })
-*/
-
-
-
-
-
-
-
-
-/*
- //   it('should change the stroke weight when the stroke-weight-slider value is changed', () => {
-  //      let SWslider = $('<input id="stroke-weight-picker" type="range" value="6"/>');
-  //      SWslider.oninput(3);
-    //    expect($(SWslider)).toHaveValue(3);
-   // })
-    //Stroke Weight slider
-    let SWslider = document.getElementById("stroke-weight-picker");
-    SWslider.oninput = changeStrokeWeight;
-    function changeStrokeWeight(event) {
-        myp5.strokeWidth = event.target.value;
-    }
-    expect(if ($('<input type="range" value="6"/>').oninput(3){
-        myp5.strokeWidth = event.target.value
-    });
-
-if (myp5.strokeWidth === 5) {
-    expect($('<input type="range" value="6"/>')).toHaveValue('5');
-}
-
-
-})*/
