@@ -64,7 +64,7 @@ As a user:
 * The icons were chosen for their universal meaning.
 
 A number of design choices were made to improve the user experience on mobile devices:
-* If the devicesscreen size is under 576px, the movers are initialized with a radius 5 times smaller than if the device is above that size.
+* If the devices screen size is under 576px, the movers are initialized with a radius 5 times smaller than if the device is above that size.
 * The sketch canvas element is fullscreen on mobile and has a 20px border on devices above 768px width.
 
 ### Wireframes
