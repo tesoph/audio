@@ -38,7 +38,7 @@ let audioVisualizerSketch = function (p) {
         p.initializeVariables();
         //Array of movers initialised with max (100) number of movers
         p.initializeMovers(p.w, p.h);
-        p.getAudioInput();
+        //p.getAudioInput();
 
         //Check if the browser supports media stream API and check if given permission
         //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
