@@ -141,7 +141,7 @@ These wireframes were created using [Procreate](https://procreate.art/).
 ## Deployment 
 This project was developed using the code editor Visual Studio Code, committed to git and pushed to GitHub using the terminal. 
 
-This site is hosted using GitHub pages, deployed directly from the master branch. The deployed site will update automatically upon new commits to the master branch. In order for the site to deploy correctly on GitHub pages, the landing page must be named `index.html`.a
+This site is hosted using GitHub pages, deployed directly from the master branch. The deployed site will update automatically upon new commits to the master branch. In order for the site to deploy correctly on GitHub pages, the landing page must be named `index.html`.
 
 ### How this project was deployed to GitHub Pages
 1. Log into GitHub
